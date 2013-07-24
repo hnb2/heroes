@@ -1,0 +1,14 @@
+{
+    "monsters": [
+        {
+            "name": "Small Kitten",
+            "hp": 30,
+            "atk": 5
+        },
+        {
+            "name": "Medium Kitten",
+            "hp": 40,
+            "atk": 5
+        }
+    ]
+}

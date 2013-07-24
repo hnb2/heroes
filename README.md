@@ -1,3 +1,9 @@
-TODO : improve and include loggerZ (checkour MDN for formatting console output)
-TODO : create a json file of monsters
-TODO : create a utility for Xhr (use orion/Xhr; orion/Deferred)
+NOW
+===
+- Load the monsters file in the area
+- replace fightUtil by chance.js
+
+LATER
+=====
+- Create a bootstrapper for the app
+- Unit test + loggerZ
