@@ -1,8 +1,9 @@
 NOW
 ===
-- replace fightUtil by chance.js
+- Test/Debug fightUtils
+- Unit test + loggerZ (make a global logger variable in the boostrap)
 
 LATER
 =====
-- Create a bootstrapper for the app
-- Unit test + loggerZ
+- Implement gcli
+- Implement Map in json format and coordinates

@@ -6,7 +6,7 @@ define(["fightUtils"], function(mFightUtils){
         this.hp = opts.hp || 100;
         this.atk = opts.atk || 15;
         this.atkChance = opts.atkChance || {min: 0, max:100};
-        this.dodgeChance = opts.dodgeChance || {min: 0, max:100};
+        this.dodgeChance = opts.dodgeChance || 0;
     }
     
     Creature.prototype.attack = function attack(creature){
@@ -24,7 +24,7 @@ define(["fightUtils"], function(mFightUtils){
     
     Creature.prototype.takeDamage = function takeDamage(dmg){
         //Test for dodging the attack
-        var chance = mFightUtils.chance(this.dodgeChance.min, this.dodgeChance.max);
+        var chance = mFightUtils.chance(this.dodgeChance);
         
         if(chance){
             console.log(this.name + " dodged the attack !!");

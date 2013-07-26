@@ -1,15 +1,17 @@
-define([], function(){
+define(["ext/chance"], function(Chance){
 
     //Return a random value between min and max
     function rand(min, max){
-         return  Math.floor(Math.random()*(max - min)+1) + min;
+         var c = new Chance();
+         
+         return c.integer({min: min, max: max});
     }
     
-    //Return true if the random value is found between the [min,max] interval
-   function chance(min, max){
-        var rand = Math.floor(Math.random()*100);
-        
-        return (rand < max && rand >= min);
+    //Return random true of false according to the given likelihood
+    function chance(ch){
+        var c = new Chance();
+    
+        return c.bool({likelihood: ch});
     }
     
     return {rand : rand,

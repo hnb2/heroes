@@ -10,12 +10,7 @@
                 ext: '../ext'
             }
         });
-        require(["js/app/arena.js"], function(mArena){
-            var arena = new mArena.Arena();
-            arena.getMonsters().then(function(){
-                arena.begin();
-            });
-        });
+        require(["js/app/app.js"]);
     </script>
 <title>Heroes</title>
 </head>

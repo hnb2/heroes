@@ -7,7 +7,7 @@ define(["creature"], function(mCreature){
         this.hp = opts.hp || 120;
         this.atk = opts.atk || 15;
         this.atkChance = opts.atkChance || {min: 80, max:100};
-        this.dodgeChance = opts.dodgeChance || {min: 0, max:7};
+        this.dodgeChance = opts.dodgeChance || 7;
     }
     
     //Hero inherits of Creature
