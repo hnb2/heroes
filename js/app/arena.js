@@ -1,4 +1,4 @@
-define(["fight", "hero", "monster"], function(mFight, mHero, mMonster){
+define(["fight", "hero", "monster", "ext/xhr"], function(mFight, mHero, mMonster, mXhr){
 
     function Arena(){
         //Clear the console
@@ -9,16 +9,34 @@ define(["fight", "hero", "monster"], function(mFight, mHero, mMonster){
         
         //Monsters
         this.monsters = new Array();
-        this.monsters.push(new mMonster.Monster("Small kitten", {}));
-        this.monsters.push(new mMonster.Monster("kitten", {hp: 55}));
-        this.monsters.push(new mMonster.Monster("Cat", {hp: 55, atk: 7}));
-        this.monsters.push(new mMonster.Monster("Tomcat", {hp: 60, atk: 7}));
-        this.monsters.push(new mMonster.Monster("Badass Tomcat", {hp: 70, atk: 7}));
-        this.monsters.push(new mMonster.Monster("Berzerk grizzly bear", {hp: 100, atk: 15}));
         
         //Round counter
         this.round = 1;
     }
+    
+    Arena.prototype.getMonsters = function getMonsters(){
+        //Make a local reference to the current instance
+        var self = this;
+        
+        return mXhr('GET', 'data/monsters.json').then(function(success){
+            
+            //Parse into Object
+            var obj = JSON.parse(success.responseText);
+            
+            //For each monsters
+            obj.monsters.forEach(function(item){
+                //Add it to the array
+                self.monsters.push( new mMonster.Monster( item.name, {} ) );
+            });
+            
+            return success.response;
+        },
+        function(error){
+            console.log(error.response);
+            
+            return error.response;
+        });
+    };
     
     Arena.prototype.begin = function begin(){
         console.log(">> ROUND " + this.round + " :" + this.hero.name + " VS " + this.monsters[this.round-1].name + " <<");
@@ -34,7 +52,7 @@ define(["fight", "hero", "monster"], function(mFight, mHero, mMonster){
         else{
             console.log(this.hero.name + " has perished at round " + this.round + " ...");
         }
-    }
+    };
     
     return {Arena : Arena};
 

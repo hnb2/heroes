@@ -1,6 +1,5 @@
 NOW
 ===
-- Load the monsters file in the area
 - replace fightUtil by chance.js
 
 LATER

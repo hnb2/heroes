@@ -12,7 +12,9 @@
         });
         require(["js/app/arena.js"], function(mArena){
             var arena = new mArena.Arena();
-            arena.begin();
+            arena.getMonsters().then(function(){
+                arena.begin();
+            });
         });
     </script>
 <title>Heroes</title>
