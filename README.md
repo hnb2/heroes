@@ -1,9 +1,7 @@
 NOW
 ===
-- Test/Debug fightUtils
-- Unit test + loggerZ (make a global logger variable in the boostrap)
+- Implement gcli
 
 LATER
 =====
-- Implement gcli
 - Implement Map in json format and coordinates

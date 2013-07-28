@@ -10,13 +10,16 @@ define(["fightUtils"], function(mFightUtils){
     }
     
     Creature.prototype.attack = function attack(creature){
+        //Get a random value between min and max
         var rand = mFightUtils.rand(this.atkChance.min, this.atkChance.max);
         
         if(rand === this.atkChance.max)
             console.log(this.name + " did a perfect attack !");
-        
-        //Will create a value between 80% and 100% of the original atk
+
+        //Will create a damage = original atk * rand%
         var dmg = Math.floor( this.atk * (rand / 100) );
+        
+        console.log(this.name + "[" + this.hp + " hp] inflicted " + dmg + " dmg points to " + creature.name + "[" + creature.hp + " hp]" );
         
         //Inflict the damages
         creature.takeDamage(dmg);
