@@ -2,7 +2,7 @@ define(["fight", "hero", "monster", "ext/xhr"], function(mFight, mHero, mMonster
 
     function Arena(){
         //Clear the console
-        console.clear();
+        //console.clear();
         
         //Hero
         this.hero = new mHero.Hero("Waylander", {});
