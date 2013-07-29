@@ -3,6 +3,9 @@ define(["creature"], function(mCreature){
     function Monster(name, opts){
         this.name = "[MONSTER] " + name;
         
+        //Add new fields
+        this.id = opts.id || 0;
+        
         //Redefine new values
         this.hp = opts.hp || 50;
         this.atk = opts.atk || 5;

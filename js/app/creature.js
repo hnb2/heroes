@@ -20,10 +20,10 @@ define(["fightUtils"], function(mFightUtils){
         //Will create a damage = original atk * rand%
         var dmg = Math.floor( this.atk * (rand / 100) );
         
-        console.log(this.name + "[" + this.hp + " hp] inflicted " + dmg + " dmg points to " + creature.name + "[" + creature.hp + " hp]" );
-        
         //Inflict the damages
         creature.takeDamage(dmg);
+        
+        return this.name + "[" + this.hp + " hp] inflicted " + dmg + " dmg points to " + creature.name + "[" + creature.hp + " hp]";
     };
     
     Creature.prototype.takeDamage = function takeDamage(dmg){
@@ -31,7 +31,7 @@ define(["fightUtils"], function(mFightUtils){
         var chance = mFightUtils.chance(this.dodgeChance);
         
         if(chance){
-            console.log(this.name + " dodged the attack !!");
+            return this.name + " dodged the attack !!";
         }
         else{
             //Take the damage
@@ -54,8 +54,15 @@ define(["fightUtils"], function(mFightUtils){
     };
     
     Creature.prototype.move = function move(pos){
-        var out = this.name + " has moved from " + this.position.name + " to " + pos.name;
-        this.position = pos;
+        var out;
+        if(typeof this.position.monsters === "undefined"){
+            out = this.name + " has moved from " + this.position.name + " to " + pos.name;
+            this.position = pos;
+        }
+        else{
+            out = "Monster(s) are blocking the way !";
+        }
+        
         return out;
     };
     

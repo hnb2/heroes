@@ -1,3 +1,4 @@
+// DEPRECATED FOR NOW
 define(["fight", "hero", "monster", "ext/xhr"], function(mFight, mHero, mMonster, mXhr){
 
     function Arena(){
@@ -27,7 +28,7 @@ define(["fight", "hero", "monster", "ext/xhr"], function(mFight, mHero, mMonster
             //For each monsters
             obj.monsters.forEach(function(item){
                 //Add it to the array
-                self.monsters.push( new mMonster.Monster( item.name, {hp: item.hp, atk: item.atk} ) );
+                self.monsters.push( new mMonster.Monster( item.name, {hp: item.hp, atk: item.atk, id: item.id} ) );
             });
             
             return success.response;

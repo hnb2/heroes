@@ -9,7 +9,7 @@ define(["ext/xhr", "position"], function(mXhr, mPosition){
             var obj = JSON.parse(success.responseText);
             
             obj.path.forEach(function(item){
-                self.map.push( new mPosition.Position(item.id, item.to, item.name, item.desc) );
+                self.map.push( new mPosition.Position(item.id, item.to, item.name, item.desc, item.monsters) );
             });
             
             return success.response;

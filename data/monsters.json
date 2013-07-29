@@ -1,19 +1,22 @@
 {
     "monsters": [
         {
-            "name": "Small Kitten",
-            "hp": 30,
+            "id": 1,
+            "name": "Injured wolf",
+            "hp": 25,
             "atk": 5
         },
         {
-            "name": "Medium Kitten",
+            "id": 2,
+            "name": "Wolf",
             "hp": 35,
-            "atk": 5
+            "atk": 7
         },
         {
-            "name": "Fat Kitten",
-            "hp": 40,
-            "atk": 5
+            "id": 3,
+            "name": "Great wolf, leader of the pack",
+            "hp": 50,
+            "atk": 10
         }
     ]
 }

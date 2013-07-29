@@ -1,3 +1,4 @@
+//Deprecated ?
 define([], function(){
 
     function Fight(creature1, creature2){
