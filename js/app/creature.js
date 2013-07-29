@@ -7,6 +7,7 @@ define(["fightUtils"], function(mFightUtils){
         this.atk = opts.atk || 15;
         this.atkChance = opts.atkChance || {min: 0, max:100};
         this.dodgeChance = opts.dodgeChance || 0;
+        this.position = 0;
     }
     
     Creature.prototype.attack = function attack(creature){
@@ -50,6 +51,16 @@ define(["fightUtils"], function(mFightUtils){
     
     Creature.prototype.isDead = function isDead(){
         return (this.hp === 0);
+    };
+    
+    Creature.prototype.move = function move(pos){
+        var out = this.name + " has moved from " + this.position.name + " to " + pos.name;
+        this.position = pos;
+        return out;
+    };
+    
+    Creature.prototype.getPosition = function getPosition(){
+        return this.position;
     };
 
     return {Creature : Creature};

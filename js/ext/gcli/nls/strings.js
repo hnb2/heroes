@@ -461,22 +461,22 @@ var i18n = {
     // to explain the command line, and is shown each time it is opened until
     // the user clicks the 'Got it!' button.
     // This string is the opening paragraph of the intro text.
-    introTextOpening2: 'This command line is designed for developers. It focuses on speed of input over JavaScript syntax and a rich display over monospace output.',
+    introTextOpening2: 'Welcome to Heroes, an awesome text based game !',
 
     // For information about the 'intro text' see introTextOpening2.
     // The second paragraph is in 2 sections, the first section points the user
     // to the 'help' command.
-    introTextCommands: 'For a list of commands type',
+    introTextCommands: 'To get started, type',
 
     // For information about the 'intro text' see introTextOpening2.
     // The second section in the second paragraph points the user to the
     // F1/Escape keys which show and hide hints.
-    introTextKeys2: ', or to show/hide command hints press',
+    introTextKeys2: '',
 
     // For information about the 'intro text' see introTextOpening2.
     // This string is used with introTextKeys2, and contains the keys that are
     // pressed to open and close hints.
-    introTextF1Escape: 'F1/Escape',
+    introTextF1Escape: '',
 
     // For information about the 'intro text' see introTextOpening2.
     // The text on the button that dismisses the intro text.
