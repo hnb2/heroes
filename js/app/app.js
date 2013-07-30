@@ -6,6 +6,9 @@ define(["map", "hero", "monsters", "utils/loggerZ", "gcli/index"], function(mMap
     
     log.info("Start the application");
     
+    //Global var to check if the hero set its name or not
+    var setName = false;
+    
     //Initialize the Hero
     var hero = new mHero.Hero("Waylander", {});
 
@@ -30,6 +33,31 @@ define(["map", "hero", "monsters", "utils/loggerZ", "gcli/index"], function(mMap
     });
     
     /** GCLI COMMANDS */
+    
+    //NAME
+    mGcli.addCommand({
+      name: 'name',
+      description: 'Set your name !',
+      params: [
+      {
+          name: 'name',
+          type: 'string',
+          description: 'The name you chose to bear for eternity...'
+        }
+      ],
+      returnType: 'string',
+          exec: function(args, context) {
+            if(!setName){
+                hero.name = args.name;
+                setName = true;
+                
+                return "Thou shall now be known as " + hero.name;
+            }
+            else{
+                return "It is too late for you " + hero.name + " !";
+            }
+          }
+    });
     
     //WHERE
     mGcli.addCommand({

@@ -3,8 +3,6 @@ NOW
 - Try to make the HTML/DOM output possible
 - Make the 'to' clickable with the name
 - Make an option for restart (linked with the death of the hero)
-- Make an option to give a name
-- Update intro text
 - Export gcli into another file after boostarting the app in "app.js"
 
 LATER

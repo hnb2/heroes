@@ -461,7 +461,7 @@ var i18n = {
     // to explain the command line, and is shown each time it is opened until
     // the user clicks the 'Got it!' button.
     // This string is the opening paragraph of the intro text.
-    introTextOpening2: 'Welcome to Heroes, an awesome text based game !',
+    introTextOpening2: 'Welcome to Heroes, an awesome text based game (my mom said its the best, no swear) !',
 
     // For information about the 'intro text' see introTextOpening2.
     // The second paragraph is in 2 sections, the first section points the user
@@ -471,7 +471,7 @@ var i18n = {
     // For information about the 'intro text' see introTextOpening2.
     // The second section in the second paragraph points the user to the
     // F1/Escape keys which show and hide hints.
-    introTextKeys2: '',
+    introTextKeys2: ' But you may also want to get yourself a name by typing',
 
     // For information about the 'intro text' see introTextOpening2.
     // This string is used with introTextKeys2, and contains the keys that are
