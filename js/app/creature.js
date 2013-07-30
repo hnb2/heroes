@@ -30,8 +30,10 @@ define(["fightUtils"], function(mFightUtils){
         //Get a random value between min and max
         var rand = mFightUtils.rand(this.atkChance.min, this.atkChance.max);
         
+        var criticalHit = false;
+        
         if(rand === this.atkChance.max)
-            console.log(this.name + " did a perfect attack !");
+            criticalHit = true;
 
         //Will create a damage = original atk * rand%
         var dmg = Math.floor( this.atk * (rand / 100) );
@@ -39,7 +41,12 @@ define(["fightUtils"], function(mFightUtils){
         //Inflict the damages
         creature.takeDamage(dmg);
         
-        return this.name + "[" + this.hp + " hp] inflicted " + dmg + " dmg points to " + creature.name + "[" + creature.hp + " hp]";
+        var out = "\t " + this.name + "[" + this.hp + " hp] inflicted " + dmg + " dmg points";
+        if(criticalHit)
+            out += " (CRITICAL HIT)";
+        out +=  " to " + creature.name + "[" + creature.hp + " hp left]";
+        
+        return out;
     };
     
     Creature.prototype.takeDamage = function takeDamage(dmg){
@@ -60,8 +67,12 @@ define(["fightUtils"], function(mFightUtils){
     
     Creature.prototype.heal = function heal(hp){
         if(!this.dead){
-            this.hp += hp;
-            console.log(this.name + " has recovered " + hp + " health points.");
+            if(this.hp + hp < this.maxHp)
+                this.hp += hp;
+            else
+                this.hp = this.maxHp;
+                
+            return this.name + " has recovered " + hp + " health points.";
         }
     };
     
@@ -88,7 +99,7 @@ define(["fightUtils"], function(mFightUtils){
     };
     
     Creature.prototype.toString = function toString(){
-        return this.name + " - " + this.hp + "/" + this.maxHp + " hp - " + this.atk + " max dmg - " + this.dodgeChance + " % chance of dodge."; 
+        return this.name + " - " + this.hp + "/" + this.maxHp + " hp - " + this.atk + " max dmg - " + this.dodgeChance + " % chance t dodge."; 
     };
 
     return {Creature : Creature};

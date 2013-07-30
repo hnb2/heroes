@@ -145,7 +145,7 @@ define(["map", "hero", "monsters", "utils/loggerZ", "gcli/index"], function(mMap
             }
                 
             if(! monster.isDead()){
-                out += monster.attack(hero);
+                out += " *|* " + monster.attack(hero);
             }
             else{
                 out += monster.name + " is dead.";
