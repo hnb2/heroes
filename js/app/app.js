@@ -38,15 +38,15 @@ define(["map", "hero", "monsters", "utils/loggerZ", "gcli/index"], function(mMap
       returnType: 'string',
           exec: function(args, context) {
             var pos = hero.getPosition();
-            var out = hero.name + " : " + pos.name + "; " + pos.description;
-            out += "\t you can go to : [" + pos.to + "]";
-            if(pos.monsters){
+            var out = pos.toString();
+            
+            /*if(pos.monsters){
               out += "\t " + pos.monsters.length + " monster(s) :"; 
               pos.monsters.forEach(function(item){
                     var m = monsters.getMonster(item);
                     out += "\t [ID=" + m.id + "] " + m.name;
               });
-            }
+            }*/
             
             return out;
           }
@@ -100,7 +100,7 @@ define(["map", "hero", "monsters", "utils/loggerZ", "gcli/index"], function(mMap
           exec: function(args, context) {
             var curPos = hero.getPosition();
             var monster;
-            if(typeof curPos.monsters !== "undefined"){
+            if(typeof curPos.monsters !== "undefined" && curPos.monsters.indexOf(args.id) !== -1){
                 monster = monsters.getMonster(args.id);
             }
             else{
@@ -128,7 +128,7 @@ define(["map", "hero", "monsters", "utils/loggerZ", "gcli/index"], function(mMap
           exec: function(args, context) {
             var curPos = hero.getPosition();
             var monster;
-            if(typeof curPos.monsters !== "undefined"){
+            if(typeof curPos.monsters !== "undefined" && curPos.monsters.indexOf(args.id) !== -1){
                 monster = monsters.getMonster(args.id);
             }
             else{

@@ -1,13 +1,13 @@
 {
     "path":[
-        {"id": 1, "to":[2], "name":"Pine Forest", "desc":"You open your eyes and wake up in a pine forest, the dim light of the sun waving through the top of the pine trees is making you dizzy, you decide to raise and find a way out."},
-        {"id": 2, "to":[1, 3], "name":"Clearing", "desc":"As you walk toward the light, you find a clearing and begin to hear some noise around you."},
-        {"id": 3, "to":[2, 4], "name":"Muddy road", "desc":"A road probably leading to a village or a farm, you notice a few bones lying on the ground, it cannot be a good sign..."},
-        {"id": 4, "to":[3, 5, 6, 7, 8], "name":"Abandonned market place", "desc":"You finally found a small village, it seems abandonned...But something catches your attention. You find a wounded wolf behind a stand !", "monsters":[1]},
-        {"id": 5, "to":[4], "name":"Old bakery", "desc":"It is a small bakery, looks like the door is locked."},
-        {"id": 6, "to":[4], "name":"Manor", "desc":"It is a manor, the owner must have been very rich. The door is locked."},
-        {"id": 7, "to":[4], "name":"Church", "desc":"A church, might not be the best idea to get there now..."},
-        {"id": 8, "to":[4, 9], "name":"Tavern", "desc":"A tavern, seems like the sound comes from there."},
+        {"id": 1, "to":[2], "name":"A pine Forest", "desc":"You open your eyes and wake up in a pine forest, the dim light of the sun waving through the top of the pine trees is making you dizzy, you decide to raise and find a way out."},
+        {"id": 2, "to":[1, 3], "name":"A clearing", "desc":"As you walk toward the light, you find a clearing and begin to hear some noise around you."},
+        {"id": 3, "to":[2, 4], "name":"A muddy road", "desc":"A road probably leading to a village or a farm, you notice a few bones lying on the ground, it cannot be a good sign..."},
+        {"id": 4, "to":[3, 5, 6, 7, 8], "name":"An abandonned market place", "desc":"You finally found a small village, it seems abandonned...But something catches your attention. You find a wounded wolf behind a stand !", "monsters":[1]},
+        {"id": 5, "to":[4], "name":"An old bakery", "desc":"It is a small bakery, looks like the door is locked."},
+        {"id": 6, "to":[4], "name":"A manor", "desc":"It is a manor, the owner must have been very rich. The door is locked."},
+        {"id": 7, "to":[4], "name":"A church", "desc":"A church, might not be the best idea to get there now..."},
+        {"id": 8, "to":[4, 9], "name":"A tavern", "desc":"A tavern, seems like the sound comes from there."},
         {"id": 9, "to":[8], "name":"Inside the tavern", "desc":"It is really dark in here, if only you could grab something to make it lighter..."}
     ]
 }
