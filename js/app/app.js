@@ -40,14 +40,6 @@ define(["map", "hero", "monsters", "utils/loggerZ", "gcli/index"], function(mMap
             var pos = hero.getPosition();
             var out = pos.toString();
             
-            /*if(pos.monsters){
-              out += "\t " + pos.monsters.length + " monster(s) :"; 
-              pos.monsters.forEach(function(item){
-                    var m = monsters.getMonster(item);
-                    out += "\t [ID=" + m.id + "] " + m.name;
-              });
-            }*/
-            
             return out;
           }
     });
@@ -107,9 +99,17 @@ define(["map", "hero", "monsters", "utils/loggerZ", "gcli/index"], function(mMap
                 return "Not found !";
             }
             
-            var out = monster.name + " - " + monster.hp + " hp - " + monster.atk + " max dmg"; 
-            
-            return out;
+            return monster.toString();
+          }
+    });
+    
+    //WHOAMI
+    mGcli.addCommand({
+      name: 'whoami',
+      description: 'It is about time you get to know yourself !',
+      returnType: 'string',
+          exec: function(args, context) {
+            return hero.toString();
           }
     });
     

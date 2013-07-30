@@ -3,18 +3,12 @@ define(["creature"], function(mCreature){
     function Monster(name, opts){
         this.name = "[MONSTER] " + name;
         
-        //Add new fields
-        this.id = opts.id || 0;
-        
-        //Redefine new values
-        this.hp = opts.hp || 50;
-        this.atk = opts.atk || 5;
-        this.atkChance = opts.atkChance || {min: 50, max:100};
-        this.dodgeChance = opts.dodgeChance || 3;
+        //Initialize the fields
+        this.initialize(opts);
     }
     
     //Monster inherits of Creature
-    Monster.prototype = new mCreature.Creature(this.name, {});
+    Monster.prototype = new mCreature.Creature();
     
     //Set the constructor
     Monster.prototype.constructor = Monster;

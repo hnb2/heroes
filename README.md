@@ -2,9 +2,6 @@ NOW
 ===
 - Upgrade output using "html" return type ? Create a utility file to wrap strings or private function
 - Make the 'to' clickable with the name
-- Implement toString for creatures
-- Implement MaxHp
-- Who about yourself
 - Make an option for restart (linked with the death of the hero)
 - Make an option to give a name
 - Update intro text

@@ -1,14 +1,30 @@
 define(["fightUtils"], function(mFightUtils){
 
     //Base for monsters and heroes
-    function Creature(name, opts){
+    function Creature(name){
         this.name = name;
-        this.hp = opts.hp || 100;
-        this.atk = opts.atk || 15;
-        this.atkChance = opts.atkChance || {min: 0, max:100};
-        this.dodgeChance = opts.dodgeChance || 0;
+        
+        this.id = 0;
+        this.hp = 100;
+        this.maxHp = this.hp;
+        this.atk = 15;
+        this.atkChance = {min: 50, max:100};
+        this.dodgeChance = 3;
         this.position = 0;
     }
+    
+    //Merge the options, to be used only once to initialize the class
+    Creature.prototype.initialize = function initialize(opts){
+        if(typeof opts === "undefined")
+            return;
+            
+        this.id = opts.id || this.id;
+        this.hp = opts.hp || this.hp;
+        this.maxHp = this.hp;
+        this.atk = opts.atk || this.atk;
+        this.atkChance = opts.atkChance || this.atkChance;
+        this.dodgeChance = opts.dodgeChance || this.dodgeChance;
+    };
     
     Creature.prototype.attack = function attack(creature){
         //Get a random value between min and max
@@ -69,6 +85,10 @@ define(["fightUtils"], function(mFightUtils){
     
     Creature.prototype.getPosition = function getPosition(){
         return this.position;
+    };
+    
+    Creature.prototype.toString = function toString(){
+        return this.name + " - " + this.hp + "/" + this.maxHp + " hp - " + this.atk + " max dmg - " + this.dodgeChance + " % chance of dodge."; 
     };
 
     return {Creature : Creature};
