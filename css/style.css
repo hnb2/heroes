@@ -1,0 +1,50 @@
+body {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+/** BEGIN : GCLI CONSOLE PART **/
+
+#gcli-display {
+    position: absolute;
+    top: 0;
+    bottom: 30px;
+    left: 0;
+    right: 0;
+}
+#gcli-input {
+    position: absolute;
+    height: 27px;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+}
+
+/** END : GCLI CONSOLE PART **/
+
+/** BEGIN : GCLI COMMAND PART **/
+
+/** Name command **/
+.name{
+    font-weight: bold;
+    font-size: 16px;
+}
+
+/** Commands outputing information **/
+.info{
+    color: gray;
+}
+
+/** Fight command **/
+.fight{
+    color: blue;
+}
+
+/** Fight command : won a fight**/
+.victory{
+    color: green;
+}
+
+/** END : GCLI COMMAND PART **/

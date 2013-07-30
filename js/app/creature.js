@@ -99,7 +99,7 @@ define(["fightUtils"], function(mFightUtils){
     };
     
     Creature.prototype.toString = function toString(){
-        return this.name + " - " + this.hp + "/" + this.maxHp + " hp - " + this.atk + " max dmg - " + this.dodgeChance + " % chance t dodge."; 
+        return this.name + " - " + this.hp + "/" + this.maxHp + " hp - " + this.atk + " dmg max - " + this.dodgeChance + " % chance to dodge."; 
     };
 
     return {Creature : Creature};

@@ -9,8 +9,11 @@ define(["map", "hero", "monsters", "utils/loggerZ", "gcli/index"], function(mMap
     //Global var to check if the hero set its name or not
     var setName = false;
     
+    //TEST GLOBAL VAR DOCUMENT
+    var doc = document;
+    
     //Initialize the Hero
-    var hero = new mHero.Hero("Waylander", {});
+    var hero = new mHero.Hero("The one without a name", {});
 
     //Initialize the map and the hero location
     var map = new mMap.Map();
@@ -45,17 +48,22 @@ define(["map", "hero", "monsters", "utils/loggerZ", "gcli/index"], function(mMap
           description: 'The name you chose to bear for eternity...'
         }
       ],
-      returnType: 'string',
+      returnType: 'dom',
           exec: function(args, context) {
+             var dom = doc.createElement('p');
+             dom.className = "name";
+            
             if(!setName){
                 hero.name = args.name;
                 setName = true;
                 
-                return "Thou shall now be known as " + hero.name;
+                dom.innerHTML = "Thou shall now be known as " + hero.name;
             }
             else{
-                return "It is too late for you " + hero.name + " !";
+                dom.innerHTML = "It is too late for you " + hero.name + " !";
             }
+            
+            return dom;
           }
     });
     
@@ -63,12 +71,15 @@ define(["map", "hero", "monsters", "utils/loggerZ", "gcli/index"], function(mMap
     mGcli.addCommand({
       name: 'where',
       description: 'Check what is around you',
-      returnType: 'string',
+      returnType: 'dom',
           exec: function(args, context) {
             var pos = hero.getPosition();
-            var out = pos.toString();
+            var dom = doc.createElement('p');
+            dom.className = "info";
             
-            return out;
+            dom.innerHTML = pos.toString();
+            
+            return dom;
           }
     });
     
@@ -83,9 +94,12 @@ define(["map", "hero", "monsters", "utils/loggerZ", "gcli/index"], function(mMap
           description: 'The id of the location to go'
         }
       ],
-      returnType: 'string',
+      returnType: 'dom',
           exec: function(args, context) {
             var curPos = hero.getPosition();
+            
+            var dom = doc.createElement('p');
+            dom.className = "info";
             
             //If the next position is part of the available path of the current position, go on
             var pos;
@@ -93,15 +107,14 @@ define(["map", "hero", "monsters", "utils/loggerZ", "gcli/index"], function(mMap
                 pos = map.getPosition(args.id);
             }
             
-            var out;
             if(typeof pos === "undefined"){
-                out = hero.name + " has lost his way ! Remember to use where in trouble...";
+                dom.innerHTML = hero.name + " has lost his way ! Remember to use where in trouble...";
             }
             else{
-                out= hero.move(pos);
+                dom.innerHTML = hero.move(pos);
             }
             
-            return out;
+            return dom;
           }
     });
     
@@ -116,18 +129,22 @@ define(["map", "hero", "monsters", "utils/loggerZ", "gcli/index"], function(mMap
           description: 'The id of the creature'
         }
       ],
-      returnType: 'string',
+      returnType: 'dom',
           exec: function(args, context) {
             var curPos = hero.getPosition();
-            var monster;
+            
+            var dom = doc.createElement('p');
+            dom.className = "info";
+            
             if(typeof curPos.monsters !== "undefined" && curPos.monsters.indexOf(args.id) !== -1){
-                monster = monsters.getMonster(args.id);
+                var monster = monsters.getMonster(args.id);
+                dom.innerHTML = monster.toString();
             }
             else{
-                return "Not found !";
+                dom.innerHTML = "Not found !";
             }
             
-            return monster.toString();
+            return dom;
           }
     });
     
@@ -135,9 +152,13 @@ define(["map", "hero", "monsters", "utils/loggerZ", "gcli/index"], function(mMap
     mGcli.addCommand({
       name: 'whoami',
       description: 'It is about time you get to know yourself !',
-      returnType: 'string',
+      returnType: 'dom',
           exec: function(args, context) {
-            return hero.toString();
+            var dom = doc.createElement('p');
+            dom.className = "info";
+            dom.innerHTML=hero.toString();
+            
+            return dom;
           }
     });
     
@@ -152,37 +173,50 @@ define(["map", "hero", "monsters", "utils/loggerZ", "gcli/index"], function(mMap
           description: 'The id of the monster to fight'
         }
       ],
-      returnType: 'string',
+      returnType: 'dom',
           exec: function(args, context) {
             var curPos = hero.getPosition();
+            
+            var dom = doc.createElement('p');
+            dom.className = "fight";
+            
             var monster;
             if(typeof curPos.monsters !== "undefined" && curPos.monsters.indexOf(args.id) !== -1){
                 monster = monsters.getMonster(args.id);
             }
             else{
-                return "Nothing to fight here !";
+                dom.innerHTML = "Nothing to fight here !";
+                return dom;
             }
 
-            var out = "";
+            var heroDom = doc.createElement('p');
             
             if(! hero.isDead()){
-                out += hero.attack(monster);
+                heroDom.innerHTML = hero.attack(monster);
             }
             else{
-                out += hero.name + " died...";
+                heroDom.innerHTML =  hero.name + " died...";
             }
+            
+            var monsterDom = doc.createElement('p');
                 
             if(! monster.isDead()){
-                out += " *|* " + monster.attack(hero);
+                monsterDom.innerHTML = monster.attack(hero);
             }
             else{
-                out += monster.name + " is dead.";
+                monsterDom.innerHTML = monster.name + " is dead.";
+                monsterDom.className = "victory";
                 curPos.monsters = undefined; //Instead of making a whole array undef, should be only the dead monster
             }
             
-            return out;
+            dom.appendChild(heroDom);
+            dom.appendChild(monsterDom);
+            
+            return dom;
           }
     });
+    
+    /** GCLI COMMANDS */
 
     mGcli.createDisplay();  
 });
