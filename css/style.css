@@ -47,8 +47,14 @@ body {
     color: green;
 }
 
+/** Error **/
 .error{
     color: red;
+}
+
+/** Action command : take **/
+.action{
+    color: purple;
 }
 
 /** END : GCLI COMMAND PART **/

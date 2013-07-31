@@ -1,6 +1,9 @@
 NOW
 ===
-- Implements items (data + controler + command = info, use, throw) interfaces ? Usable, Throwable...
+- Fix issue of the monsters and items set to undefined instead of removed from the array
+- Find a way to implement the use() content of the function
+- Add content in the map.json for the rooms upstairs and the wolves
+- Add content in the map.json for the key, the manor and the wolf leader
 - Make the 'to' clickable with the name (check position.js for current impl)
 
 EXTRA

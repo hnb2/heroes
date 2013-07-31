@@ -1,5 +1,5 @@
 // Bootstrap/Entry point of the application
-define(["controllers/map", "models/hero", "controllers/monsters", "utils/loggerZ", "gcli/index"], function(mMap, mHero, mMonsters, mLoggerZ, mGcli){
+define(["controllers/map", "models/hero", "controllers/monsters", "controllers/items", "utils/loggerZ", "gcli/index"], function(mMap, mHero, mMonsters, mItems, mLoggerZ, mGcli){
     
     //Initialize the logger
     var log = new mLoggerZ.LoggerZ(true);
@@ -35,6 +35,15 @@ define(["controllers/map", "models/hero", "controllers/monsters", "utils/loggerZ
         log.error("Something went wrong : " + error.responseText);
     });
     
+    //Initialize the items
+    var items = new mItems.Items();
+    items.loadItems().then(function(success){
+        log.info("Items loaded");
+    },
+    function(error){
+        log.error("Something went wrong : " + error.responseText);
+    });
+    
     /*************************** GCLI COMMANDS ***************************/
     
     //NAME
@@ -51,7 +60,6 @@ define(["controllers/map", "models/hero", "controllers/monsters", "utils/loggerZ
       returnType: 'dom',
           exec: function(args, context) {
              var dom = doc.createElement('p');
-             dom.className = "name";
              
              if(typeof args.name === "undefined"){
                 dom.innerHTML = "Please enter a valid name.";
@@ -63,9 +71,11 @@ define(["controllers/map", "models/hero", "controllers/monsters", "utils/loggerZ
                 hero.name = args.name;
                 setName = true;
                 
+                dom.className = "name";
                 dom.innerHTML = "Thou shall now be known as " + hero.name;
             }
             else{
+                dom.className = "error";
                 dom.innerHTML = "It is too late for you " + hero.name + " !";
             }
             
@@ -105,7 +115,6 @@ define(["controllers/map", "models/hero", "controllers/monsters", "utils/loggerZ
             var curPos = hero.getPosition();
             
             var dom = doc.createElement('p');
-            dom.className = "info";
             
             //If the next position is part of the available path of the current position, go on
             var pos;
@@ -114,9 +123,11 @@ define(["controllers/map", "models/hero", "controllers/monsters", "utils/loggerZ
             }
             
             if(typeof pos === "undefined"){
+                dom.className = "error";
                 dom.innerHTML = hero.name + " has lost his way ! Remember to use where in trouble...";
             }
             else{
+                dom.className = "info";
                 dom.innerHTML = hero.move(pos);
             }
             
@@ -140,13 +151,14 @@ define(["controllers/map", "models/hero", "controllers/monsters", "utils/loggerZ
             var curPos = hero.getPosition();
             
             var dom = doc.createElement('p');
-            dom.className = "info";
             
             if(typeof curPos.monsters !== "undefined" && curPos.monsters.indexOf(args.id) !== -1){
                 var monster = monsters.getMonster(args.id);
+                dom.className = "info";
                 dom.innerHTML = monster.toString();
             }
             else{
+                dom.className = "error";
                 dom.innerHTML = "Not found !";
             }
             
@@ -184,17 +196,19 @@ define(["controllers/map", "models/hero", "controllers/monsters", "utils/loggerZ
             var curPos = hero.getPosition();
             
             var dom = doc.createElement('p');
-            dom.className = "fight";
             
             var monster;
             if(typeof curPos.monsters !== "undefined" && curPos.monsters.indexOf(args.id) !== -1){
                 monster = monsters.getMonster(args.id);
             }
             else{
+                dom.className = "error";
                 dom.innerHTML = "Nothing to fight here !";
                 return dom;
             }
 
+            dom.className = "fight";
+            
             var heroDom = doc.createElement('p');
             
             if(! hero.isDead()){
@@ -212,11 +226,107 @@ define(["controllers/map", "models/hero", "controllers/monsters", "utils/loggerZ
             else{
                 monsterDom.innerHTML = monster.name + " is dead.";
                 monsterDom.className = "victory";
-                curPos.monsters = undefined; //Instead of making a whole array undef, should be only the dead monster
+                curPos.monsters = undefined; // WRONG SHOULD ONLY REMOVE AN ID
             }
             
             dom.appendChild(heroDom);
             dom.appendChild(monsterDom);
+            
+            return dom;
+          }
+    });
+    
+    //WHAT
+    mGcli.addCommand({
+      name: 'what',
+      description: 'Get information about an item',
+      params: [
+      {
+          name: 'id',
+          type: 'number',
+          description: 'The id of the item'
+        }
+      ],
+      returnType: 'dom',
+          exec: function(args, context) {
+            var curPos = hero.getPosition();
+            
+            var dom = doc.createElement('p');
+            
+            if(typeof curPos.items !== "undefined" && curPos.items.indexOf(args.id) !== -1){
+                var item = items.getItem(args.id);
+                dom.className = "info";
+                dom.innerHTML = item.toString();
+            }
+            else{
+                dom.className = "error";
+                dom.innerHTML = "Not found !";
+            }
+            
+            return dom;
+          }
+    });
+    
+    //TAKE
+    mGcli.addCommand({
+      name: 'take',
+      description: 'Take an item',
+      params: [
+      {
+          name: 'id',
+          type: 'number',
+          description: 'The id of the item'
+        }
+      ],
+      returnType: 'dom',
+          exec: function(args, context) {
+            var curPos = hero.getPosition();
+            
+            var dom = doc.createElement('p');
+            
+            if(typeof curPos.items !== "undefined" && curPos.items.indexOf(args.id) !== -1){
+                var item = items.getItem(args.id);
+                
+                dom.className = "action";
+            
+                //The hero take the item
+                dom.innerHTML = hero.take(item);
+                
+                //We remove it from the position
+                curPos.items = undefined; // WRONG SHOULD ONLY REMOVE AN ID
+            }
+            else{
+                dom.className = "error";
+                dom.innerHTML = "Not found !";
+            }
+            
+            return dom;
+          }
+    });
+    
+    //INVENTORY
+    mGcli.addCommand({
+      name: 'inventory',
+      description: 'Check your bag',
+      returnType: 'dom',
+          exec: function(args, context) {
+            var bag = hero.getInventory();
+            
+            var dom = doc.createElement('p');
+
+            if(bag.length > 0){
+                dom.className = "info";
+                
+                bag.forEach(function(item){
+                    var itemDom = doc.createElement('p');
+                    itemDom.innerHTML = item.toString();
+                    dom.appendChild(itemDom);
+                });
+            }
+            else{
+                dom.className = "error";
+                dom.innerHTML = "Empty bag...";
+            }
             
             return dom;
           }

@@ -8,6 +8,6 @@
         {"id": 6, "to":[4], "name":"A manor", "desc":"It is a manor, the owner must have been very rich. The door is locked."},
         {"id": 7, "to":[4], "name":"A church", "desc":"A church, might not be the best idea to get there now..."},
         {"id": 8, "to":[4, 9], "name":"A tavern", "desc":"A tavern, seems like the sound comes from there."},
-        {"id": 9, "to":[8], "name":"Inside the tavern", "desc":"It is really dark in here, if only you could grab something to make it lighter..."}
+        {"id": 9, "to":[8], "name":"Inside the tavern", "desc":"It is really dark in here, if only you could grab something to make it lighter...", "items":[1]}
     ]
 }

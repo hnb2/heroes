@@ -1,0 +1,22 @@
+{
+    "items": [
+        {
+            "type": "ActionItem",
+            "item": {
+                "id": 1,
+                "name": "Lantern",
+                "desc": "an old petrol lantern, not sure it will catch fire...",
+                "value": 1
+            }
+        },
+        {
+            "type": "ActionItem",
+            "item": {
+                "id": 2,
+                "name": "Key to the manor",
+                "desc": "A large iron key with the label 'Front door'",
+                "value": 0
+            }
+        }
+    ]
+}
