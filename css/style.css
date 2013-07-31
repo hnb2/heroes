@@ -47,4 +47,8 @@ body {
     color: green;
 }
 
+.error{
+    color: red;
+}
+
 /** END : GCLI COMMAND PART **/

@@ -1,4 +1,4 @@
-define(["ext/xhr", "position"], function(mXhr, mPosition){
+define(["ext/xhr", "models/position"], function(mXhr, mPosition){
     function Map(){
         this.map = new Array();
     }

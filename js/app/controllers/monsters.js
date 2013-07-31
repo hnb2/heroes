@@ -1,4 +1,4 @@
-define(["ext/xhr", "monster"], function(mXhr, mMonster){
+define(["ext/xhr", "models/monster"], function(mXhr, mMonster){
     function Monsters(){
         this.monsters = new Array();
     }

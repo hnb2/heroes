@@ -1,4 +1,4 @@
-define(["creature"], function(mCreature){
+define(["models/creature"], function(mCreature){
 
     function Hero(name, opts){
         this.name = "[HERO] " + name;

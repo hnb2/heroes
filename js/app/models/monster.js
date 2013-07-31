@@ -1,7 +1,7 @@
-define(["creature"], function(mCreature){
+define(["models/creature"], function(mCreature){
 
     function Monster(name, opts){
-        this.name = "[MONSTER] " + name;
+        this.name = name;
         
         //Initialize the fields
         this.initialize(opts);

@@ -1,4 +1,4 @@
-define(["fightUtils"], function(mFightUtils){
+define(["utils/fightUtils"], function(mFightUtils){
 
     //Base for monsters and heroes
     function Creature(name){

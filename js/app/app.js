@@ -1,5 +1,5 @@
 // Bootstrap/Entry point of the application
-define(["map", "hero", "monsters", "utils/loggerZ", "gcli/index"], function(mMap, mHero, mMonsters, mLoggerZ, mGcli){
+define(["controllers/map", "models/hero", "controllers/monsters", "utils/loggerZ", "gcli/index"], function(mMap, mHero, mMonsters, mLoggerZ, mGcli){
     
     //Initialize the logger
     var log = new mLoggerZ.LoggerZ(true);
@@ -9,7 +9,7 @@ define(["map", "hero", "monsters", "utils/loggerZ", "gcli/index"], function(mMap
     //Global var to check if the hero set its name or not
     var setName = false;
     
-    //TEST GLOBAL VAR DOCUMENT
+    //Global var to hold the document
     var doc = document;
     
     //Initialize the Hero
@@ -35,7 +35,7 @@ define(["map", "hero", "monsters", "utils/loggerZ", "gcli/index"], function(mMap
         log.error("Something went wrong : " + error.responseText);
     });
     
-    /** GCLI COMMANDS */
+    /*************************** GCLI COMMANDS ***************************/
     
     //NAME
     mGcli.addCommand({
@@ -52,6 +52,12 @@ define(["map", "hero", "monsters", "utils/loggerZ", "gcli/index"], function(mMap
           exec: function(args, context) {
              var dom = doc.createElement('p');
              dom.className = "name";
+             
+             if(typeof args.name === "undefined"){
+                dom.innerHTML = "Please enter a valid name.";
+                dom.className = "error";
+                return dom;
+             }
             
             if(!setName){
                 hero.name = args.name;
@@ -216,7 +222,7 @@ define(["map", "hero", "monsters", "utils/loggerZ", "gcli/index"], function(mMap
           }
     });
     
-    /** GCLI COMMANDS */
+    /*************************** GCLI COMMANDS ***************************/
 
     mGcli.createDisplay();  
 });
