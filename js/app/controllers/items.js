@@ -1,4 +1,4 @@
-define(["ext/xhr", "models/actionItem"], function(mXhr, mActionItem){
+define(["ext/xhr", "models/actionItem", "models/action"], function(mXhr, mActionItem, mAction){
 
     function Items(){
         this.items = new Array();
@@ -18,7 +18,9 @@ define(["ext/xhr", "models/actionItem"], function(mXhr, mActionItem){
                 //Add it to the array
                 switch(item.type){
                     case "ActionItem":
-                        self.items.push( new mActionItem.ActionItem( item.item.id, item.item.name, item.item.desc, item.item.value ) );
+                        var action = new mAction.Action(item.action.actionName, {effects: item.action.effects, output: item.action.output});
+                        var itemz = new mActionItem.ActionItem( item.item.id, item.item.name, item.item.desc, item.item.value, action);
+                        self.items.push(itemz);
                         break;
                 }
             });

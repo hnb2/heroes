@@ -1,7 +1,8 @@
 NOW
 ===
-- Find a way to implement the use() content of the function (meta/description language like saved queries in redmine)
-- Add content in the map.json for the rooms upstairs and the wolves
+- Implement "locked" in position
+- Prevent player to take an item if there is a monster
+- Implement key behaviour (target a doorwith a position id)
 - Add content in the map.json for the key, the manor and the wolf leader
 - Make the 'to' clickable with the name (check position.js for current impl)
 - Implement the gold coins

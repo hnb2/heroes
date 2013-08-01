@@ -4,7 +4,7 @@ define(["models/creature"], function(mCreature){
         this.name = name;
         
         //Initialize the fields
-        this.initialize(opts);
+        this.set(opts);
         
         //A bag which contains items
         this.inventory = new Array();
@@ -19,6 +19,17 @@ define(["models/creature"], function(mCreature){
     //Return the inventory
     Hero.prototype.getInventory = function getInventory(){
         return this.inventory;
+    };
+    
+    //Return the item corresponding to the ID (not an index !)
+    Hero.prototype.getItem = function getItem(id){
+        for(var i = 0; i < this.inventory.length; i++){
+            if(this.inventory[i].id === id){
+                return this.inventory[i];
+            }
+        }
+        
+        return undefined;  
     };
     
     //Add an item to the inventory

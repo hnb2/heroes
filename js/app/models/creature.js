@@ -13,17 +13,20 @@ define(["utils/fightUtils"], function(mFightUtils){
         this.position = 0;
     }
     
-    //Merge the options, to be used only once to initialize the class
-    Creature.prototype.initialize = function initialize(opts){
+    //Merge the options
+    Creature.prototype.set = function set(opts){
         if(typeof opts === "undefined")
             return;
             
         this.id = opts.id || this.id;
         this.hp = opts.hp || this.hp;
-        this.maxHp = this.hp;
+        //this.maxHp = this.hp;
         this.atk = opts.atk || this.atk;
         this.atkChance = opts.atkChance || this.atkChance;
         this.dodgeChance = opts.dodgeChance || this.dodgeChance;
+        
+        if(opts.position)
+            this.position.set(opts.position);
     };
     
     Creature.prototype.attack = function attack(creature){
@@ -82,13 +85,17 @@ define(["utils/fightUtils"], function(mFightUtils){
     
     Creature.prototype.move = function move(pos){
         var out;
-        if(typeof this.position.monsters === "undefined" || this.position.monsters.length === 0){
+        
+        if(! this.position.light){
+            out = "You cannot find your way in the dark !";
+        }
+        else if(typeof this.position.monsters !== "undefined" && this.position.monsters.length > 0){
+            out = "Monster(s) are blocking the way !";
+        }
+        else{
             out = this.name + " has moved from " + this.position.name + " to " + pos.name + ".";
             out += "\t " + pos.toString();
             this.position = pos;
-        }
-        else{
-            out = "Monster(s) are blocking the way !";
         }
         
         return out;
@@ -96,6 +103,10 @@ define(["utils/fightUtils"], function(mFightUtils){
     
     Creature.prototype.getPosition = function getPosition(){
         return this.position;
+    };
+    
+    Creature.prototype.use = function use(target, item){
+        return item.use(this, target);
     };
     
     Creature.prototype.toString = function toString(){

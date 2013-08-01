@@ -5,16 +5,22 @@ define([], function(){
         this.name = name;
         this.description = desc;
         
+        this.set(opts);
+    }
+    
+    Position.prototype.set = function set(opts){
         if(typeof opts === "undefined")
             opts = {};
             
-        this.monsters = opts.monsters;
-        this.items = opts.items;
-        this.light = opts.light || 1;
-    }
+        this.monsters = opts.monsters || this.monsters;
+        this.items = opts.items || this.items;
+        this.light = (typeof opts.light === "undefined")?true:opts.light;
+    };
     
     Position.prototype.toString = function toString(){
-        var out = this.name + ": " + this.description;
+        var out = (! this.light)?"[DARK] ":"";
+        
+        out += this.name + ": " + this.description;
         out += "\t You can go to : [" + this.to + "]";
         
         if(this.monsters && this.monsters.length > 0){

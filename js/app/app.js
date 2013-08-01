@@ -342,6 +342,35 @@ define(["controllers/map", "models/hero", "controllers/monsters", "controllers/i
           }
     });
     
+    //USE
+    mGcli.addCommand({
+      name: 'use',
+      description: 'Use an item',
+      params: [
+      {
+          name: 'id',
+          type: 'number',
+          description: 'The id of the item'
+        }
+      ],
+      returnType: 'dom',
+          exec: function(args, context) {
+            var dom = doc.createElement('p');
+            
+            var item = hero.getItem(args.id);
+            if(typeof item !== "undefined"){
+                dom.className = "action";
+                dom.innerHTML = hero.use(hero, item);
+            }
+            else{
+                dom.className = "error";
+                dom.innerHTML = "Not found in your inventory !";
+            }
+            
+            return dom;
+          }
+    });
+    
     /*************************** GCLI COMMANDS ***************************/
 
     mGcli.createDisplay();  
