@@ -1,10 +1,10 @@
 NOW
 ===
-- Fix issue of the monsters and items set to undefined instead of removed from the array
-- Find a way to implement the use() content of the function
+- Find a way to implement the use() content of the function (meta/description language like saved queries in redmine)
 - Add content in the map.json for the rooms upstairs and the wolves
 - Add content in the map.json for the key, the manor and the wolf leader
 - Make the 'to' clickable with the name (check position.js for current impl)
+- Implement the gold coins
 
 EXTRA
 =====

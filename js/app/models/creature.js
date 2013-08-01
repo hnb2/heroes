@@ -82,7 +82,7 @@ define(["utils/fightUtils"], function(mFightUtils){
     
     Creature.prototype.move = function move(pos){
         var out;
-        if(typeof this.position.monsters === "undefined"){
+        if(typeof this.position.monsters === "undefined" || this.position.monsters.length === 0){
             out = this.name + " has moved from " + this.position.name + " to " + pos.name + ".";
             out += "\t " + pos.toString();
             this.position = pos;

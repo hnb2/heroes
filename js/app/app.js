@@ -44,6 +44,14 @@ define(["controllers/map", "models/hero", "controllers/monsters", "controllers/i
         log.error("Something went wrong : " + error.responseText);
     });
     
+    // Array Remove - By John Resig (MIT Licensed)
+    //TODO : Should be put in a util file
+    Array.prototype.remove = function(from, to) {
+      var rest = this.slice((to || from) + 1 || this.length);
+      this.length = from < 0 ? this.length + from : from;
+      return this.push.apply(this, rest);
+    };
+    
     /*************************** GCLI COMMANDS ***************************/
     
     //NAME
@@ -198,7 +206,8 @@ define(["controllers/map", "models/hero", "controllers/monsters", "controllers/i
             var dom = doc.createElement('p');
             
             var monster;
-            if(typeof curPos.monsters !== "undefined" && curPos.monsters.indexOf(args.id) !== -1){
+            var mIndex = curPos.monsters.indexOf(args.id); //Position of the monster in the array
+            if(typeof curPos.monsters !== "undefined" && mIndex !== -1){
                 monster = monsters.getMonster(args.id);
             }
             else{
@@ -226,7 +235,7 @@ define(["controllers/map", "models/hero", "controllers/monsters", "controllers/i
             else{
                 monsterDom.innerHTML = monster.name + " is dead.";
                 monsterDom.className = "victory";
-                curPos.monsters = undefined; // WRONG SHOULD ONLY REMOVE AN ID
+                curPos.monsters.remove(mIndex);
             }
             
             dom.appendChild(heroDom);
@@ -284,7 +293,8 @@ define(["controllers/map", "models/hero", "controllers/monsters", "controllers/i
             
             var dom = doc.createElement('p');
             
-            if(typeof curPos.items !== "undefined" && curPos.items.indexOf(args.id) !== -1){
+            var iIndex = curPos.items.indexOf(args.id); //Position of the item in the array
+            if(typeof curPos.items !== "undefined" && iIndex !== -1){
                 var item = items.getItem(args.id);
                 
                 dom.className = "action";
@@ -293,7 +303,7 @@ define(["controllers/map", "models/hero", "controllers/monsters", "controllers/i
                 dom.innerHTML = hero.take(item);
                 
                 //We remove it from the position
-                curPos.items = undefined; // WRONG SHOULD ONLY REMOVE AN ID
+                curPos.items.remove(iIndex);
             }
             else{
                 dom.className = "error";
