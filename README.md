@@ -1,5 +1,6 @@
 NOW
 ===
+- Decide on a fixed amount of number for every attributes instead of sometimes % (dodge)
 - Implement "locked" in position
 - Prevent player to take an item if there is a monster
 - Implement key behaviour (target a doorwith a position id)

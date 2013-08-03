@@ -2,7 +2,7 @@ define([], function(){
 
     function BaseAttribute(name, val){
         this.name = name;
-        this.val = new Number(val);
+        this.val = val;
     }
     
     BaseAttribute.prototype.getVal = function getVal(){
@@ -11,6 +11,14 @@ define([], function(){
     
     BaseAttribute.prototype.getName = function getName(){
         return this.name;
+    };
+    
+    BaseAttribute.prototype.toString = function toString(){
+        return this.name + " : " + this.val;
+    };
+    
+    BaseAttribute.prototype.toJson = function toJson(){
+        return JSON.stringify(this);
     };
     
     return {BaseAttribute : BaseAttribute};

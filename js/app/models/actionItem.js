@@ -34,6 +34,10 @@ define(["models/item"], function(mItem){
         return target.name + " used " + this.name;
     };
     
+    ActionItem.prototype.toJson = function toJson(){
+        return JSON.stringify(this);
+    };
+    
     return {ActionItem : ActionItem};
 
 });
