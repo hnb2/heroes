@@ -23,7 +23,7 @@ define(["ext/xhr", "models/actionItem", "models/bonus"], function(mXhr, mActionI
                     });
                 }
                 
-                self.items.push(new mActionItem.ActionItem( item.id, item.name, item.desc, item.value, bonuses));
+                self.items.push(new mActionItem.ActionItem( item.id, item.name, item.description, item.value, bonuses));
             });
             
             return success.response;

@@ -46,7 +46,6 @@ define([], function(){
     };
     
     Attributes.prototype.toString = function toString(){
-        console.log(this.attributes.length + " attributes");
         var out = "";
         this.attributes.forEach(function(item){
             out += item.toString();

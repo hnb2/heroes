@@ -9,7 +9,7 @@ define([], function(){
     }
     
     Item.prototype.toString = function toString(){
-        return "[" + this.id + "] " + this.name + " : " + this.description + ", worth " + this.value + " gold coins.";
+        return "[" + this.id + "] " + this.name + " : " + this.description + " Worth " + this.value + " gold coins.";
     };
     
     return {Item : Item};
