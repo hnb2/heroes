@@ -14,7 +14,9 @@ define(["ext/chance"], function(Chance){
         return c.bool({likelihood: ch});
     }
     
-    return {rand : rand,
-            chance : chance};
+    return {
+        rand : rand,
+        chance : chance
+    };
 
 });

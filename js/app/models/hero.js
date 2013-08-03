@@ -4,7 +4,7 @@ define(["models/creature"], function(mCreature){
         this.name = name;
         
         //Initialize the fields
-        this.set(opts);
+        this.setOpts(opts);
         
         //A bag which contains items
         this.inventory = new Array();

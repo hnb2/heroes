@@ -1,74 +1,71 @@
-define(["utils/fightUtils"], function(mFightUtils){
+define(["utils/fightUtils", "models/attributes", "models/attributeType"], function(mFightUtils, mAttributes, mAttributeType){
 
     //Base for monsters and heroes
-    function Creature(name){
+    function Creature(id, name, pos, opts){
+        this.id = id;
         this.name = name;
-        
-        this.id = 0;
-        this.hp = 100;
-        this.maxHp = this.hp;
-        this.atk = 15;
-        this.atkChance = {min: 50, max:100};
-        this.dodgeChance = 3;
-        this.position = 0;
+        this.position = pos;
+        this.setOpts(opts);
     }
     
-    //Merge the options
-    Creature.prototype.set = function set(opts){
+    //USED ONLY ONCE FOR INITIALIZATION
+    Creature.prototype.setOpts = function setOpts(opts){
         if(typeof opts === "undefined")
-            return;
+            opts = {};
             
-        this.id = opts.id || this.id;
-        this.hp = opts.hp || this.hp;
-        //this.maxHp = this.hp;
-        this.atk = opts.atk || this.atk;
-        this.atkChance = opts.atkChance || this.atkChance;
-        this.dodgeChance = opts.dodgeChance || this.dodgeChance;
-        
-        if(opts.position)
-            this.position.set(opts.position);
+        this.attributes = new mAttributes.Attributes(opts.attributes);
+    };
+    
+    //Helper method to retrieve attributes
+    Creature.prototype.getAttr = function getAttr(name){
+        return this.attributes.get(name);
     };
     
     Creature.prototype.attack = function attack(creature){
-        //Get a random value between min and max
-        var rand = mFightUtils.rand(this.atkChance.min, this.atkChance.max);
+
+        var dmg = this.getAttr( mAttributeType.DMG );
+  
+      //Get a random value between min and max of dmg
+        var rand = mFightUtils.rand(dmg.min, dmg.max);
         
         var criticalHit = false;
         
-        if(rand === this.atkChance.max)
+        if(rand === dmg.max)
             criticalHit = true;
-
-        //Will create a damage = original atk * rand%
-        var dmg = Math.floor( this.atk * (rand / 100) );
+        
+        //Final damage amount
+        var finalDmg = rand;
         
         //Inflict the damages
-        creature.takeDamage(dmg);
+        if( ! this.isDead() )
+            creature.takeDamage( finalDmg );
         
-        var out = "\t " + this.name + "[" + this.hp + " hp] inflicted " + dmg + " dmg points";
+        var out = "\t " + this.name + "[" + this.getAttr( mAttributeType.HP ) + "] inflicted " + finalDmg + " dmg points";
+        
         if(criticalHit)
             out += " (CRITICAL HIT)";
-        out +=  " to " + creature.name + "[" + creature.hp + " hp left]";
+            
+        out +=  " to " + creature.name + "[" + creature.getAttr( mAttributeType.HP ) + " left]";
         
         return out;
     };
     
     Creature.prototype.takeDamage = function takeDamage(dmg){
         //Test for dodging the attack
-        var chance = mFightUtils.chance(this.dodgeChance);
+        var dodge = this.getAttr( mAttributeType.DODGE );
         
-        if(chance){
-            return this.name + " dodged the attack !!";
+        if(typeof dodge !== "undefined"){
+            var chance = mFightUtils.chance(dodge.max);
+        
+            if(chance){
+                return this.name + " dodged the attack !!";
+            }
         }
-        else{
-            //Take the damage
-            if(this.hp - dmg <= 0)
-                this.hp = 0;
-            else
-                this.hp = this.hp - dmg;
-        }
+        
+        this.getAttr( mAttributeType.HP ).decrease(dmg);
     };
     
-    Creature.prototype.heal = function heal(hp){
+    /*Creature.prototype.heal = function heal(hp){
         if(!this.dead){
             if(this.hp + hp < this.maxHp)
                 this.hp += hp;
@@ -77,16 +74,24 @@ define(["utils/fightUtils"], function(mFightUtils){
                 
             return this.name + " has recovered " + hp + " health points.";
         }
-    };
+    };*/
     
     Creature.prototype.isDead = function isDead(){
-        return (this.hp === 0);
+        return (this.getAttr( mAttributeType.HP ).getVal() === 0);
+    };
+    
+    Creature.prototype.update = function update(bonus){
+        var attr = this.getAttr(bonus.getName());
+        if(typeof attr !== "undefined"){
+            attr.addBonus(bonus);
+        }
     };
     
     Creature.prototype.move = function move(pos){
         var out;
         
-        if(! this.position.light){
+        var light = this.position.getAttr( mAttributeType.LIGHT );
+        if(typeof light !== "undefined" && light.getVal() === 0){
             out = "You cannot find your way in the dark !";
         }
         else if(typeof this.position.monsters !== "undefined" && this.position.monsters.length > 0){
@@ -97,6 +102,7 @@ define(["utils/fightUtils"], function(mFightUtils){
             out += "\t " + pos.toString();
             this.position = pos;
         }
+
         
         return out;
     };
@@ -106,11 +112,15 @@ define(["utils/fightUtils"], function(mFightUtils){
     };
     
     Creature.prototype.use = function use(target, item){
-        return item.use(this, target);
+        return item.use(target);
     };
     
     Creature.prototype.toString = function toString(){
-        return this.name + " - " + this.hp + "/" + this.maxHp + " hp - " + this.atk + " dmg max - " + this.dodgeChance + " % chance to dodge."; 
+        return this.name + " >> " + this.attributes.toString();
+    };
+    
+    Creature.prototype.toJson = function toJson(){
+        return JSON.stringify(this);
     };
 
     return {Creature : Creature};

@@ -1,4 +1,4 @@
-define(["ext/xhr", "models/monster"], function(mXhr, mMonster){
+define(["ext/xhr", "models/monster", "models/attribute", "models/bonus"], function(mXhr, mMonster, mAttribute, mBonus){
     function Monsters(){
         this.monsters = new Array();
     }
@@ -15,8 +15,25 @@ define(["ext/xhr", "models/monster"], function(mXhr, mMonster){
             
             //For each monsters
             obj.monsters.forEach(function(item){
+            
+                var attributes = new Array();
+                if(item.attributes){
+                
+                    item.attributes.forEach(function(attr){
+                    
+                        var bonuses = new Array();
+                        if(attr.bonuses){
+                            attr.bonuses.forEach(function(bonus){
+                                bonuses.push( new mBonus.Bonus(bonus.name, bonus.val) );
+                            });
+                        }
+                        
+                        attributes.push( new mAttribute.Attribute(attr.name, attr.val, {min: attr.min, max: attr.max, bonuses: bonuses}) );
+                    });
+                }
+            
                 //Add it to the array
-                self.monsters.push( new mMonster.Monster( item.name, {hp: item.hp, atk: item.atk, id: item.id} ) );
+                self.monsters.push( new mMonster.Monster( item.id, item.name, {attributes: attributes} ) );
             });
             
             return success.response;

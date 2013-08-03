@@ -1,5 +1,5 @@
 // Bootstrap/Entry point of the application
-define(["controllers/map", "models/hero", "controllers/monsters", "controllers/items", "utils/loggerZ", "gcli/index"], function(mMap, mHero, mMonsters, mItems, mLoggerZ, mGcli){
+define(["controllers/map", "models/hero", "controllers/monsters", "controllers/items", "utils/loggerZ", "models/attribute", "models/attributeType", "gcli/index"], function(mMap, mHero, mMonsters, mItems, mLoggerZ, mAttribute, mAttributeType, mGcli){
     
     //Initialize the logger
     var log = new mLoggerZ.LoggerZ(true);
@@ -13,7 +13,14 @@ define(["controllers/map", "models/hero", "controllers/monsters", "controllers/i
     var doc = document;
     
     //Initialize the Hero
-    var hero = new mHero.Hero("The one without a name", {});
+    var hero = new mHero.Hero("The one without a name", {
+            attributes:[
+                new mAttribute.Attribute(mAttributeType.HP, 120, {max: 120}),
+                new mAttribute.Attribute(mAttributeType.DMG, 15, {min:10, max:15}),
+                new mAttribute.Attribute(mAttributeType.DODGE, 5, {min:2, max:5})
+            ]
+        }
+    );
 
     //Initialize the map and the hero location
     var map = new mMap.Map();
@@ -360,7 +367,7 @@ define(["controllers/map", "models/hero", "controllers/monsters", "controllers/i
             var item = hero.getItem(args.id);
             if(typeof item !== "undefined"){
                 dom.className = "action";
-                dom.innerHTML = hero.use(hero, item);
+                dom.innerHTML = hero.use(hero.getPosition(), item);
             }
             else{
                 dom.className = "error";

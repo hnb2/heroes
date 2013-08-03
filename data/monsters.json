@@ -3,20 +3,27 @@
         {
             "id": 1,
             "name": "Injured wolf",
-            "hp": 25,
-            "atk": 5
+            "attributes":[
+                {"name":"hp","val":25,"min":0,"max":35},
+                {"name":"dmg","val":5,"min":3,"max":5}
+            ]
         },
         {
             "id": 2,
             "name": "Wolf",
-            "hp": 35,
-            "atk": 7
+            "attributes":[
+                {"name":"hp","val":35,"min":0,"max":35},
+                {"name":"dmg","val":7,"min":5,"max":7}
+            ]
         },
         {
             "id": 3,
             "name": "Great wolf, leader of the pack",
-            "hp": 50,
-            "atk": 10
+            "attributes":[
+                {"name":"hp","val":50,"min":0,"max":50},
+                {"name":"dmg","val":10,"min":8,"max":10},
+                {"name":"dodge","val":10,"min":7,"max":10}
+            ]
         }
     ]
 }

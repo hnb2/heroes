@@ -1,40 +1,6 @@
 {
     "items": [
-        {
-            "type": "ActionItem",
-            "item": {
-                "id": 1,
-                "name": "Lantern",
-                "desc": "an old petrol lantern, not sure it will catch fire...",
-                "value": 1
-            },
-            "action":{
-                "actionName": "uses ", 
-                "effects": { 
-                    "position":{
-                        "light":true
-                    } 
-                },
-                "output": "Its not that dark anymore..."
-            }
-        },
-        {
-            "type": "ActionItem",
-            "item": {
-                "id": 2,
-                "name": "Key to the manor",
-                "desc": "A large iron key with the label 'Front door'",
-                "value": 0
-            },
-            "action":{
-                "actionName": "uses ", 
-                "effects": { 
-                    "position":{
-                        "locked":false
-                    }
-                },
-                "output": "The door is now open, let's hope that no one is home..."
-            }
-        }
+        {"id":1,"name":"Lantern","description":"an old petrol lantern, not sure it will catch fire...","value":1,"bonuses":[{"name":"light","val":1}]},
+        {"id":2,"name":"Manor key","description":"It has a small label : 'front door'.","value":0,"bonuses":[{"name":"locked","val":0}]}
     ]
 }
