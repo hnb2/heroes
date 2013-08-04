@@ -114,7 +114,7 @@ define(["utils/fightUtils", "models/attributes", "models/attributeType"], functi
     };
     
     Creature.prototype.use = function use(target, item){
-        return item.use(target);
+        return item.use(this, target);
     };
     
     Creature.prototype.toString = function toString(){

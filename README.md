@@ -1,9 +1,6 @@
 NOW
 ===
-- Update the use function take the id of the item and the target if any (eg. throw small rocks at monster).
-- Update intro message
 - Implement "locked" in position
-- Prevent player to take an item if there is a monster
 - Implement key behaviour (target a doorwith a position id)
 - Add content in the map.json for the key, the manor and the wolf leader
 - Make the 'to' clickable with the name (check position.js for current impl)

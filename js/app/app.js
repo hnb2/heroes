@@ -304,13 +304,20 @@ define(["controllers/map", "models/hero", "controllers/monsters", "controllers/i
             if(typeof curPos.items !== "undefined" && iIndex !== -1){
                 var item = items.getItem(args.id);
                 
-                dom.className = "action";
-            
-                //The hero take the item
-                dom.innerHTML = hero.take(item);
+                //Check for monsters
+                if(typeof curPos.monsters !== "undefined" && curPos.monsters.length > 0){
+                    dom.className = "error";
+                    dom.innerHTML = "You cannot take the item, monster(s) are around...";
+                }
+                else{   
+                    dom.className = "action";
                 
-                //We remove it from the position
-                curPos.items.remove(iIndex);
+                    //The hero take the item
+                    dom.innerHTML = hero.take(item);
+                    
+                    //We remove it from the position
+                    curPos.items.remove(iIndex);
+                }
             }
             else{
                 dom.className = "error";
@@ -354,10 +361,15 @@ define(["controllers/map", "models/hero", "controllers/monsters", "controllers/i
       name: 'use',
       description: 'Use an item',
       params: [
-      {
+        {
           name: 'id',
           type: 'number',
           description: 'The id of the item'
+        },
+        {
+          name: 'target',
+          type: 'string',
+          description: 'Which target (env, me, monster)'
         }
       ],
       returnType: 'dom',
@@ -366,8 +378,21 @@ define(["controllers/map", "models/hero", "controllers/monsters", "controllers/i
             
             var item = hero.getItem(args.id);
             if(typeof item !== "undefined"){
+                
+                var target;
+                switch(args.target){
+                    case "env":
+                        target = hero.getPosition();
+                        break;
+                    case "me":
+                        target = hero;
+                        break;
+                    default:
+                        target = hero;
+                }
+                
                 dom.className = "action";
-                dom.innerHTML = hero.use(hero.getPosition(), item);
+                dom.innerHTML = hero.use(target, item);
             }
             else{
                 dom.className = "error";

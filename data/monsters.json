@@ -1,6 +1,6 @@
 {
     "monsters": [
-        {"id":"1","name":"Wounded wolf","attributes":{"attributes":[{"name":"dmg","val":"15","originalVal":"15","min":"10","bonuses":[]},{"name":"hp","val":"25","originalVal":"25","min":0,"max":"35","bonuses":[]}]}},
+        {"id":"1","name":"Wounded wolf","attributes":{"attributes":[{"name":"hp","val":"25","originalVal":"25","min":0,"max":"35","bonuses":[]},{"name":"dmg","val":"5","originalVal":"5","min":"3","bonuses":[]}]}},
         {"id":"2","name":"Wolf","attributes":{"attributes":[{"name":"hp","val":"35","originalVal":"35","min":0,"max":"35","bonuses":[]},{"name":"dmg","val":"7","originalVal":"7","min":"5","bonuses":[]}]}},
         {"id":"3","name":"Great wolf, leader of the pack","attributes":{"attributes":[{"name":"hp","val":"50","originalVal":"50","min":0,"max":"50","bonuses":[]},{"name":"dmg","val":"10","originalVal":"10","min":"7","bonuses":[]},{"name":"dexterity","val":"10","originalVal":"10","min":"7","bonuses":[]}]}}
     ]

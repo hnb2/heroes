@@ -24,14 +24,18 @@ define(["models/item"], function(mItem){
                 self.bonuses.push(item);  
             });
         }
-    };   
+    };
     
-    ActionItem.prototype.use = function use(target){
+    ActionItem.prototype.use = function use(source, target){
         this.bonuses.forEach(function(item){
             target.update(item);  
         });
         
-        return target.name + " used " + this.name;
+        var out = source.name + " used " + this.name;
+        if(source !== target)
+            out += " on " + target.name; 
+        
+        return out;
     };
     
     ActionItem.prototype.toJson = function toJson(){
