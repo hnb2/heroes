@@ -19,21 +19,21 @@ define(["ext/xhr", "models/monster", "models/attribute", "models/bonus"], functi
                 var attributes = new Array();
                 if(item.attributes){
                 
-                    item.attributes.forEach(function(attr){
+                    item.attributes.attributes.forEach(function(attr){
                     
                         var bonuses = new Array();
                         if(attr.bonuses){
                             attr.bonuses.forEach(function(bonus){
-                                bonuses.push( new mBonus.Bonus(bonus.name, bonus.val) );
+                                bonuses.push( new mBonus.Bonus( bonus.name, parseInt(bonus.val, 10) ) );
                             });
                         }
                         
-                        attributes.push( new mAttribute.Attribute(attr.name, attr.val, {min: attr.min, max: attr.max, bonuses: bonuses}) );
+                        attributes.push( new mAttribute.Attribute(attr.name, parseInt(attr.val, 10), {min: parseInt(attr.min, 10), max: parseInt(attr.max, 10), bonuses: bonuses}) );
                     });
                 }
             
                 //Add it to the array
-                self.monsters.push( new mMonster.Monster( item.id, item.name, {attributes: attributes} ) );
+                self.monsters.push( new mMonster.Monster( parseInt(item.id, 10), item.name, {attributes: attributes} ) );
             });
             
             return success.response;

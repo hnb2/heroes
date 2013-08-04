@@ -16,8 +16,8 @@ define(["controllers/map", "models/hero", "controllers/monsters", "controllers/i
     var hero = new mHero.Hero("The one without a name", {
             attributes:[
                 new mAttribute.Attribute(mAttributeType.HP, 120, {max: 120}),
-                new mAttribute.Attribute(mAttributeType.DMG, 15, {min:10, max:15}),
-                new mAttribute.Attribute(mAttributeType.DODGE, 5, {min:2, max:5})
+                new mAttribute.Attribute(mAttributeType.DMG, 15, {min:10}),
+                new mAttribute.Attribute(mAttributeType.DEXTERITY, 5)
             ]
         }
     );

@@ -46,11 +46,15 @@ define([], function(){
     };
     
     Attributes.prototype.toString = function toString(){
+        var delimiter = " || ";
         var out = "";
         this.attributes.forEach(function(item){
             out += item.toString();
-            out += " || ";
+            out += delimiter;
         });
+        
+        //Remove the extra delimiter
+        out = out.substr(0, out.length - delimiter.length);
         
         return out;
     };

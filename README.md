@@ -1,6 +1,5 @@
 NOW
 ===
-- Decide on a way to set and take care of the attributes (VOIR PAPIER SOUS LE BUREAU)
 - Update the use function take the id of the item and the target if any (eg. throw small rocks at monster).
 - Update intro message
 - Implement "locked" in position

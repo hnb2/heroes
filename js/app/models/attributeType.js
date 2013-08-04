@@ -5,7 +5,7 @@ define([], function(){
     
     return{
         HP: "hp",
-        DODGE: "dodge chance",
+        DEXTERITY: "dexterity",
         DMG: "dmg",
         LIGHT: "light",
         LOCKED: "locked"

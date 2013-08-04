@@ -26,11 +26,11 @@ define(["utils/fightUtils", "models/attributes", "models/attributeType"], functi
         var dmg = this.getAttr( mAttributeType.DMG );
   
       //Get a random value between min and max of dmg
-        var rand = mFightUtils.rand(dmg.min, dmg.max);
+        var rand = mFightUtils.rand(dmg.min, dmg.val);
         
         var criticalHit = false;
         
-        if(rand === dmg.max)
+        if(rand === dmg.val)
             criticalHit = true;
         
         //Final damage amount
@@ -52,10 +52,12 @@ define(["utils/fightUtils", "models/attributes", "models/attributeType"], functi
     
     Creature.prototype.takeDamage = function takeDamage(dmg){
         //Test for dodging the attack
-        var dodge = this.getAttr( mAttributeType.DODGE );
+        var dexterity = this.getAttr( mAttributeType.DEXTERITY );
         
-        if(typeof dodge !== "undefined"){
-            var chance = mFightUtils.chance(dodge.max);
+        if(typeof dexterity !== "undefined"){
+            //Every 2 points of dexterity, there is 1% chance to dodge the attack
+            var result = Math.floor(dexterity.getVal() / 2);
+            var chance = mFightUtils.chance(result);
         
             if(chance){
                 return this.name + " dodged the attack !!";

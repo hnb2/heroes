@@ -2,7 +2,6 @@ define(["models/baseAttribute"], function(mBaseAttribute){
 
     function Attribute(name, val, opts){
         this.name = name;
-        //this.val = new Number(val);
         this.val = val;
         
         this.setOpts(opts);
@@ -19,7 +18,7 @@ define(["models/baseAttribute"], function(mBaseAttribute){
             opts = {};
         
         this.min = opts.min || 0;
-        this.max = opts.max || 100;
+        this.max = opts.max || undefined; //The maximum is optional
         
         this.bonuses = opts.bonus || new Array();
     };
@@ -27,13 +26,21 @@ define(["models/baseAttribute"], function(mBaseAttribute){
     
     //PRIVATE
     Attribute.prototype.setVal = function setVal(val){
-        if(val <= this.max && val >= this.min)
-            this.val = val;
-        else if(val < this.min)
+        if( val >= this.min ){
+            //If there is a max
+            if( typeof this.max !== "undefined" ){
+                if( val <= this.max )
+                    this.val = val;
+                else
+                    this.val = this.max;
+            }
+            else{ //If not
+                this.val = val;
+            }
+        }
+        else if(val < this.min){
             this.val = 0;
-        /*else
-            throw new Error("Please supply a correct value between [" + this.min + ", " + this.max + "]");
-        */
+        }
     };
     
     Attribute.prototype.increaseCoeff = function increaseCoeff(coeff){
@@ -79,7 +86,12 @@ define(["models/baseAttribute"], function(mBaseAttribute){
     };
     
     Attribute.prototype.toString = function toString(){
-        return this.name + " : " + this.val;
+        var out = this.name + " : " + this.val;
+        
+        if(typeof this.max !== "undefined")
+            out += "/" + this.max;
+            
+        return out;
     };
     
     Attribute.prototype.toJson = function toJson(){
