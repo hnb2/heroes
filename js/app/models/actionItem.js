@@ -19,10 +19,17 @@ define(["models/item"], function(mItem){
         this.bonuses = new Array();
         
         if(typeof opts !== "undefined"){
-            var self = this;
-            opts.forEach(function(item){
-                self.bonuses.push(item);  
-            });
+        
+            //Bonuses
+            if(typeof opts.bonuses !== "undefined"){
+                var self = this;
+                opts.bonuses.forEach(function(item){
+                    self.bonuses.push(item);  
+                });
+            }
+            
+            //Position constraint
+            this.constraint = opts.constraint;
         }
     };
     

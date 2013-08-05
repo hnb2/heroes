@@ -1,6 +1,6 @@
 {
     "items": [
         {"id":1,"name":"Lantern","description":"an old petrol lantern, not sure it will catch fire...","value":1,"bonuses":[{"name":"light","val":1}]},
-        {"id":2,"name":"Manor key","description":"It has a small label : 'front door'.","value":0,"bonuses":[{"name":"locked","val":0}]}
+        {"id":2,"name":"Manor key","description":"It has a small label : 'front door'.","value":0,"bonuses":[{"name":"locked","val":0}], "constraint": 6}
     ]
 }

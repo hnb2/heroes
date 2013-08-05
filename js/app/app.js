@@ -376,9 +376,11 @@ define(["controllers/map", "models/hero", "controllers/monsters", "controllers/i
           exec: function(args, context) {
             var dom = doc.createElement('p');
             
+            var pos = hero.getPosition();
             var item = hero.getItem(args.id);
+            
             if(typeof item !== "undefined"){
-                
+            
                 var target;
                 switch(args.target){
                     case "env":
@@ -390,9 +392,22 @@ define(["controllers/map", "models/hero", "controllers/monsters", "controllers/i
                     default:
                         target = hero;
                 }
+            
+                if(typeof item.constraint !== "undefined"){
                 
-                dom.className = "action";
-                dom.innerHTML = hero.use(target, item);
+                    if( item.constraint === pos.id ){    
+                        dom.className = "action";
+                        dom.innerHTML = hero.use(target, item);
+                    }
+                    else{
+                        dom.className = "error";
+                        dom.innerHTML = "You cannot use this here !";              
+                    }
+                }
+                else{        
+                    dom.className = "action";
+                    dom.innerHTML = hero.use(target, item);
+                }
             }
             else{
                 dom.className = "error";

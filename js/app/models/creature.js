@@ -67,17 +67,6 @@ define(["utils/fightUtils", "models/attributes", "models/attributeType"], functi
         this.getAttr( mAttributeType.HP ).decrease(dmg);
     };
     
-    /*Creature.prototype.heal = function heal(hp){
-        if(!this.dead){
-            if(this.hp + hp < this.maxHp)
-                this.hp += hp;
-            else
-                this.hp = this.maxHp;
-                
-            return this.name + " has recovered " + hp + " health points.";
-        }
-    };*/
-    
     Creature.prototype.isDead = function isDead(){
         return (this.getAttr( mAttributeType.HP ).getVal() === 0);
     };
