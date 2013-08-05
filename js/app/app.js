@@ -1,7 +1,8 @@
 // Bootstrap/Entry point of the application
-define(["bootstrap", "gcli/index"], function(mBootstrap, mGcli){
+define(["bootstrap", "gcli/index", "utils/domUtils"], function(mBootstrap, mGcli, mDomUtils){
 
     mBootstrap.startup().then(function(result){
+        //Get the variables initialized in the bootstrap
         var log = result.log;
         var hero = result.hero;
         var monsters = result.monsters;
@@ -10,9 +11,6 @@ define(["bootstrap", "gcli/index"], function(mBootstrap, mGcli){
     
         //Global var to check if the hero set its name or not
         var setName = false;
-        
-        //Global var to hold the document
-        var doc = document;
     
         // Array Remove - By John Resig (MIT Licensed)
         //TODO : Should be put in a util file
@@ -37,27 +35,21 @@ define(["bootstrap", "gcli/index"], function(mBootstrap, mGcli){
           ],
           returnType: 'dom',
               exec: function(args, context) {
-                 var dom = doc.createElement('p');
                  
                  if(typeof args.name === "undefined"){
-                    dom.innerHTML = "Please enter a valid name.";
-                    dom.className = "error";
-                    return dom;
+                    return mDomUtils.createText("error", "Please enter a valid name.");
                  }
                 
                 if(!setName){
                     hero.name = args.name;
                     setName = true;
-                    
-                    dom.className = "name";
-                    dom.innerHTML = "Thou shall now be known as " + hero.name;
+
+                    return mDomUtils.createText("name", "Thou shall now be known as " + hero.name);
                 }
                 else{
-                    dom.className = "error";
-                    dom.innerHTML = "It is too late for you " + hero.name + " !";
+                    return mDomUtils.createText("error", "It is too late for you " + hero.name + " !");
                 }
-                
-                return dom;
+
               }
         });
         
@@ -68,12 +60,8 @@ define(["bootstrap", "gcli/index"], function(mBootstrap, mGcli){
           returnType: 'dom',
               exec: function(args, context) {
                 var pos = hero.getPosition();
-                var dom = doc.createElement('p');
-                dom.className = "info";
                 
-                dom.innerHTML = pos.toString();
-                
-                return dom;
+                return mDomUtils.createText("info", pos.toString());
               }
         });
         
@@ -92,8 +80,6 @@ define(["bootstrap", "gcli/index"], function(mBootstrap, mGcli){
               exec: function(args, context) {
                 var curPos = hero.getPosition();
                 
-                var dom = doc.createElement('p');
-                
                 //If the next position is part of the available path of the current position, go on
                 var pos;
                 if(curPos.to.indexOf(args.id) !== -1){
@@ -101,15 +87,12 @@ define(["bootstrap", "gcli/index"], function(mBootstrap, mGcli){
                 }
                 
                 if(typeof pos === "undefined"){
-                    dom.className = "error";
-                    dom.innerHTML = hero.name + " has lost his way ! Remember to use where in trouble...";
+                    return mDomUtils.createText("error", hero.name + " has lost his way ! Remember to use where in trouble...");
                 }
                 else{
-                    dom.className = "info";
-                    dom.innerHTML = hero.move(pos);
+                    return mDomUtils.createText("info", hero.move(pos));
                 }
                 
-                return dom;
               }
         });
         
@@ -128,19 +111,15 @@ define(["bootstrap", "gcli/index"], function(mBootstrap, mGcli){
               exec: function(args, context) {
                 var curPos = hero.getPosition();
                 
-                var dom = doc.createElement('p');
-                
                 if(typeof curPos.monsters !== "undefined" && curPos.monsters.indexOf(args.id) !== -1){
                     var monster = monsters.getMonster(args.id);
-                    dom.className = "info";
-                    dom.innerHTML = monster.toString();
+
+                    return mDomUtils.createText("info", monster.toString());
                 }
                 else{
-                    dom.className = "error";
-                    dom.innerHTML = "Not found !";
+                    return mDomUtils.createText("error", "Not found !");
                 }
                 
-                return dom;
               }
         });
         
@@ -150,11 +129,7 @@ define(["bootstrap", "gcli/index"], function(mBootstrap, mGcli){
           description: 'It is about time you get to know yourself !',
           returnType: 'dom',
               exec: function(args, context) {
-                var dom = doc.createElement('p');
-                dom.className = "info";
-                dom.innerHTML=hero.toString();
-                
-                return dom;
+                return mDomUtils.createText("info", hero.toString());
               }
         });
         
@@ -173,45 +148,33 @@ define(["bootstrap", "gcli/index"], function(mBootstrap, mGcli){
               exec: function(args, context) {
                 var curPos = hero.getPosition();
                 
-                var dom = doc.createElement('p');
-                
                 var monster;
                 var mIndex = curPos.monsters.indexOf(args.id); //Position of the monster in the array
                 if(typeof curPos.monsters !== "undefined" && mIndex !== -1){
                     monster = monsters.getMonster(args.id);
                 }
                 else{
-                    dom.className = "error";
-                    dom.innerHTML = "Nothing to fight here !";
-                    return dom;
+                    return mDomUtils.createText("error", "Nothing to fight here !");
                 }
-    
-                dom.className = "fight";
-                
-                var heroDom = doc.createElement('p');
-                
+
+                var heroDom;
                 if(! hero.isDead()){
-                    heroDom.innerHTML = hero.attack(monster);
+                    heroDom = mDomUtils.createText("fight", hero.attack(monster));
                 }
                 else{
-                    heroDom.innerHTML =  hero.name + " died...";
+                    heroDom = mDomUtils.createText("error", hero.name + " died...");
                 }
                 
-                var monsterDom = doc.createElement('p');
-                    
+                var monsterDom;
                 if(! monster.isDead()){
-                    monsterDom.innerHTML = monster.attack(hero);
+                    monsterDom = mDomUtils.createText("fight", monster.attack(hero));
                 }
                 else{
-                    monsterDom.innerHTML = monster.name + " is dead.";
-                    monsterDom.className = "victory";
                     curPos.monsters.remove(mIndex);
+                    monsterDom = mDomUtils.createText("victory", monster.name + " is dead.");
                 }
                 
-                dom.appendChild(heroDom);
-                dom.appendChild(monsterDom);
-                
-                return dom;
+                return mDomUtils.append(heroDom, monsterDom);
               }
         });
         
@@ -230,19 +193,15 @@ define(["bootstrap", "gcli/index"], function(mBootstrap, mGcli){
               exec: function(args, context) {
                 var curPos = hero.getPosition();
                 
-                var dom = doc.createElement('p');
-                
                 if(typeof curPos.items !== "undefined" && curPos.items.indexOf(args.id) !== -1){
                     var item = items.getItem(args.id);
-                    dom.className = "info";
-                    dom.innerHTML = item.toString();
+                    
+                    return mDomUtils.createText("info", item.toString());
                 }
                 else{
-                    dom.className = "error";
-                    dom.innerHTML = "Not found !";
+                    return mDomUtils.createText("error", "Not found !");
                 }
                 
-                return dom;
               }
         });
         
@@ -261,33 +220,25 @@ define(["bootstrap", "gcli/index"], function(mBootstrap, mGcli){
               exec: function(args, context) {
                 var curPos = hero.getPosition();
                 
-                var dom = doc.createElement('p');
-                
                 var iIndex = curPos.items.indexOf(args.id); //Position of the item in the array
                 if(typeof curPos.items !== "undefined" && iIndex !== -1){
                     var item = items.getItem(args.id);
                     
                     //Check for monsters
                     if(typeof curPos.monsters !== "undefined" && curPos.monsters.length > 0){
-                        dom.className = "error";
-                        dom.innerHTML = "You cannot take the item, monster(s) are around...";
+                        return mDomUtils.createText("error", "You cannot take the item, monster(s) are around...");
                     }
-                    else{   
-                        dom.className = "action";
-                    
-                        //The hero take the item
-                        dom.innerHTML = hero.take(item);
-                        
+                    else{
                         //We remove it from the position
                         curPos.items.remove(iIndex);
+                        
+                        return mDomUtils.createText("action", hero.take(item));
                     }
                 }
                 else{
-                    dom.className = "error";
-                    dom.innerHTML = "Not found !";
+                    return mDomUtils.createText("error", "Not found !");
                 }
                 
-                return dom;
               }
         });
         
@@ -299,23 +250,18 @@ define(["bootstrap", "gcli/index"], function(mBootstrap, mGcli){
               exec: function(args, context) {
                 var bag = hero.getInventory();
                 
-                var dom = doc.createElement('p');
+                var dom = new Array();
     
                 if(bag.length > 0){
-                    dom.className = "info";
-                    
                     bag.forEach(function(item){
-                        var itemDom = doc.createElement('p');
-                        itemDom.innerHTML = item.toString();
-                        dom.appendChild(itemDom);
+                        dom.push( mDomUtils.createText( "info", item.toString() ) );
                     });
+                    return mDomUtils.appendArray(dom);
                 }
                 else{
-                    dom.className = "error";
-                    dom.innerHTML = "Empty bag...";
+                    return mDomUtils.createText("error", "Empty bag...");
                 }
                 
-                return dom;
               }
         });
         
@@ -337,7 +283,6 @@ define(["bootstrap", "gcli/index"], function(mBootstrap, mGcli){
           ],
           returnType: 'dom',
               exec: function(args, context) {
-                var dom = doc.createElement('p');
                 
                 var pos = hero.getPosition();
                 var item = hero.getItem(args.id);
@@ -358,26 +303,21 @@ define(["bootstrap", "gcli/index"], function(mBootstrap, mGcli){
                 
                     if(typeof item.constraint !== "undefined"){
                     
-                        if( item.constraint === pos.id ){    
-                            dom.className = "action";
-                            dom.innerHTML = hero.use(target, item);
+                        if( item.constraint === pos.id ){
+                            return mDomUtils.createText("action", hero.use(target, item));
                         }
                         else{
-                            dom.className = "error";
-                            dom.innerHTML = "You cannot use this here !";              
+                            return mDomUtils.createText("error", "You cannot use this here !");
                         }
                     }
                     else{        
-                        dom.className = "action";
-                        dom.innerHTML = hero.use(target, item);
+                        return mDomUtils.createText("action", hero.use(target, item));
                     }
                 }
                 else{
-                    dom.className = "error";
-                    dom.innerHTML = "Not found in your inventory !";
+                    return mDomUtils.createText("error", "Not found in your inventory !");
                 }
                 
-                return dom;
               }
         });
         

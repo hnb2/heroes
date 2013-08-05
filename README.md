@@ -1,6 +1,6 @@
 NOW
 ===
-- Implement a pattern to solve the mess in the commands and models (MVC + Observer ?)
+- Implement a command pattern ( -commands/ )
 - Review the fight command logic
 - Implement "locked" in position
 - Add content in the map.json for the key, the manor and the wolf leader
