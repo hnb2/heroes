@@ -1,13 +1,12 @@
 define(["models/baseAttribute"], function(mBaseAttribute){
 
     function Attribute(name, val, opts){
-        this.name = name;
-        this.val = val;
+        mBaseAttribute.BaseAttribute.call(this, name, val);
         
         this.setOpts(opts);
     }
     
-    Attribute.prototype = new mBaseAttribute.BaseAttribute();
+    Attribute.prototype = Object.create(mBaseAttribute.BaseAttribute.prototype);
     Attribute.prototype.constructor = Attribute;
     
     //USED ONLY ONCE FOR INITIALIZATION

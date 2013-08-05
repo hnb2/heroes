@@ -1,17 +1,13 @@
-//Only to be inherited by child classes
 define(["models/item"], function(mItem){
 
     function ActionItem(id, name, desc, value, opts){
-        this.id = id;
-        this.name = name;
-        this.description = desc;
-        this.value = value;
+        mItem.Item.call(this, id, name, desc, value);
         
         //New field
         this.setOpts(opts);
     }
     
-    ActionItem.prototype = new mItem.Item();
+    ActionItem.prototype = Object.create(mItem.Item.prototype);
     
     ActionItem.prototype.constructor = ActionItem;
 

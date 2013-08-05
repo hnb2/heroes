@@ -1,17 +1,14 @@
 define(["models/creature"], function(mCreature){
 
     function Hero(name, opts){
-        this.name = name;
-        
-        //Initialize the fields
-        this.setOpts(opts);
+        mCreature.Creature.call(this, 0, name,  undefined, opts);
         
         //A bag which contains items
         this.inventory = new Array();
     }
     
     //Hero inherits of Creature
-    Hero.prototype = new mCreature.Creature();
+    Hero.prototype = Object.create(mCreature.Creature.prototype);
     
     //Set the constructor
     Hero.prototype.constructor = Hero;

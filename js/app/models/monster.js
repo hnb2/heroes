@@ -1,11 +1,7 @@
 define(["models/creature"], function(mCreature){
 
     function Monster(id, name, opts){
-        this.id = id;
-        this.name = name;
-        
-        //Initialize the fields
-        this.setOpts(opts);
+        mCreature.Creature.call(this, id, name,  undefined, opts);
     }
     
     //Monster inherits of Creature
