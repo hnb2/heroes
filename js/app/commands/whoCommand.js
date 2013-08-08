@@ -18,15 +18,18 @@ define(["commands/command"], function(mCommand){
     WhoCommand.prototype.constructor = WhoCommand;
     
     WhoCommand.prototype.exec = function(args, context){
-        var curPos = context.env.hero.getPosition();
+        //Creating a "shortcut"
+        var env = context.environment;
+    
+        var curPos = env.hero.getPosition();
         
         if(typeof curPos.monsters !== "undefined" && curPos.monsters.indexOf(args.id) !== -1){
-            var monster = context.env.monsters.getMonster(args.id);
+            var monster = env.monsters.getMonster(args.id);
 
-            return context.env.domHelper.createText("info", monster.toString());
+            return env.domHelper.createText("info", monster.toString());
         }
         else{
-            return context.env.domHelper.createText("error", "Not found !");
+            return env.domHelper.createText("error", "Not found !");
         }
     };
     

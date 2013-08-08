@@ -30,18 +30,14 @@ define(["bootstrap", "gcli/index", "utils/domUtils", "commands/commands"], funct
                 description: item.description,
                 params: item.params,
                 returnType: item.returnType,
-                exec: function(args, context){
-                    //Way of injecting the environment inside the context
-                    context.env = env;
-                    console.log(context);
-                    return item.exec.call(this, args, context);
-                }
+                exec: item.exec
             });
         });
         
         /*************************** GCLI COMMANDS ***************************/
     
-        mGcli.createDisplay();  
+        //Add the environment
+        mGcli.createDisplay({environment: env});  
                 
     });
 });

@@ -18,15 +18,18 @@ define(["commands/command"], function(mCommand){
     WhatCommand.prototype.constructor = WhatCommand;
     
     WhatCommand.prototype.exec = function(args, context){
-        var curPos = context.env.hero.getPosition();
+        //Creating a "shortcut"
+        var env = context.environment;
+    
+        var curPos = env.hero.getPosition();
         
         if(typeof curPos.items !== "undefined" && curPos.items.indexOf(args.id) !== -1){
-            var item = context.env.items.getItem(args.id);
+            var item = env.items.getItem(args.id);
             
-            return context.env.domHelper.createText("info", item.toString());
+            return env.domHelper.createText("info", item.toString());
         }
         else{
-            return context.env.domHelper.createText("error", "Not found !");
+            return env.domHelper.createText("error", "Not found !");
         }
     };
     

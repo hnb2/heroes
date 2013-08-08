@@ -18,17 +18,20 @@ define(["commands/command"], function(mCommand){
     NameCommand.prototype.constructor = NameCommand;
     
     NameCommand.prototype.exec = function(args, context){
+        //Creating a "shortcut"
+        var env = context.environment;
+        
         if(typeof args.name === "undefined"){
-            return context.env.domHelper.createText("error", "Please enter a valid name.");
+            return env.domHelper.createText("error", "Please enter a valid name.");
         }
                     
-        if(typeof context.env.hero.name === "undefined"){
-            context.env.hero.name = args.name;
+        if(typeof env.hero.name === "undefined"){
+            env.hero.name = args.name;
     
-            return context.env.domHelper.createText("name", "Thou shall now be known as " + context.env.hero.name);
+            return env.domHelper.createText("name", "Thou shall now be known as " + env.hero.name);
         }
         else{
-            return context.env.domHelper.createText("error", "It is too late for you " + context.env.hero.name + " !");
+            return env.domHelper.createText("error", "It is too late for you " + env.hero.name + " !");
         }
     };
     

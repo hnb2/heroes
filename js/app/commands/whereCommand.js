@@ -12,9 +12,12 @@ define(["commands/command"], function(mCommand){
     WhereCommand.prototype.constructor = WhereCommand;
     
     WhereCommand.prototype.exec = function(args, context){
-        var pos = context.env.hero.getPosition();
+        //Creating a "shortcut"
+        var env = context.environment;
         
-        return context.env.domHelper.createText("info", pos.toString());
+        var pos = env.hero.getPosition();
+        
+        return env.domHelper.createText("info", pos.toString());
     };
     
     return {WhereCommand: WhereCommand};

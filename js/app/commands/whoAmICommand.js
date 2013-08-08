@@ -12,7 +12,10 @@ define(["commands/command"], function(mCommand){
     WhoAmICommand.prototype.constructor = WhoAmICommand;
     
     WhoAmICommand.prototype.exec = function(args, context){
-        return context.env.domHelper.createText("info", context.env.hero.toString());
+        //Creating a "shortcut"
+        var env = context.environment;
+        
+        return env.domHelper.createText("info", env.hero.toString());
     };
     
     return {WhoAmICommand: WhoAmICommand};

@@ -23,38 +23,41 @@ define(["commands/command"], function(mCommand){
     UseCommand.prototype.constructor = UseCommand;
     
     UseCommand.prototype.exec = function(args, context){
-        var pos = context.env.hero.getPosition();
-        var item = context.env.hero.getItem(args.id);
+        //Creating a "shortcut"
+        var env = context.environment;
+    
+        var pos = env.hero.getPosition();
+        var item = env.hero.getItem(args.id);
         
         if(typeof item !== "undefined"){
         
             var target;
             switch(args.target){
                 case "env":
-                    target = context.env.hero.getPosition();
+                    target = env.hero.getPosition();
                     break;
                 case "me":
-                    target = context.env.hero;
+                    target = env.hero;
                     break;
                 default:
-                    target = context.env.hero;
+                    target = env.hero;
             }
         
             if(typeof item.constraint !== "undefined"){
             
                 if( item.constraint === pos.id ){
-                    return context.env.domHelper.createText("action", context.env.hero.use(target, item));
+                    return env.domHelper.createText("action", env.hero.use(target, item));
                 }
                 else{
-                    return context.env.domHelper.createText("error", "You cannot use this here !");
+                    return env.domHelper.createText("error", "You cannot use this here !");
                 }
             }
             else{        
-                return context.env.domHelper.createText("action", context.env.hero.use(target, item));
+                return env.domHelper.createText("action", env.hero.use(target, item));
             }
         }
         else{
-            return context.env.domHelper.createText("error", "Not found in your inventory !");
+            return env.domHelper.createText("error", "Not found in your inventory !");
         }
 
     };
