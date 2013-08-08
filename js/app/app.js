@@ -8,10 +8,7 @@ define(["bootstrap", "gcli/index", "utils/domUtils", "commands/commands"], funct
         var monsters = env.monsters;
         var items = env.items;
         var map = env.map;
-    
-        //Global var to check if the hero set its name or not
-        var setName = false;
-    
+
         // Array Remove - By John Resig (MIT Licensed)
         //TODO : Should be put in a util file
         Array.prototype.remove = function(from, to) {
@@ -36,6 +33,7 @@ define(["bootstrap", "gcli/index", "utils/domUtils", "commands/commands"], funct
                 exec: function(args, context){
                     //Way of injecting the environment inside the context
                     context.env = env;
+                    console.log(context);
                     return item.exec.call(this, args, context);
                 }
             });

@@ -22,9 +22,8 @@ define(["commands/command"], function(mCommand){
             return context.env.domHelper.createText("error", "Please enter a valid name.");
         }
                     
-        if(!context.env.setName){
+        if(typeof context.env.hero.name === "undefined"){
             context.env.hero.name = args.name;
-            context.env.setName = true;
     
             return context.env.domHelper.createText("name", "Thou shall now be known as " + context.env.hero.name);
         }

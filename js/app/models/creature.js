@@ -107,7 +107,8 @@ define(["utils/fightUtils", "models/attributes", "models/attributeType"], functi
     };
     
     Creature.prototype.toString = function toString(){
-        return this.name + " >> " + this.attributes.toString();
+        var name = (typeof this.name !== "undefined")?this.name:"The one without a name";
+        return name + " >> " + this.attributes.toString();
     };
     
     Creature.prototype.toJson = function toJson(){

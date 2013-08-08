@@ -8,7 +8,7 @@ define(["controllers/map", "models/hero", "controllers/monsters", "controllers/i
         log.info("Start the application");
         
         //Initialize the Hero
-        var hero = new mHero.Hero("The one without a name", {
+        var hero = new mHero.Hero(undefined, {
                 attributes:[
                     new mAttribute.Attribute(mAttributeType.HP, 120, {max: 120}),
                     new mAttribute.Attribute(mAttributeType.DMG, 15, {min:10}),
