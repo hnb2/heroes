@@ -78,6 +78,7 @@ define(["utils/fightUtils", "models/attributes", "models/attributeType"], functi
         }
     };
     
+    //TODO: remove the output
     Creature.prototype.move = function move(pos){
         var out;
         
@@ -106,8 +107,14 @@ define(["utils/fightUtils", "models/attributes", "models/attributeType"], functi
         return item.use(this, target);
     };
     
-    Creature.prototype.toString = function toString(){
+    Creature.prototype.getName = function getName(){
         var name = (typeof this.name !== "undefined")?this.name:"The one without a name";
+        
+        return name;
+    }
+    
+    Creature.prototype.toString = function toString(){
+        var name = this.getName();
         return name + " >> " + this.attributes.toString();
     };
     

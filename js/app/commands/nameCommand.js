@@ -10,7 +10,7 @@ define(["commands/command"], function(mCommand){
                   description: 'The name you chose to bear for eternity...'
                 }
             ], 
-            'dom'
+            'out'
         );
     }
     
@@ -20,15 +20,21 @@ define(["commands/command"], function(mCommand){
     NameCommand.prototype.exec = function(args, context){
         //Creating a "shortcut"
         var env = context.environment;
-        
-        if(typeof args.name === "undefined"){
-            return env.domHelper.createText("error", "Please enter a valid name.");
-        }
                     
         if(typeof env.hero.name === "undefined"){
-            env.hero.name = args.name;
-    
-            return env.domHelper.createText("name", "Thou shall now be known as " + env.hero.name);
+            if(typeof args.name === "undefined"){
+                var content = new Array();
+                content.push( env.domHelper.createText("error", "Please enter a valid name.") );
+                content.push(env.domHelper.createCommand("name", "name"));
+                
+                return env.domHelper.appendArray(content);
+            }
+            else{
+                //Set the name
+                env.hero.name = args.name;
+        
+                return env.domHelper.createText("name", "Thou shall now be known as " + env.hero.name);
+            }
         }
         else{
             return env.domHelper.createText("error", "It is too late for you " + env.hero.name + " !");

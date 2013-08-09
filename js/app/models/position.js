@@ -29,10 +29,23 @@ define(["models/attributes", "models/attributeType"], function(mAttributes, mAtt
         }
     };
     
-    Position.prototype.toString = function toString(){
+    Position.prototype.isDark = function isDark(){
         var light = this.getAttr( mAttributeType.LIGHT );
-
-        var out = (typeof light !== "undefined" && light.getVal() === 0)?"[DARK] ":"";
+        
+        return (typeof light !== "undefined" && light.getVal() === 0);
+    };
+    
+    Position.prototype.getItems = function getItems(){
+        return this.items;
+    };
+    
+    Position.prototype.getMonsters = function getMonsters(){
+        return this.monsters;
+    };
+    
+    //TODO: TO BE DELETED
+    Position.prototype.toString = function toString(){
+        var out = ( this.isDark() )?"[DARK] ":"";
         
         out += this.name + " : " + this.desc + " You can move to : " + this.to + ".";
         

@@ -10,7 +10,7 @@ define(["commands/command"], function(mCommand){
                   description: 'The id of the monster to fight'
                 }
             ], 
-            'dom'
+            'out'
         );
     }
     
@@ -32,24 +32,28 @@ define(["commands/command"], function(mCommand){
             return env.domHelper.createText("error", "Nothing to fight here !");
         }
 
-        var heroDom;
+        /** DOM CONSTRUCTION **/
+        var content = new Array();
         if(! env.hero.isDead()){
-            heroDom = env.domHelper.createText("fight", env.hero.attack(monster));
+            content.push( env.domHelper.createText( "fight", env.hero.attack(monster) ) );
         }
         else{
-            heroDom = env.domHelper.createText("error", env.hero.name + " died...");
+            content.push( env.domHelper.createText( "error", env.hero.getName() + " died..." ) );
         }
         
-        var monsterDom;
         if(! monster.isDead()){
-            monsterDom = env.domHelper.createText("fight", monster.attack(env.hero));
+            content.push( env.domHelper.createText( "fight", monster.attack(env.hero) ) );
+            content.push(env.domHelper.createCommand("fight " + monster.id, "fight"));
         }
         else{
             curPos.monsters.remove(mIndex);
-            monsterDom = env.domHelper.createText("victory", monster.name + " is dead.");
+            content.push( env.domHelper.createText( "victory", monster.name + " is dead." ) );
         }
+        /** DOM CONSTRUCTION **/
         
-        return env.domHelper.append(heroDom, monsterDom);
+        content.push(env.domHelper.createCommand("whoami", "whoami"));
+        
+        return env.domHelper.appendArray(content);
     };
     
     return {FightCommand: FightCommand};

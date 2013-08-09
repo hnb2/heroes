@@ -1,6 +1,6 @@
 NOW
 ===
-- Make the 'to' clickable with the name (check position.js for current impl)
+- Rewrite the commands to avoid using toString() and returning 'out' and better output with domHelper
 - Review the fight command logic ?
 - Review the use command logic (add target to object ?)
 - Implement "locked" in position

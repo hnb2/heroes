@@ -10,7 +10,7 @@ define(["commands/command"], function(mCommand){
                   description: 'The id of the creature'
                 }
             ], 
-            'dom'
+            'out'
         );
     }
     
@@ -26,7 +26,13 @@ define(["commands/command"], function(mCommand){
         if(typeof curPos.monsters !== "undefined" && curPos.monsters.indexOf(args.id) !== -1){
             var monster = env.monsters.getMonster(args.id);
 
-            return env.domHelper.createText("info", monster.toString());
+            var content = new Array();
+            content.push( env.domHelper.createText( "info", monster.name ) );
+            content.push( env.domHelper.createText( "info", ">> " + monster.attributes.toString() ) );
+            content.push(env.domHelper.createCommand("fight " + monster.id, "fight"));
+            
+            return env.domHelper.appendArray(content);
+        
         }
         else{
             return env.domHelper.createText("error", "Not found !");

@@ -16,17 +16,17 @@ define([], function(){
         return createElement("p", className, content);
     }
     
-    //elements...
-    function append(elements){
-        var dom = createElement("p", "main", "");
+    //Wrapper for <span> command
+    function createCommand(command, name){
+        var dom = createElement("span", "gcli-out-shortcut", name);
         
-        for(var i = 0; i < arguments.length; i++){
-            dom.appendChild(arguments[i]);
-        }
+        dom.setAttribute("onclick", "${onclick}");
+        dom.setAttribute("ondblclick", "${ondblclick}");
+        dom.setAttribute('data-command', command);
         
         return dom;
     }
-    
+
     //Array
     function appendArray(elements){
         var dom = createElement("p", "main", "");
@@ -40,7 +40,7 @@ define([], function(){
 
     return {
         createText: createText,
-        append: append,
-        appendArray: appendArray
+        appendArray: appendArray,
+        createCommand: createCommand
     };
 });
