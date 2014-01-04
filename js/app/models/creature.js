@@ -54,9 +54,18 @@ define(["utils/fightUtils", "models/attributes", "models/attributeType"],
          * @public
          */
         this.getName = function () {
-            return name !== undefined ?
-                name :
-                "The one without a name";
+            return name;
+        };
+
+        /**
+         * Setter for name
+         * @method setName
+         * @param {String} _name new name for the creature
+         * @return {Nothing}
+         * @public
+         */
+        this.setName = function (_name) {
+            name = _name;
         };
 
         /**
@@ -68,7 +77,6 @@ define(["utils/fightUtils", "models/attributes", "models/attributeType"],
         this.getPosition = function () {
             return position;
         };
-
         
         /**
          * Setter for position
