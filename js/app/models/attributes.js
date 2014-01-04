@@ -3,7 +3,7 @@
  * @class Attributes
  * @author Pierre Guillemot
  */
-define([], function(){
+define([], function () {
 
     /**
      * Constructor
@@ -12,7 +12,7 @@ define([], function(){
      *
      *
      */
-    function Attributes(_opts){
+    function Attributes(_opts) {
         /**
          * Array of attributes
          */
@@ -35,7 +35,7 @@ define([], function(){
                 self.add(attribute);
             });
         }
-    } 
+    }
     
     /**
      * Add or update an attribute
@@ -74,10 +74,10 @@ define([], function(){
      * @param {Object} _attribute the attribute to add or update
      * @return {Nothing}
      * @public
-     */ 
+     */
     Attributes.prototype.set = function (_attribute) {
         //Validate the attribute
-        if(_attribute === undefined){
+        if (_attribute === undefined) {
             throw new Error(
                 "Error, the attribute is undefined !"
             );
@@ -88,10 +88,10 @@ define([], function(){
         
         if (ref === undefined) {
             this.getAttributes().push(_attribute);
-        }
-        else{
+        } else {
             //TODO: implement
-        } 
+            throw new Error("Not yet implemented !");
+        }
     };
 
     /**
@@ -99,7 +99,7 @@ define([], function(){
      * @method toString
      * @return {String} a string representation of every attributes
      * @public
-     */    
+     */
     Attributes.prototype.toString = function () {
         var delimiter = " || ";
         var out = "";

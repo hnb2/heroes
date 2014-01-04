@@ -4,7 +4,7 @@
  * @class BaseAttribute
  * @author Pierre Guillemot
  */
-define([], function(){
+define([], function () {
 
     
     /**
@@ -15,7 +15,7 @@ define([], function(){
      * @return {Nothing}
      * @public
      */
-    function BaseAttribute(_name, _value){
+    function BaseAttribute(_name, _value) {
         /**
          * Name of the attribute
          */
@@ -71,7 +71,7 @@ define([], function(){
         //Set the name and value
         this.setName(_name);
         this.setValue(_value);
-    } 
+    }
         
     /**
      * Return a string representation of the Base attribute

@@ -5,7 +5,7 @@
  * @class Bonus
  * @author Pierre Guillemot
  */
-define(["models/baseAttribute"], function(mBaseAttribute){
+define(["models/baseAttribute"], function (mBaseAttribute) {
 
     /**
      * Constructor
@@ -15,7 +15,7 @@ define(["models/baseAttribute"], function(mBaseAttribute){
      * @return {Nothing}
      * @public
      */
-    function Bonus(_name, _value){
+    function Bonus(_name, _value) {
         //Calls the parent constructor
         mBaseAttribute.BaseAttribute.call(this, _name, _value);
     }

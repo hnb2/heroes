@@ -3,7 +3,7 @@
  * @class AttributeType
  * @author Pierre Guillemot
  */
-define([], function(){
+define([], function () {
 
     /**
      * Constructor
@@ -11,11 +11,11 @@ define([], function(){
      * @return {Nothing}
      * @public
      */
-    function AttributeType(){
+    function AttributeType() {
     }
   
     //TODO: review the encapsulation system  
-    return{
+    return {
         HP: "hp",
         DEXTERITY: "dexterity",
         DMG: "dmg",

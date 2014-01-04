@@ -3,7 +3,7 @@
  * @class Attribute
  * @author Pierre Guillemot
  */
-define(["models/baseAttribute"], function(mBaseAttribute){
+define(["models/baseAttribute"], function (mBaseAttribute) {
 
     /**
      * Constructor
@@ -14,13 +14,13 @@ define(["models/baseAttribute"], function(mBaseAttribute){
      * @return {Nothing}
      * @public
      */
-    function Attribute(_name, _value, _opts){
+    function Attribute(_name, _value, _opts) {
         //Calls the Base Attribute constructor
         mBaseAttribute.BaseAttribute.call(this, _name, _value);
        
         /**
          * Original value of the attribute
-         */ 
+         */
         var originalValue = this.getValue();
    
         //If no options are set, create an empty dict 
@@ -40,7 +40,7 @@ define(["models/baseAttribute"], function(mBaseAttribute){
         
         /**
          * Array of bonuses the Attribute has
-         */    
+         */
         var bonuses = _opts.bonus || [];
 
         /**
@@ -82,7 +82,7 @@ define(["models/baseAttribute"], function(mBaseAttribute){
          * @return {Nothing}
          * public
          */
-        this.setVal = function (_value){
+        this.setVal = function (_value) {
             //If the new value is greater than the minimun allowed
             if (this.getValue() >= this.getMin()) {
                 //If there is a maximum defined
@@ -92,7 +92,7 @@ define(["models/baseAttribute"], function(mBaseAttribute){
                     } else {
                         this.setValue(this.getMax());
                     }
-                } else{ //If not
+                } else { //If not
                     this.setValue(_value);
                 }
             } //If the value if less than the minimum allowed
@@ -112,7 +112,7 @@ define(["models/baseAttribute"], function(mBaseAttribute){
     };
     
     //TODO: find out what this is for  
-    Attribute.prototype.decreaseCoeff = function decreaseCoeff(coeff){
+    Attribute.prototype.decreaseCoeff = function (coeff) {
         this.setVal(this.val - (this.val *= coeff));
     };
    
@@ -124,7 +124,7 @@ define(["models/baseAttribute"], function(mBaseAttribute){
      * @param {Number} _number number to add to the value
      * @return {Nothing}
      * @private
-     */ 
+     */
     Attribute.prototype._increase = function (_number) {
         this.setVal(this.getValue() + Math.abs(_number));
     };
@@ -156,11 +156,11 @@ define(["models/baseAttribute"], function(mBaseAttribute){
      * @param {Object} _bonus bonus to apply to the attribute
      * @return {Nothing}
      * @public
-     */ 
+     */
     Attribute.prototype.addBonus = function (_bonus) {
         //Add the bonus
         //TODO: Create a class Bonuses similar to Attributes
-        this.getBonuses().push(bonus);
+        this.getBonuses().push(_bonus);
 
         //Calculate the effect of the bonuses
         this.calculateBonus();
@@ -196,7 +196,7 @@ define(["models/baseAttribute"], function(mBaseAttribute){
      * value as a string
      * @public
      */
-    Attribute.prototype.toString = function toString(){
+    Attribute.prototype.toString = function () {
         //TODO: is it possible to exploit the parent toString ?
         var out = this.getName() + " : " + this.getValue();
         
@@ -214,7 +214,7 @@ define(["models/baseAttribute"], function(mBaseAttribute){
      * @return {String} fields of the attribute as JSON
      * @public
      */
-    Attribute.prototype.toJson = function toJson(){
+    Attribute.prototype.toJson = function () {
         return JSON.stringify(this);
     };
     
