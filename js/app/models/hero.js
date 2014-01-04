@@ -1,10 +1,35 @@
-define(["models/creature"], function(mCreature){
+/**
+ * Inherits of Creature, represents the player.
+ * @class Hero
+ * @author Pierre Guillemot
+ */
+define(["models/creature"], function (mCreature) {
 
-    function Hero(name, opts){
-        mCreature.Creature.call(this, 0, name,  undefined, opts);
+    /**
+     * Constructor
+     * @method Hero
+     * @param {String} _name name of the hero
+     * @param {Object} _opts options
+     * @return {Nothing}
+     * @public
+     */
+    function Hero(_name, _opts) {
+        mCreature.Creature.call(this, 0, _name,  undefined, _opts);
         
-        //A bag which contains items
-        this.inventory = new Array();
+        /**
+         * A bag which contains items
+         */
+        var inventory = [];
+
+        /**
+         * Getter for inventory
+         * @method getInventory
+         * @return {Array} array of items of the hero
+         * @public
+         */
+        this.getInventory = function () {
+            return inventory;
+        };
     }
     
     //Hero inherits of Creature
@@ -13,27 +38,37 @@ define(["models/creature"], function(mCreature){
     //Set the constructor
     Hero.prototype.constructor = Hero;
     
-    //Return the inventory
-    Hero.prototype.getInventory = function getInventory(){
-        return this.inventory;
-    };
-    
-    //Return the item corresponding to the ID (not an index !)
-    Hero.prototype.getItem = function getItem(id){
-        for(var i = 0; i < this.inventory.length; i++){
-            if(this.inventory[i].id === id){
-                return this.inventory[i];
+    /**
+     * Return an item from the inventory
+     * TODO: put this in a separate class
+     * @method getItem
+     * @param {Number} _id id of the item
+     * @return {Object} item if found, else undefined
+     * @public
+     */
+    Hero.prototype.getItem = function (_id) {
+        for (var i = 0; i < this.getInventory().length; i++) {
+            var currentItem = this.getInventory()[i];
+            if (currentItem.id === _id) {
+                return currentItem;
             }
         }
         
-        return undefined;  
+        return undefined;
     };
     
-    //Add an item to the inventory
-    Hero.prototype.take = function take(item){
-        this.inventory.push(item);
+    /**
+     * Add an item to the inventory
+     * TODO: should be put in a separate class
+     * @method take
+     * @param {Object} _item the item to add in the inventory
+     * @return {Nothing}
+     * @public
+     */
+    Hero.prototype.take = function (_item) {
+        this.getInventory().push(_item);
         
-        return item.name + " has been added to the bag"; 
+        return _item.getName() + " has been added to the bag";
     };
     
     return {Hero : Hero};

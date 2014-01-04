@@ -1,7 +1,21 @@
-define(["models/creature"], function(mCreature){
+/**
+ * Inherits of Creature.
+ * @class Monster
+ * @author Pierre Guillemot
+ */
+define(["models/creature"], function (mCreature) {
 
-    function Monster(id, name, opts){
-        mCreature.Creature.call(this, id, name,  undefined, opts);
+    /**
+     * Constructor
+     * @method Monster
+     * @param {Number} _id   id of the monster
+     * @param {String} _name name of the monster
+     * @param {Object} _opts options
+     * @return {Nothing}
+     * @public
+     */
+    function Monster(_id, _name, _opts) {
+        mCreature.Creature.call(this, _id, _name,  undefined, _opts);
     }
     
     //Monster inherits of Creature

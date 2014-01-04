@@ -1,124 +1,282 @@
-define(["utils/fightUtils", "models/attributes", "models/attributeType"], function(mFightUtils, mAttributes, mAttributeType){
+/**
+ * Base class for Hero and Monster
+ * @class Creature
+ * @author Pierre Guillemot
+ */
+define(["utils/fightUtils", "models/attributes", "models/attributeType"],
+    function (mFightUtils, mAttributes, mAttributeType) {
 
-    //Base for monsters and heroes
-    function Creature(id, name, pos, opts){
-        this.id = id;
-        this.name = name;
-        this.position = pos;
-        this.setOpts(opts);
+    /**
+     * Constructor
+     * @method Creature
+     * @param {Number} _id       ID of the creature
+     * @param {String} _name     Name of the creature
+     * @param {Object} _position Position of the creature 
+     * @param {Object} _opts     Options
+     * @return {Nothing}
+     * @public
+     */
+    function Creature(_id, _name, _position, _opts) {
+        /**
+         * Unique identifier of the creature
+         */
+        var id;
+
+        /**
+         * Name of the creature
+         */
+        var name;
+
+        /**
+         * Position of the creature
+         */
+        var position;
+
+        /**
+         * Array of attributes of the creature
+         */
+        var attributes;
+
+        /**
+         * Getter for id
+         * @method getId
+         * @return {Number} id of the creature
+         * @public
+         */
+        this.getId = function () {
+            return id;
+        };
+
+        /**
+         * Getter for name
+         * @method getName
+         * @return {String} name of the creature
+         * @public
+         */
+        this.getName = function () {
+            return name !== undefined ?
+                name :
+                "The one without a name";
+        };
+
+        /**
+         * Getter for position
+         * @method getPosition
+         * @return {Object} position of the creature
+         * @public
+         */
+        this.getPosition = function () {
+            return position;
+        };
+
+        
+        /**
+         * Setter for position
+         * @method setPosition
+         * @param {Object} _position new position for the creature
+         * @return {Nothing}
+         * @public
+         */
+        this.setPosition = function (_position) {
+            position = _position;
+        };
+
+        /**
+         * Getter for attributes
+         * @method getAttributes
+         * @return {Array} attributes of the creature
+         * @public
+         */
+        this.getAttributes = function () {
+            return attributes;
+        };
+
+        //If no options have been passed, create an empty dict
+        if (_opts === undefined) {
+            _opts = {};
+        }
+            
+        //Initialize the attributes
+        attributes = new mAttributes.Attributes(_opts.attributes);
     }
     
-    //USED ONLY ONCE FOR INITIALIZATION
-    Creature.prototype.setOpts = function setOpts(opts){
-        if(typeof opts === "undefined")
-            opts = {};
-            
-        this.attributes = new mAttributes.Attributes(opts.attributes);
+    /**
+     * Return an attribute of the creature
+     * @method getAttribute
+     * @param {String} _name name of the attribute to find
+     * @return {Object} attribute or undefined if not found
+     * @public
+     */
+    Creature.prototype.getAttribute = function (_name) {
+        return this.getAttributes().get(name);
     };
-    
-    //Helper method to retrieve attributes
-    Creature.prototype.getAttr = function getAttr(name){
-        return this.attributes.get(name);
-    };
-    
-    Creature.prototype.attack = function attack(creature){
+   
+    /**
+     * Make a creature attack another one to inflict damages
+     * @method attack
+     * @param {Object} _creature the target to attack
+     * @return {Nothing}
+     * @public
+     */
+    Creature.prototype.attack = function (_creature) {
 
-        var dmg = this.getAttr( mAttributeType.DMG );
+        var dmg = this.getAttribute(mAttributeType.DMG);
   
-      //Get a random value between min and max of dmg
+        //Get a random value between min and max of dmg
         var rand = mFightUtils.rand(dmg.min, dmg.val);
         
         var criticalHit = false;
         
-        if(rand === dmg.val)
+        if (rand === dmg.val) {
             criticalHit = true;
+        }
         
         //Final damage amount
         var finalDmg = rand;
         
         //Inflict the damages
-        if( ! this.isDead() )
-            creature.takeDamage( finalDmg );
+        if (! this.isDead()) {
+            _creature.takeDamage(finalDmg);
+        }
+
+        var out =
+            "\t " +
+            this.getName() +
+            "[" +
+            this.getAttribute(mAttributeType.HP) +
+            "] inflicted " +
+            finalDmg +
+            " dmg points";
         
-        var out = "\t " + this.name + "[" + this.getAttr( mAttributeType.HP ) + "] inflicted " + finalDmg + " dmg points";
-        
-        if(criticalHit)
+        if (criticalHit) {
             out += " (CRITICAL HIT)";
-            
-        out +=  " to " + creature.name + "[" + creature.getAttr( mAttributeType.HP ) + " left]";
+        }
+
+        out +=
+            " to " +
+            _creature.getName() +
+            "[" +
+            _creature.getAttribute(mAttributeType.HP) +
+            " left]";
         
         return out;
     };
-    
-    Creature.prototype.takeDamage = function takeDamage(dmg){
+   
+    /**
+     * Manage the result of the attack when a creature is 
+     * being attacked (take damage, dodge, ...)
+     * @method takeDamage
+     * @param {Number} _dmg amount of damage to take
+     * @return {Nothing}
+     * @public
+     */
+    Creature.prototype.takeDamage = function (_dmg) {
         //Test for dodging the attack
-        var dexterity = this.getAttr( mAttributeType.DEXTERITY );
+        var dexterity = this.getAttr(mAttributeType.DEXTERITY);
         
-        if(typeof dexterity !== "undefined"){
-            //Every 2 points of dexterity, there is 1% chance to dodge the attack
-            var result = Math.floor(dexterity.getVal() / 2);
+        if (dexterity !== undefined) {
+            //Every 2 points of dexterity, 
+            // there is 1% chance to dodge the attack
+            var result = Math.floor(dexterity.getValue() / 2);
             var chance = mFightUtils.chance(result);
         
-            if(chance){
-                return this.name + " dodged the attack !!";
+            if (chance) {
+                return this.getName() + " dodged the attack !!";
             }
         }
         
-        this.getAttr( mAttributeType.HP ).decrease(dmg);
+        this.getAttribute(mAttributeType.HP).decrease(_dmg);
     };
-    
-    Creature.prototype.isDead = function isDead(){
-        return (this.getAttr( mAttributeType.HP ).getVal() === 0);
+   
+    /**
+     * Helper method to determine if the creature is dead or not
+     * @method isDead
+     * @return {Boolean} true if dead, false otherwise
+     * @public
+     */
+    Creature.prototype.isDead = function () {
+        return (this.getAttribute(mAttributeType.HP).getValue() === 0);
     };
-    
-    Creature.prototype.update = function update(bonus){
-        var attr = this.getAttr(bonus.getName());
-        if(typeof attr !== "undefined"){
-            attr.addBonus(bonus);
+   
+    /**
+     * Applies a bonus on one of the creature's attribute
+     * @method updateAttribute
+     * @param {Object} _bonus bonus to apply
+     * @return {Nothing}
+     * @public
+     */
+    Creature.prototype.updateAttribute = function (_bonus) {
+        var attr = this.getAttribute(_bonus.getName());
+        if (attr !== undefined) {
+            attr.addBonus(_bonus);
         }
     };
     
-    //TODO: remove the output
-    Creature.prototype.move = function move(pos){
+    /**
+     * Move the creature from its current position to a new one
+     * @method move
+     * @param {Object} _position new position to move to
+     * @return {Nothing}
+     * @public
+     */
+    Creature.prototype.move = function (_position) {
         var out;
         
-        var light = this.position.getAttr( mAttributeType.LIGHT );
-        if(typeof light !== "undefined" && light.getVal() === 0){
+        if (_position.isDark()) {
             out = "You cannot find your way in the dark !";
         }
-        else if(typeof this.position.monsters !== "undefined" && this.position.monsters.length > 0){
+        else if (_position.hasMonsters()) {
             out = "Monster(s) are blocking the way !";
-        }
-        else{
-            out = this.name + " has moved from " + this.position.name + " to " + pos.name + ".";
-            out += "\t " + pos.toString();
-            this.position = pos;
+        } else {
+            out =
+                this.getName() +
+                " has moved from " +
+                this.getPosition().getName() +
+                " to " +
+                _position.getName() +
+                "." +
+                "\t " +
+                _position.toString();
+
+            this.setPosition(_position);
         }
 
         
         return out;
     };
-    
-    Creature.prototype.getPosition = function getPosition(){
-        return this.position;
+     
+   
+    /**
+     * The creature will use an item on a target
+     * @method use
+     * @param {Object} _target target
+     * @param {Object} _item   item to use on the target
+     * @return {Boolean} true if success, false if error/failure
+     * @public
+     */
+    Creature.prototype.use = function (_target, _item) {
+        return _item.use(this, _target);
     };
     
-    Creature.prototype.use = function use(target, item){
-        return item.use(this, target);
+    /**
+     * Returns a string representation of a creature
+     * @method toString
+     * @return {String} return the name and the attributes
+     * @public
+     */
+    Creature.prototype.toString = function () {
+        return this.getName() +
+            " >> " +
+            this.getAttributes().toString();
     };
     
-    Creature.prototype.getName = function getName(){
-        var name = (typeof this.name !== "undefined")?this.name:"The one without a name";
-        
-        return name;
-    }
-    
-    Creature.prototype.toString = function toString(){
-        var name = this.getName();
-        return name + " >> " + this.attributes.toString();
-    };
-    
-    Creature.prototype.toJson = function toJson(){
+    /**
+     * Returns a JSON representation of a creature
+     * @method toJson
+     * @return {String} JSON representation of this creature
+     * @public
+     */
+    Creature.prototype.toJson = function () {
         return JSON.stringify(this);
     };
 
