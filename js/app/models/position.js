@@ -1,60 +1,216 @@
-define(["models/attributes", "models/attributeType"], function(mAttributes, mAttributeType){
-    function Position(id, to, name, desc, opts){
-        this.id = id;
-        this.to = to;
-        this.name = name;
-        this.desc = desc;
-        
-        this.setOpts(opts);
+/**
+ * Define a position in the map
+ * @class Position
+ * @author Pierre Guillemot
+ */
+define(["models/attributes", "models/attributeType"],
+    function (mAttributes, mAttributeType) {
+   
+    /**
+     * Constructor
+     * @method Position
+     * @param {Number} _id          ID of the position
+     * @param {Number} _to          ID of the next position
+     * @param {String} _name        name of the position
+     * @param {String} _description description of the position
+     * @param {Object} _opts        options
+     * @return {Nothing}
+     * @public
+     */
+    function Position(_id, _to, _name, _description, _opts) {
+
+        /**
+         * Unique identifier of the position
+         */
+        var id;
+
+        /**
+         * Identifier of the next position
+         */
+        var to;
+
+        /**
+         * Name of the position
+         */
+        var name;
+
+        /**
+         * Description of the position
+         */
+        var description;
+       
+        /**
+         * Array of monsters located at this position
+         */
+        var monsters;
+
+        /**
+         * Array of items located at this position
+         */
+        var items;
+
+        /**
+         * Attributes of the position
+         * e.g: locked, dark, ...
+         */
+        var attributes;
+
+        /**
+         * Getter for id
+         * @method getId
+         * @return {Number} ID of the position
+         * @public
+         */
+        this.getId = function () {
+            return id;
+        };
+
+        /**
+         * Getter for to
+         * @method getTo
+         * @return {Number} ID of the next position
+         * @public
+         */
+        this.getTo = function () {
+            return to;
+        };
+
+        /**
+         * Getter for name
+         * @method getName
+         * @return {String} name of the position
+         * @public
+         */
+        this.getName = function () {
+            return name;
+        };
+
+        /**
+         * Getter for description
+         * @method getDescription
+         * @return {String} Description of the position
+         * @public
+         */
+        this.getDescription = function () {
+            return description;
+        };
+
+        /**
+         * Getter for monsters
+         * @method getMonsters
+         * @return {Array} Array of monsters ID
+         * @public
+         */
+        this.getMonsters = function () {
+            return monsters;
+        };
+
+        /**
+         * Getter for items
+         * @method getItems
+         * @return {Array} Array of items ID
+         * @public
+         */
+        this.getItems = function () {
+            return items;
+        };
+
+        /**
+         * Getter for attributes
+         * @method getAttributes
+         * @return {Array} Array of attributes
+         * @public
+         */
+        this.getAttributes = function () {
+            return attributes;
+        };
+
+        if (_opts === undefined) {
+            _opts = {};
+        }
+            
+        monsters = _opts.monsters || [];
+        items = _opts.items || [];
+        attributes = new mAttributes.Attributes(_opts.attributes);
     }
     
-    Position.prototype.setOpts = function setOpts(opts){
-        if(typeof opts === "undefined")
-            opts = {};
-            
-        this.monsters = opts.monsters || new Array();
-        this.items = opts.items || new Array();
-        this.attributes = new mAttributes.Attributes(opts.attributes);
+    /**
+     * Return an attribute of the position by name
+     * @method getAttribute
+     * @param {String} _name name of the attribute to find
+     * @return {Object} an attribute if found, undefined otherwise
+     * @public
+     */
+    Position.prototype.getAttribute = function (_name) {
+        return this.getAttributes().get(_name);
     };
-     
-    //Helper method to retrieve attributes
-    Position.prototype.getAttr = function getAttr(name){
-        return this.attributes.get(name);
-    };
-    
-    Position.prototype.update = function update(bonus){
-        var attr = this.getAttr( bonus.getName() );
-        if(typeof attr !== "undefined"){
-            attr.addBonus(bonus);
+   
+    /**
+     * Update an attribute by applying a bonus
+     * @method updateAttribute
+     * @param {Object} _bonus bonus to apply
+     * @return {Nothing}
+     * @public
+     */
+    Position.prototype.updateAttribute = function (_bonus) {
+        var attr = this.getAttr(_bonus.getName());
+        if (attr !== undefined) {
+            attr.addBonus(_bonus);
         }
     };
-    
-    Position.prototype.isDark = function isDark(){
-        var light = this.getAttr( mAttributeType.LIGHT );
+   
+    /**
+     * Helper method to determine if a position is "Dark" or not
+     * @method isDark
+     * @return {Boolean} true if is dark, false otherwise
+     * @public
+     */
+    Position.prototype.isDark = function () {
+        var light = this.getAttr(mAttributeType.LIGHT);
         
-        return (typeof light !== "undefined" && light.getVal() === 0);
+        return (light !== undefined && light.getVal() === 0);
     };
     
-    Position.prototype.getItems = function getItems(){
-        return this.items;
+    /**
+     * Check if the position has monsters
+     * @method hasMonsters
+     * @return {Boolean} true if has monsters, false otherwise
+     * @public
+     */
+    Position.prototype.hasMonsters = function () {
+        //TODO: create a util method for this kind of things
+        return this.getMonsters() !== undefined  &&
+            this.getMonsters().length > 0;
     };
-    
-    Position.prototype.getMonsters = function getMonsters(){
-        return this.monsters;
+ 
+    /**
+     * Check if the position has items
+     * @method hasItems
+     * @return {Boolean} true if has items, false otherwise
+     * @public
+     */
+    Position.prototype.hasItems = function () {
+        return this.getItems() !== undefined &&
+            this.getItems().length > 0;
     };
-    
-    //TODO: TO BE DELETED
-    Position.prototype.toString = function toString(){
-        var out = ( this.isDark() )?"[DARK] ":"";
+
+    /**
+     * Return a string representation of the position
+     * @method toString
+     * @return {String} all the information about the position
+     * @public
+     */
+    Position.prototype.toString = function () {
+        var out = this.isDark() ? "[DARK] " : "";
         
         out += this.name + " : " + this.desc + " You can move to : " + this.to + ".";
         
-        if(this.monsters && this.monsters.length > 0){
-            out += "\t " + this.monsters.length + " monster(s) : " + this.monsters + "."; 
+        if (this.hasMonsters()) {
+            out += "\t " + this.getMonsters().length + " monster(s) : " + this.getMonsters() + ".";
         }
         
-        if(this.items && this.items.length > 0){
-            out += "\t " + this.items.length + " items(s) : " + this.items + "."; 
+        if (this.hasItems()) {
+            out += "\t " + this.getItems().length + " items(s) : " + this.getItems() + ".";
         }
         
         return out;
