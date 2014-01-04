@@ -23,7 +23,15 @@ define(["commands/command"], function (mCommand) {
     
     WhoAmICommand.prototype = Object.create(mCommand.Command.prototype);
     WhoAmICommand.prototype.constructor = WhoAmICommand;
-    
+
+    /**
+     * Display information about the user
+     * @method exec
+     * @param {Object} _args    no argument needed here
+     * @param {Object} _context contains the environment
+     * @return {Object} View
+     * @public
+     */
     WhoAmICommand.prototype.exec = function (_args, _context) {
         //Creating a "shortcut"
         var env = _context.environment;

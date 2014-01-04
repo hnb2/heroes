@@ -30,6 +30,14 @@ define(["commands/command"], function (mCommand) {
     NameCommand.prototype = Object.create(mCommand.Command.prototype);
     NameCommand.prototype.constructor = NameCommand;
     
+    /**
+     * Allow the user to change name once
+     * @method exec
+     * @param {Object} _args    argument "name"
+     * @param {Object} _context contains the environment
+     * @return {Object} View
+     * @public
+     */
     NameCommand.prototype.exec = function (_args, _context) {
         //Creating a "shortcut"
         var env = _context.environment;
