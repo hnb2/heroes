@@ -1,58 +1,123 @@
-define(["commands/command"], function(mCommand){
-    function WhereCommand(){
-        mCommand.Command.call(this,
-            'where', 
-            'Check what is around you', 
-            undefined, 
+/**
+ * "where" command, will return information about the position
+ * @class WhereCommand
+ * @author Pierre Guillemot
+ */
+define(["commands/command"], function (mCommand) {
+
+    /**
+     * Constructor
+     * @method WhereCommand
+     * @return {Nothing}
+     * @public
+     */
+    function WhereCommand() {
+        mCommand.Command.call(
+            this,
+            'where',
+            'Check what is around you',
+            undefined,
             'out'
         );
     }
     
     WhereCommand.prototype = Object.create(mCommand.Command.prototype);
     WhereCommand.prototype.constructor = WhereCommand;
-    
-    WhereCommand.prototype.exec = function(args, context){
+   
+    /**
+     * Return information about the current position of the hero
+     * @method exec
+     * @param {Array} _args     no arguments for this command
+     * @param {Object} _context contains the hero
+     * @return {Nothing}
+     * @public
+     */
+    WhereCommand.prototype.exec = function (_args, _context) {
         //Creating a "shortcut"
-        var env = context.environment;
+        var env = _context.environment;
         
         //Getting the position of the hero
-        var pos = env.hero.getPosition();
+        var position = env.hero.getPosition();
         
-        /** DOM CONSTRUCTION **/
-        var content = new Array();
+        var content = [];
         
         //Dark
-        if(pos.isDark())
-            content.push(env.domHelper.createText("dark", "[DARK]"));
-        
+        if (position.isDark()) {
+            content.push(
+                env.domHelper.createText(
+                    "dark",
+                    "[DARK]"
+                )
+            );
+        }
+
         //Basic description
-        content.push(env.domHelper.createText("info", pos.name + " : " + pos.desc));
+        content.push(
+            env.domHelper.createText(
+                "info",
+                position.getName() + " : " + position.getDescription()
+            )
+        );
         
         //Directions
-        content.push(env.domHelper.createText("info", "You can move to :"));
-        pos.to.forEach(function(item){
-            content.push(env.domHelper.createCommand("move " + item, item));
+        content.push(
+            env.domHelper.createText(
+                "info",
+                "You can move to :"
+            )
+        );
+
+        position.getTo().forEach(function (toPosition) {
+            content.push(
+                env.domHelper.createCommand(
+                    "move " + toPosition,
+                    toPosition
+                )
+            );
         });
         
         //Monsters
-        var monsters = pos.getMonsters();
-        if(monsters && monsters.length > 0){
-            content.push(env.domHelper.createText("info", monsters.length + " monster(s) :"));
-            monsters.forEach(function(monster){
-                content.push(env.domHelper.createCommand("who " + monster, monster));
+        if (position.hasMonsters()) {
+            var monsters = position.getMonsters();
+
+            content.push(
+                env.domHelper.createText(
+                    "info",
+                    monsters.length +
+                    " monster:"
+                )
+            );
+
+            monsters.forEach(function (monster) {
+                content.push(
+                    env.domHelper.createCommand(
+                        "who " + monster,
+                        monster
+                    )
+                );
             });
         }
         
         //Items
-        var items = pos.getItems();
-        if(items && items.length > 0){
-            content.push(env.domHelper.createText("info", items.length + " items(s) :"));
-            items.forEach(function(item){
-                content.push(env.domHelper.createCommand("what " + item, item));
+        if (position.hasItems()) {
+            var items = position.getItems();
+
+            content.push(
+                env.domHelper.createText(
+                    "info",
+                    items.length + " items(s) :"
+                )
+            );
+
+            items.forEach(function (item) {
+                content.push(
+                    env.domHelper.createCommand(
+                        "what " + item,
+                        item
+                    )
+                );
             });
         }
-        
-        /** DOM CONSTRUCTION **/
         
         return env.domHelper.appendArray(content);
     };

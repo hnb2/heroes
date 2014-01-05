@@ -10,7 +10,7 @@ define(["models/attributes", "models/attributeType"],
      * Constructor
      * @method Position
      * @param {Number} _id          ID of the position
-     * @param {Number} _to          ID of the next position
+     * @param {Array}  _to          Array of next positions' IDs
      * @param {String} _name        name of the position
      * @param {String} _description description of the position
      * @param {Object} _opts        options
@@ -25,7 +25,7 @@ define(["models/attributes", "models/attributeType"],
         var id;
 
         /**
-         * Identifier of the next position
+         * Array of identifier of next positions
          */
         var to;
 
@@ -68,7 +68,7 @@ define(["models/attributes", "models/attributeType"],
         /**
          * Getter for to
          * @method getTo
-         * @return {Number} ID of the next position
+         * @return {Array} Array of Ids of the next positions
          * @public
          */
         this.getTo = function () {
@@ -128,7 +128,12 @@ define(["models/attributes", "models/attributeType"],
         if (_opts === undefined) {
             _opts = {};
         }
-            
+
+        id = _id;
+        to = _to;
+        name = _name;
+        description = _description;
+
         monsters = _opts.monsters || [];
         items = _opts.items || [];
         attributes = new mAttributes.Attributes(_opts.attributes);
@@ -153,7 +158,7 @@ define(["models/attributes", "models/attributeType"],
      * @public
      */
     Position.prototype.updateAttribute = function (_bonus) {
-        var attr = this.getAttr(_bonus.getName());
+        var attr = this.getAttribute(_bonus.getName());
         if (attr !== undefined) {
             attr.addBonus(_bonus);
         }
@@ -166,7 +171,7 @@ define(["models/attributes", "models/attributeType"],
      * @public
      */
     Position.prototype.isDark = function () {
-        var light = this.getAttr(mAttributeType.LIGHT);
+        var light = this.getAttribute(mAttributeType.LIGHT);
         
         return (light !== undefined && light.getVal() === 0);
     };
@@ -203,14 +208,30 @@ define(["models/attributes", "models/attributeType"],
     Position.prototype.toString = function () {
         var out = this.isDark() ? "[DARK] " : "";
         
-        out += this.name + " : " + this.desc + " You can move to : " + this.to + ".";
+        out +=
+            this.getName() +
+            " : " +
+            this.getDescription() +
+            " You can move to : " +
+            this.getTo() +
+            ".";
         
         if (this.hasMonsters()) {
-            out += "\t " + this.getMonsters().length + " monster(s) : " + this.getMonsters() + ".";
+            out +=
+                "\t " +
+                this.getMonsters().length +
+                " monster(s) : " +
+                this.getMonsters() +
+                ".";
         }
         
         if (this.hasItems()) {
-            out += "\t " + this.getItems().length + " items(s) : " + this.getItems() + ".";
+            out +=
+                "\t " +
+                this.getItems().length +
+                " items(s) : " +
+                this.getItems() +
+                ".";
         }
         
         return out;

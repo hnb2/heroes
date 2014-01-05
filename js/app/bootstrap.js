@@ -26,7 +26,7 @@ define(["controllers/map", "models/hero", "controllers/monsters", "controllers/i
         
             log.info("Map loaded");
             
-            hero.position = map.getFirst();
+            hero.setPosition(map.getFirst());
             return success;
             
         },
@@ -67,7 +67,7 @@ define(["controllers/map", "models/hero", "controllers/monsters", "controllers/i
                 hero: hero,
                 log: log
             };
-            
+
             return result;
         });
     }
