@@ -1,29 +1,25 @@
-// Bootstrap/Entry point of the application
-define(["bootstrap", "gcli/index", "utils/domUtils", "commands/commands"], function(mBootstrap, mGcli, mDomUtils, mCommands){
+/**
+ * Entry point of the application, it will load all the 
+ * commands once everything has been loaded.
+ * @author Pierre Guillemot
+ */
+define(["bootstrap", "gcli/index", "utils/domUtils", "commands/commands"],
+    function (mBootstrap, mGcli, mDomUtils, mCommands) {
 
-    mBootstrap.startup().then(function(env){
-
-        // Array Remove - By John Resig (MIT Licensed)
-        Array.prototype.remove = function(from, to) {
-          var rest = this.slice((to || from) + 1 || this.length);
-          this.length = from < 0 ? this.length + from : from;
-          return this.push.apply(this, rest);
-        };
-        
-        /*************************** GCLI COMMANDS ***************************/
+    mBootstrap.startup().then(function (_env) {
         
         //Add the DOM utility to the environment
-        env.domHelper = mDomUtils;
+        _env.domHelper = mDomUtils;
         
         //Add all the commands registered in the Commands class
         var commands = new mCommands.Commands();
-        commands.getCommands().forEach(function(item){
+        commands.getCommands().forEach(function (command) {
             mGcli.addCommand({
-                name: item.name,
-                description: item.description,
-                params: item.params,
-                returnType: item.returnType,
-                exec: item.exec
+                name: command.getName(),
+                description: command.getDescription(),
+                params: command.getParams(),
+                returnType: command.getReturnType(),
+                exec: command.exec
             });
         });
         
@@ -32,21 +28,19 @@ define(["bootstrap", "gcli/index", "utils/domUtils", "commands/commands"], funct
             item: "converter",
             from: 'out',
             to: 'view',
-            exec: function(dom, conversionContext) {
-              return conversionContext.createView({
-                html: dom,
-                data: {
-                  onclick: conversionContext.update,
-                  ondblclick: conversionContext.updateExec
-                }
-              });
+            exec: function (dom, conversionContext) {
+                return conversionContext.createView({
+                    html: dom,
+                    data: {
+                        onclick: conversionContext.update,
+                        ondblclick: conversionContext.updateExec
+                    }
+                });
             }
         });
         
-        /*************************** GCLI COMMANDS ***************************/
-    
         //Add the environment
-        mGcli.createDisplay({environment: env});  
+        mGcli.createDisplay({environment: _env});
                 
     });
 });

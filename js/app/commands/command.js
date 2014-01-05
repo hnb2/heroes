@@ -1,24 +1,122 @@
-define([], function(){
+/**
+ * Base class for all the commands, they must inherits this class
+ * and override the exec method.
+ * @class Command
+ * @author Pierre Guillemot
+ */
+define([], function () {
 
-    function Command(name, description, params, returnType){
-        this.name = name;
-        this.description = description;
-        this.params = params;
-        this.returnType = returnType;
+    /**
+     * Constructor
+     * @method Command
+     * @param {String} _name        name of the command
+     * @param {String} _description description of the command
+     * @param {Array} _params       parameters of the command
+     * @param {String} _returnType  return type of the command
+     * @return {Nothing}
+     * @public
+     */
+    function Command(_name, _description, _params, _returnType) {
+        /**
+         * Name of the command
+         */
+        var name;
+
+        /**
+         * Description of the command, can be seen in the help
+         */
+        var description;
+
+        /**
+         * Parameters of the command, can be empty
+         */
+        var params;
+
+        /**
+         * What the command should return
+         */
+        var returnType;
+
+        /**
+         * Getter for name
+         * @method getName
+         * @return {String} name
+         * @public
+         */
+        this.getName = function () {
+            return name;
+        };
+
+        /**
+         * Getter for description
+         * @method getDescription
+         * @return {String} description
+         * @public
+         */
+        this.getDescription = function () {
+            return description;
+        };
+
+        /**
+         * Getter for params
+         * @method getParams
+         * @return {Array} params
+         * @public
+         */
+        this.getParams = function () {
+            return params;
+        };
+
+        /**
+         * Getter for returnType
+         * @method getReturnType
+         * @return {String} returnType
+         * @public
+         */
+        this.getReturnType = function () {
+            return returnType;
+        };
+
+        name = _name;
+        description = _description;
+        params = _params;
+        returnType = _returnType;
     }
-    
-    Command.prototype.exec = function(args, context){
+   
+    /**
+     * This method should be overriden by all the child classes.
+     * Contains the command's execution code, will be called by
+     * the console's API.
+     * @method exec
+     * @param {Array} _args     arguments
+     * @param {Object} _context dictionnary of objects used
+     *      as a context, it is possible to pass custom ones.
+     * @return {Nothing}
+     * @public
+     */
+    Command.prototype.exec = function (_args, _context) {
         throw new Error("Must be implemented !!!");
     };
     
-    Command.prototype.toString = function toString(){
-        var l = (typeof this.params !== "undefined")?this.params.length:0;
-        return this.name + " - " + this.description + " - " + l + " param(s) - " + this.returnType;
-    };
-    
-    Command.prototype.toJson = function toJson(){
-        return JSON.stringify(this);
-    };
+    /**
+     * Return a string representation of the command
+     * @method toString
+     * @return {String} A description of the command
+     * @public
+     */
+    Command.prototype.toString = function () {
+        var numberOfParameters = (this.getParams() !== undefined)
+            ? this.getParams().length
+            : 0;
 
+        return this.getName() +
+            " - " +
+            this.getDescription() +
+            " - " +
+            numberOfParameters +
+            " param(s) - " +
+            this.getReturnType();
+    };
+   
     return {Command: Command};
 });
