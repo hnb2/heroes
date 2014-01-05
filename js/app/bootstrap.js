@@ -26,7 +26,7 @@ define(["controllers/map", "models/hero", "controllers/monsters", "controllers/i
         
             log.info("Map loaded");
             
-            hero.setPosition(map.getFirst());
+            hero.setPosition(map.getFirstPosition());
             return success;
             
         },

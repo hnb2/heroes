@@ -1,50 +1,132 @@
-define(["ext/xhr", "models/position", "models/attribute", "models/bonus"], function(mXhr, mPosition, mAttribute, mBonus){
-    function Map(){
-        this.map = new Array();
-    }
-    
-    Map.prototype.loadMap = function loadMap(map){
-        var self = this;
-        return mXhr("Get", "data/" + map + ".json").then(function(success){
-            var obj = JSON.parse(success.responseText);
-            
-            obj.path.forEach(function(item){
+/**
+ * Loads the map JSON file into an object and retrieve positions
+ * @class Map
+ * @author Pierre Guillemot
+ */
+define(
+["ext/xhr", "models/position", "models/attribute", "models/bonus"],
+function (mXhr, mPosition, mAttribute, mBonus) {
 
-                var attributes = new Array();
-                if(item.attributes){
+    /**
+     * Constructor
+     * @method Map
+     * @return {Nothing}
+     * @public
+     */
+    function Map() {
+        /**
+         * Holds the positions from the map JSON file
+         */
+        var map = [];
+
+        /**
+         * Getter for map
+         * @method getMap
+         * @return {Array} the array of positions
+         * @public
+         */
+        this.getMap = function () {
+            return map;
+        };
+    }
+   
+    /**
+     * Loads the map file into an object
+     * @method loadMap
+     * @param {String} _fileName name of the json map file
+     * @return {Nothing}
+     * @public
+     */
+    Map.prototype.loadMap = function (_fileName) {
+        var self = this;
+
+        //Async load the map file
+        return mXhr("Get", "data/" + _fileName + ".json").then(function (success) {
+            var rootObject = JSON.parse(success.responseText);
+            
+            //Loop on all the positions
+            rootObject.path.forEach(function (item) {
+
+                //Get the attributes
+                var attributes = [];
+                if (item.attributes) {
                 
-                    item.attributes.forEach(function(attr){
+                    item.attributes.forEach(function (attr) {
                     
-                        var bonuses = new Array();
-                        if(attr.bonuses){
-                            attr.bonuses.forEach(function(bonus){
-                                bonuses.push( new mBonus.Bonus(bonus.name, bonus.val) );
+                        //Bonuses first
+                        var bonuses = [];
+                        if (attr.bonuses) {
+                            attr.bonuses.forEach(function (bonus) {
+                                //Create bonuses
+                                bonuses.push(
+                                    new mBonus.Bonus(bonus.name, bonus.val)
+                                );
                             });
                         }
                         
-                        attributes.push( new mAttribute.Attribute(attr.name, attr.val, {min: attr.min, max: attr.max, bonuses: bonuses}) );
+                        //Create attributes
+                        attributes.push(
+                            new mAttribute.Attribute(
+                                attr.name,
+                                attr.val,
+                                {
+                                    min: attr.min,
+                                    max: attr.max,
+                                    bonuses: bonuses
+                                }
+                            )
+                        );
                     });
                 }
-                self.map.push( new mPosition.Position(item.id, item.to, item.name, item.desc, {monsters: item.monsters, items: item.items, attributes: attributes}) );
+
+                //Finally create positions
+                self.getMap().push(
+                    new mPosition.Position(
+                        item.id,
+                        item.to,
+                        item.name,
+                        item.desc,
+                        {
+                            monsters: item.monsters,
+                            items: item.items,
+                            attributes: attributes
+                        }
+                    )
+                );
             });
             
             return success.response;
-        }, 
-        function(error){
+        },
+        function (error) {
             console.log(error);
             
             return error.response;
         });
     };
-    
-    Map.prototype.getFirst = function getFirst(){
-        return this.map[0];
+   
+    /**
+     * Return the first position of the map. Used to initialize
+     * the hero when launching the game.
+     * @method getFirstPosition
+     * @return {Object} Position object
+     * @public
+     */
+    Map.prototype.getFirstPosition = function () {
+        return this.getMap()[0];
     };
-    
-    Map.prototype.getPosition = function getPosition(id){
-        for(var i = 0; i < this.map.length; i++){
-            if(this.map[i].id === id){
-                return this.map[i];
+   
+    /**
+     * Return a position in the map based on its ID
+     * @method getPosition
+     * @param {Number} _id id of the position
+     * @return {Object} Position if found, undefined otherwise
+     * @public
+     */
+    Map.prototype.getPosition = function (_id) {
+        for (var i = 0; i < this.getMap().length; i++) {
+            var currentPosition = this.getMap()[i];
+            if (currentPosition.getId() === _id) {
+                return currentPosition;
             }
         }
         

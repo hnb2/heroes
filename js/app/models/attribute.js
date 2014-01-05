@@ -41,7 +41,7 @@ define(["models/baseAttribute"], function (mBaseAttribute) {
         /**
          * Array of bonuses the Attribute has
          */
-        var bonuses = _opts.bonus || [];
+        var bonuses = _opts.bonuses || [];
 
         /**
          * Getter for min
