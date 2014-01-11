@@ -33,26 +33,33 @@ define(["ext/xhr", "models/monster", "models/attribute", "models/bonus"], functi
                 }
             
                 //Add it to the array
-                self.monsters.push( new mMonster.Monster( parseInt(item.id, 10), item.name, {attributes: attributes} ) );
+                self.monsters.push(
+                    new mMonster.Monster(
+                        parseInt(item.id, 10),
+                        item.name,
+                        {attributes: attributes}
+                    )
+                );
             });
             
             return success.response;
         },
-        function(error){
+        function (error) {
             console.log(error.response);
             
             return error.response;
         });
     };
     
-    Monsters.prototype.getMonster = function getMonster(id){
-        for(var i = 0; i < this.monsters.length; i++){
-            if(this.monsters[i].id === id){
-                return this.monsters[i];
+    Monsters.prototype.getMonster = function (_id) {
+        for (var i = 0; i < this.monsters.length; i++) {
+            var currentMonster = this.monsters[i];
+            if (currentMonster.getId() === _id) {
+                return currentMonster;
             }
         }
         
-        return undefined;   
+        return undefined;
     };
     
     return {Monsters : Monsters};

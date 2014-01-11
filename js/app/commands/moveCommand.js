@@ -35,9 +35,9 @@ define(["commands/command"], function (mCommand) {
      * Moves the hero from one point to the other if possible,
      * takes in account the current position status (dark, monsters))
      * @method exec
-     * @param {Array} _args     ID: id of the location to go to
+     * @param {Array} _args     id: id of the location to go to
      * @param {Object} _context contains the environment
-     * @return {Nothing}
+     * @return {Object} view object
      * @public
      */
     MoveCommand.prototype.exec = function (_args, _context) {

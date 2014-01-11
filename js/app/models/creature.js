@@ -99,6 +99,10 @@ define(["utils/fightUtils", "models/attributes", "models/attributeType"],
             return attributes;
         };
 
+        id = _id;
+        name = _name;
+        position = _position;
+
         //If no options have been passed, create an empty dict
         if (_opts === undefined) {
             _opts = {};
