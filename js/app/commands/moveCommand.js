@@ -44,13 +44,17 @@ define(["commands/command"], function (mCommand) {
         //Creating a "shortcut"
         var env = _context.environment;
         
+        //Get the hero current position
         var currentPosition = env.hero.getPosition();
         
+        //Get the ID of the choosen position
+        var positionId = _args.id;
+
         //If the next position is part of the available path 
         // of the current position, go on.
         var nextPosition;
-        if (currentPosition.getTo().indexOf(_args.id) !== -1) {
-            nextPosition = env.map.getPosition(_args.id);
+        if (currentPosition.getTo().indexOf(positionId) !== -1) {
+            nextPosition = env.map.getPosition(positionId);
         }
         
         //If the position has not been found
@@ -61,9 +65,7 @@ define(["commands/command"], function (mCommand) {
                 " has lost his way ! Remember to use where in trouble..."
             );
         }
-
-        var content = [];
-    
+ 
         //Dark
         if (currentPosition.isDark()) {
             return env.domHelper.createText(
@@ -79,6 +81,8 @@ define(["commands/command"], function (mCommand) {
                 "Monster(s) are blocking the way !"
             );
         }
+
+        var content = [];
 
         //Info message: the hero is moving
         content.push(
@@ -103,7 +107,6 @@ define(["commands/command"], function (mCommand) {
         
         //Move the hero
         env.hero.move(nextPosition);
-    
     
         return env.domHelper.appendArray(content);
     };

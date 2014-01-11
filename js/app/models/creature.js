@@ -228,29 +228,21 @@ define(["utils/fightUtils", "models/attributes", "models/attributeType"],
      * @public
      */
     Creature.prototype.move = function (_position) {
-        var out;
-        
-        if (_position.isDark()) {
-            out = "You cannot find your way in the dark !";
-        }
-        else if (_position.hasMonsters()) {
-            out = "Monster(s) are blocking the way !";
-        } else {
-            out =
-                this.getName() +
-                " has moved from " +
-                this.getPosition().getName() +
-                " to " +
-                _position.getName() +
-                "." +
-                "\t " +
-                _position.toString();
+        var currentPosition = this.getPosition();
 
-            this.setPosition(_position);
+        if (currentPosition.isDark()) {
+            throw new Error(
+                "You cannot find your way in the dark !"
+            );
         }
-
         
-        return out;
+        if (currentPosition.hasMonsters()) {
+            throw new Error(
+                "Monster(s) are blocking the way !"
+            );
+        }
+        
+        this.setPosition(_position);
     };
      
    
