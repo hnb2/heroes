@@ -57,7 +57,7 @@ define(["commands/command"], function (mCommand) {
         if (nextPosition === undefined) {
             return env.domHelper.createText(
                 "error",
-                env.hero.getName() +
+                env.hero.getDisplayName() +
                 " has lost his way ! Remember to use where in trouble..."
             );
         }
@@ -84,7 +84,7 @@ define(["commands/command"], function (mCommand) {
         content.push(
             env.domHelper.createText(
                 "info",
-                env.hero.getName() +
+                env.hero.getDisplayName() +
                 " has moved from " +
                 currentPosition.getName() +
                 " to " +

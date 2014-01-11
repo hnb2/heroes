@@ -71,5 +71,20 @@ define(["models/creature"], function (mCreature) {
         return _item.getName() + " has been added to the bag";
     };
     
+    /**
+     * Return the name of the hero to display in the view
+     * @method getDisplayName
+     * @return {String} Gives a default name if not set, else the name
+     * @public
+     */
+    Hero.prototype.getDisplayName = function () {
+        var heroName = this.getName();
+        if (heroName === undefined) {
+            heroName = "The one without a name";
+        }
+
+        return heroName;
+    };
+
     return {Hero : Hero};
 });
