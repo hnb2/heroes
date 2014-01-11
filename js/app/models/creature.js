@@ -120,7 +120,7 @@ define(["utils/fightUtils", "models/attributes", "models/attributeType"],
      * @public
      */
     Creature.prototype.getAttribute = function (_name) {
-        return this.getAttributes().get(name);
+        return this.getAttributes().get(_name);
     };
    
     /**
@@ -134,8 +134,11 @@ define(["utils/fightUtils", "models/attributes", "models/attributeType"],
 
         var dmg = this.getAttribute(mAttributeType.DMG);
   
-        //Get a random value between min and max of dmg
-        var rand = mFightUtils.rand(dmg.min, dmg.val);
+        //Get a random value between min and the actual value of dmg
+        var rand = mFightUtils.rand(
+            dmg.getMin(),
+            dmg.getValue()
+        );
         
         var criticalHit = false;
         
@@ -153,7 +156,7 @@ define(["utils/fightUtils", "models/attributes", "models/attributeType"],
 
         var out =
             "\t " +
-            this.getName() +
+            this.getDisplayName() +
             "[" +
             this.getAttribute(mAttributeType.HP) +
             "] inflicted " +
@@ -166,7 +169,7 @@ define(["utils/fightUtils", "models/attributes", "models/attributeType"],
 
         out +=
             " to " +
-            _creature.getName() +
+            _creature.getDisplayName() +
             "[" +
             _creature.getAttribute(mAttributeType.HP) +
             " left]";
@@ -184,7 +187,7 @@ define(["utils/fightUtils", "models/attributes", "models/attributeType"],
      */
     Creature.prototype.takeDamage = function (_dmg) {
         //Test for dodging the attack
-        var dexterity = this.getAttr(mAttributeType.DEXTERITY);
+        var dexterity = this.getAttribute(mAttributeType.DEXTERITY);
         
         if (dexterity !== undefined) {
             //Every 2 points of dexterity, 
@@ -193,7 +196,7 @@ define(["utils/fightUtils", "models/attributes", "models/attributeType"],
             var chance = mFightUtils.chance(result);
         
             if (chance) {
-                return this.getName() + " dodged the attack !!";
+                return this.getDisplayName() + " dodged the attack !!";
             }
         }
         
@@ -207,7 +210,8 @@ define(["utils/fightUtils", "models/attributes", "models/attributeType"],
      * @public
      */
     Creature.prototype.isDead = function () {
-        return (this.getAttribute(mAttributeType.HP).getValue() === 0);
+        return this.getAttribute(mAttributeType.HP).getValue()
+             === 0;
     };
    
     /**
@@ -262,6 +266,16 @@ define(["utils/fightUtils", "models/attributes", "models/attributeType"],
         return _item.use(this, _target);
     };
     
+    /**
+     * Return the name of the creature to display in the view
+     * @method getDisplayName
+     * @return {String} Returns the name
+     * @public
+     */
+    Creature.prototype.getDisplayName = function () {
+        return this.getName();
+    };
+
     /**
      * Returns a string representation of a creature
      * @method toString

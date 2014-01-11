@@ -72,7 +72,8 @@ define(["models/creature"], function (mCreature) {
     };
     
     /**
-     * Return the name of the hero to display in the view
+     * Return the name of the hero to display in the view.
+     * Was overriden from Creature
      * @method getDisplayName
      * @return {String} Gives a default name if not set, else the name
      * @public

@@ -123,9 +123,9 @@ define(["models/baseAttribute"], function (mBaseAttribute) {
      * @method increase
      * @param {Number} _number number to add to the value
      * @return {Nothing}
-     * @private
+     * @public
      */
-    Attribute.prototype._increase = function (_number) {
+    Attribute.prototype.increase = function (_number) {
         this.setVal(this.getValue() + Math.abs(_number));
     };
     
@@ -134,9 +134,9 @@ define(["models/baseAttribute"], function (mBaseAttribute) {
      * @method increase
      * @param {Number} _number number to subtract to the value
      * @return {Nothing}
-     * @private
+     * @public
      */
-    Attribute.prototype._decrease = function (_number) {
+    Attribute.prototype.decrease = function (_number) {
         this.setVal(this.getValue() - _number);
     };
     
