@@ -17,8 +17,8 @@ define(["models/item"], function (mItem) {
             //Bonuses
             if (_opts.bonuses !== undefined) {
                 var self = this;
-                _opts.bonuses.forEach(function (item) {
-                    self.bonuses.push(item);
+                _opts.bonuses.forEach(function (_bonus) {
+                    self.bonuses.push(_bonus);
                 });
             }
             
@@ -41,11 +41,14 @@ define(["models/item"], function (mItem) {
      * @public
      */
     ActionItem.prototype.use = function (_source, _target) {
-        this.bonuses.forEach(function (item) {
-            _target.update(item);
+        this.bonuses.forEach(function (_bonus) {
+            _target.updateAttribute(_bonus);
         });
         
-        var out = _source.getName() + " used " + this.getName();
+        var out = _source.getDisplayName() +
+            " used " +
+            this.getName();
+
         if (_source !== _target) {
             out += " on " + _target.getName();
         }

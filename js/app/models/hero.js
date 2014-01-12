@@ -49,7 +49,7 @@ define(["models/creature"], function (mCreature) {
     Hero.prototype.getItem = function (_id) {
         for (var i = 0; i < this.getInventory().length; i++) {
             var currentItem = this.getInventory()[i];
-            if (currentItem.id === _id) {
+            if (currentItem.getId() === _id) {
                 return currentItem;
             }
         }
