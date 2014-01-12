@@ -1,6 +1,8 @@
 #Heroes
 Heroes is a full javascript (i think i saw some HTML around too...) text based RPG. I use :
 
+- VIM to write code
+- JSHint for code quality
 - GCli to render a nice and elegant out of the box graphical console
 - RequireJs to separate each class into modules (AMD)
 - [Eclipse Orion](http://eclipse.org/orion/)'s Xhr and Deferred classes to execute Xhr Request and make use of Deferred object and promises
@@ -18,16 +20,14 @@ No, I have not.
 Thou shall find what one must do to complete what one once began...
 
 ## NOW
-- Convert the rest of the commands using the new ViewConverter
-- Cleanup old code ( output in methods + toString() )
-- Review the fight command logic ?
-- Review the use command logic (add target to object ?)
+- Write Views in order to separate the logic in the Commands classes
+- Review the fight command logic
+- Review the use command logic
 - Implement "locked" in position
 - Add content in the map.json for the key, the manor and the wolf leader
-- Add more log output in the developer console
 
 ## EXTRA
-- Update Heroes maker
+- Integrate in this project Heroes maker
 
 ## LATER
 - Make a loading screen
