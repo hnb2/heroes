@@ -142,7 +142,7 @@ define(["utils/fightUtils", "models/attributes", "models/attributeType"],
         
         var criticalHit = false;
         
-        if (rand === dmg.val) {
+        if (rand === dmg.getValue()) {
             criticalHit = true;
         }
         

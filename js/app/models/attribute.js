@@ -84,10 +84,10 @@ define(["models/baseAttribute"], function (mBaseAttribute) {
          */
         this.setVal = function (_value) {
             //If the new value is greater than the minimun allowed
-            if (this.getValue() >= this.getMin()) {
+            if (_value >= this.getMin()) {
                 //If there is a maximum defined
                 if (this.getMax() !== undefined) {
-                    if (this.getValue() < this.getMax()) {
+                    if (_value < this.getMax()) {
                         this.setValue(_value);
                     } else {
                         this.setValue(this.getMax());
@@ -96,7 +96,7 @@ define(["models/baseAttribute"], function (mBaseAttribute) {
                     this.setValue(_value);
                 }
             } //If the value if less than the minimum allowed
-            else if (this.getValue() < this.getMin()) {
+            else if (_value < this.getMin()) {
                 //Set the value as the minimum
                 this.setValue(this.getMin());
             }

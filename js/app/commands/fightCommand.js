@@ -97,7 +97,8 @@ define(["commands/command"], function (mCommand) {
                 )
             );
         } else {
-            currentPosition.getMonsters().remove(monsterIndexPosition);
+            //Remove the monster
+            currentPosition.getMonsters().splice(monsterIndexPosition, 1);
 
             content.push(
                 env.domHelper.createText(
