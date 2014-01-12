@@ -1,15 +1,28 @@
-define(["commands/command"], function(mCommand){
-    function TakeCommand(){
+/**
+ * "take <id>" takes an item and put it inside the hero
+ * 's inventory.
+ * @class TakeCommand
+ * @author Pierre Guillemot
+ */
+define(["commands/command"], function (mCommand) {
+
+    /**
+     * Constructor
+     * @method TakeCommand
+     * @return {Nothing}
+     * @public
+     */
+    function TakeCommand() {
         mCommand.Command.call(this,
-            'take', 
-            'Take an item', 
+            'take',
+            'Take an item',
             [
                 {
-                  name: 'id',
-                  type: 'number',
-                  description: 'The id of the item'
+                    name: 'id',
+                    type: 'number',
+                    description: 'The id of the item'
                 }
-            ], 
+            ],
             'dom'
         );
     }
@@ -17,30 +30,51 @@ define(["commands/command"], function(mCommand){
     TakeCommand.prototype = Object.create(mCommand.Command.prototype);
     TakeCommand.prototype.constructor = TakeCommand;
     
-    TakeCommand.prototype.exec = function(args, context){
+    /**
+     * Takes an item into the hero's inventory
+     * @method exec
+     * @param {Array}  _args    id: id of the item to use
+     * @param {Object} _context contains the environment
+     * @return {Object} view object
+     * @public
+     */
+    TakeCommand.prototype.exec = function (_args, _context) {
         //Creating a "shortcut"
-        var env = context.environment;
+        var env = _context.environment;
     
-        var curPos = env.hero.getPosition();
+        //Get the current position of the hero
+        var currentPosition = env.hero.getPosition();
         
-        var iIndex = curPos.items.indexOf(args.id); //Position of the item in the array
-        if(typeof curPos.items !== "undefined" && iIndex !== -1){
-            var item = env.items.getItem(args.id);
+        //Get the ID of the item to take
+        var itemId = _args.id;
+
+        //Position of the item in the array
+        var itemIndex = currentPosition.getItems().indexOf(itemId);
+
+        if (currentPosition.hasItems() && itemIndex !== -1) {
+            //Get the item
+            var item = env.items.getItem(itemId);
             
             //Check for monsters
-            if(typeof curPos.monsters !== "undefined" && curPos.monsters.length > 0){
-                return env.domHelper.createText("error", "You cannot take the item, monster(s) are around...");
+            if (currentPosition.hasMonsters()) {
+                return env.domHelper.createText(
+                    "error",
+                    "You cannot take the item, " +
+                    "monster(s) are around..."
+                );
             }
-            else{
-                //We remove it from the position
-                curPos.items.remove(iIndex);
-                
-                return env.domHelper.createText("action", env.hero.take(item));
-            }
+
+            //We remove it from the position
+            currentPosition.getItems().splice(itemIndex, 1);
+            
+            return env.domHelper.createText(
+                "action",
+                env.hero.take(item)
+            );
         }
-        else{
-            return env.domHelper.createText("error", "Not found !");
-        }
+
+        //Cannot find the item
+        return env.domHelper.createText("error", "Not found !");
     };
     
     return {TakeCommand: TakeCommand};
