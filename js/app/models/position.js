@@ -173,7 +173,7 @@ define(["models/attributes", "models/attributeType"],
     Position.prototype.isDark = function () {
         var light = this.getAttribute(mAttributeType.LIGHT);
         
-        return (light !== undefined && light.getVal() === 0);
+        return (light !== undefined && light.getValue() === 0);
     };
     
     /**
