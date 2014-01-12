@@ -1,36 +1,61 @@
-define(["commands/command"], function(mCommand){
-    function WhatCommand(){
+/**
+ * "what <id>: returns information about an item"
+ * @class WhatCommand
+ * @author Pierre Guillemot
+ */
+define(["commands/command"], function (mCommand) {
+
+    /**
+     * Constructor
+     * @method WhatCommand
+     * @return {Nothing}
+     * @public
+     */
+    function WhatCommand() {
         mCommand.Command.call(this,
-            'what', 
-            'Get information about an item', 
+            'what',
+            'Get information about an item',
             [
                 {
-                  name: 'id',
-                  type: 'number',
-                  description: 'The id of the item'
+                    name: 'id',
+                    type: 'number',
+                    description: 'The id of the item'
                 }
-            ], 
+            ],
             'dom'
         );
     }
     
     WhatCommand.prototype = Object.create(mCommand.Command.prototype);
     WhatCommand.prototype.constructor = WhatCommand;
-    
-    WhatCommand.prototype.exec = function(args, context){
+   
+    /**
+     * Returns information about an item
+     * @method exec
+     * @param {Array}  _args    id: id of the item to get info
+     * @param {Object} _context contains the environment
+     * @return {Object} view object
+     * @public
+     */
+    WhatCommand.prototype.exec = function (_args, _context) {
         //Creating a "shortcut"
-        var env = context.environment;
+        var env = _context.environment;
     
-        var curPos = env.hero.getPosition();
+        //Get the current position
+        var currentPosition = env.hero.getPosition();
         
-        if(typeof curPos.items !== "undefined" && curPos.items.indexOf(args.id) !== -1){
-            var item = env.items.getItem(args.id);
+        //Get the ID from the arguments
+        var itemId = _args.id;
+
+        if (currentPosition.hasItems() &&
+            currentPosition.getItems().indexOf(itemId) !== -1) {
+            //Get the item
+            var item = env.items.getItem(itemId);
             
             return env.domHelper.createText("info", item.toString());
         }
-        else{
-            return env.domHelper.createText("error", "Not found !");
-        }
+        
+        return env.domHelper.createText("error", "Not found !");
     };
     
     return {WhatCommand: WhatCommand};

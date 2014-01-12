@@ -35,14 +35,15 @@ define(["ext/xhr", "models/actionItem", "models/bonus"], function(mXhr, mActionI
         });
     };
     
-    Items.prototype.getItem = function getItem(id){
-        for(var i = 0; i < this.items.length; i++){
-            if(this.items[i].id === id){
-                return this.items[i];
+    Items.prototype.getItem = function (_id) {
+        for (var i = 0; i < this.items.length; i++) {
+            var currentItem = this.items[i];
+            if (currentItem.getId() === _id) {
+                return currentItem;
             }
         }
         
-        return undefined;   
+        return undefined;
     };
     
     return {Items : Items};
