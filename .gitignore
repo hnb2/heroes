@@ -1,0 +1,2 @@
+#Ignore the content of the build directory (doc + minified js)
+build

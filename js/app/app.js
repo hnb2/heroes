@@ -1,6 +1,7 @@
 /**
  * Entry point of the application, it will load all the 
  * commands once everything has been loaded.
+ * @class App
  * @author Pierre Guillemot
  */
 define(["bootstrap", "gcli/index", "utils/domUtils", "commands/commands"],

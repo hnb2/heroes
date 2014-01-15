@@ -1,0 +1,10 @@
+{
+    "name": "Heroes API",
+    "description": "The Text based RPG",
+    "version": "0,1",
+    "url": "https://github.com/hnb2/heroes",
+    "options": {
+        "outdir": "build/doc",
+        "paths": "js/app"
+    }
+}

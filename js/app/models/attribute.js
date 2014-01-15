@@ -20,6 +20,8 @@ define(["models/baseAttribute"], function (mBaseAttribute) {
        
         /**
          * Original value of the attribute
+         * @property originalValue
+         * @type Object
          */
         var originalValue = this.getValue();
    
@@ -30,16 +32,23 @@ define(["models/baseAttribute"], function (mBaseAttribute) {
         
         /**
          * Minimum value allowed for this attribute. Default on 0.
+         * @property min
+         * @type Number
+         * @default 0
          */
         var min = _opts.min || 0;
 
         /**
          * Maximum value allowed for this attribute. Is optionnal.
+         * @property max
+         * @type Number
          */
         var max = _opts.max || undefined;
         
         /**
          * Array of bonuses the Attribute has
+         * @property bonuses
+         * @type Array
          */
         var bonuses = _opts.bonuses || [];
 
@@ -210,7 +219,7 @@ define(["models/baseAttribute"], function (mBaseAttribute) {
     
     /**
      * Return a json representation of the Base attribute
-     * @nethod toJson
+     * @method toJson
      * @return {String} fields of the attribute as JSON
      * @public
      */

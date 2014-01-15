@@ -30,11 +30,16 @@ function (
 ) {
 
     /**
-     *
+     * Constructor
+     * @method Commands
+     * @return {Nothing}
+     * @public
      */
     function Commands() {
         /**
          * Array which will contains all the commands
+         * @property commands
+         * @type Array
          */
         var commands = [];
 

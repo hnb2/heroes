@@ -18,6 +18,8 @@ define(["models/creature"], function (mCreature) {
         
         /**
          * A bag which contains items
+         * @property inventory
+         * @type Array
          */
         var inventory = [];
 
