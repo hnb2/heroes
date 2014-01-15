@@ -32,8 +32,8 @@ define(["commands/command"], function (mCommand) {
     /**
      * Gets information about a creature in the current position
      * @method exec
-     * @params {Array}  _args    id: id of the creature to get info
-     * @params {Object} _context contains the environment
+     * @param {Array}  _args    id: id of the creature to get info
+     * @param {Object} _context contains the environment
      * @return {Object} view object
      * @public
      */

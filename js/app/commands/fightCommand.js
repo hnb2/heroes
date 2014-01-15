@@ -33,8 +33,8 @@ define(["commands/command"], function (mCommand) {
      * Fights a creature: A inflicts damage to B, B takes the damages
      * then the opposite occurs from B to A.
      * @method exec
-     * @params {Array}  _args    id: id of the creature to fight
-     * @params {Object} _context contains the environment
+     * @param {Array}  _args    id: id of the creature to fight
+     * @param {Object} _context contains the environment
      * @return {Object} view object
      * @public
      */

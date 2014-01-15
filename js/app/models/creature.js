@@ -19,21 +19,29 @@ define(["utils/fightUtils", "models/attributes", "models/attributeType"],
     function Creature(_id, _name, _position, _opts) {
         /**
          * Unique identifier of the creature
+         * @property id
+         * @type Number
          */
         var id;
 
         /**
          * Name of the creature
+         * @property name
+         * @type String
          */
         var name;
 
         /**
          * Position of the creature
+         * @property position
+         * @type Object
          */
         var position;
 
         /**
          * Array of attributes of the creature
+         * @property attributes
+         * @type Array
          */
         var attributes;
 

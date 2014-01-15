@@ -18,21 +18,29 @@ define([], function () {
     function Item(_id, _name, _description, _value) {
         /**
          * Unique identifier of the item
+         * @property id
+         * @type Number
          */
         var id;
 
         /**
          * Name of the item
+         * @property name
+         * @type String
          */
         var name;
 
         /**
          * Description of the item, is optionnal
+         * @property description
+         * @type String
          */
         var description;
 
         /**
          * Value of the item
+         * @property value
+         * @type Number
          */
         var value;
 

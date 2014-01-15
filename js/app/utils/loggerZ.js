@@ -1,6 +1,8 @@
 /**
  * Should be used for debug/error output
- *
+ * TODO: Write the documentation + jshint this class
+ * @class LoggerZ
+ * @author Pierre Guillemot
  */
 define([""], function(){
 

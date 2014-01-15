@@ -18,11 +18,15 @@ define([], function () {
     function BaseAttribute(_name, _value) {
         /**
          * Name of the attribute
+         * @property name
+         * @type String
          */
         var name;
 
         /**
          * Value of the attribute
+         * @property value
+         * @type Number
          */
         var value;
 
@@ -85,7 +89,7 @@ define([], function () {
     
     /**
      * Return a json representation of the Base attribute
-     * @nethod toJson
+     * @method toJson
      * @return {String} name and value as JSON
      * @public
      */

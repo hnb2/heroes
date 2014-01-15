@@ -16,6 +16,8 @@ function (mXhr, mPosition, mAttribute, mBonus) {
     function Map() {
         /**
          * Holds the positions from the map JSON file
+         * @property map
+         * @type Array
          */
         var map = [];
 

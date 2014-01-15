@@ -21,37 +21,51 @@ define(["models/attributes", "models/attributeType"],
 
         /**
          * Unique identifier of the position
+         * @property id
+         * @type Number
          */
         var id;
 
         /**
          * Array of identifier of next positions
+         * @property to
+         * @type Array
          */
         var to;
 
         /**
          * Name of the position
+         * @property name
+         * @type String
          */
         var name;
 
         /**
          * Description of the position
+         * @property description
+         * @type String
          */
         var description;
        
         /**
          * Array of monsters located at this position
+         * @property monsters
+         * @type Array
          */
         var monsters;
 
         /**
          * Array of items located at this position
+         * @property items
+         * @type Array
          */
         var items;
 
         /**
          * Attributes of the position
          * e.g: locked, dark, ...
+         * @property attributes
+         * @type Array
          */
         var attributes;
 

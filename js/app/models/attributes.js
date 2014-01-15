@@ -15,6 +15,8 @@ define([], function () {
     function Attributes(_opts) {
         /**
          * Array of attributes
+         * @property attributes
+         * @type Array
          */
         var attributes = [];
         
@@ -120,7 +122,7 @@ define([], function () {
     
     /**
      * Return a json representation of Attributes
-     * @nethod toJson
+     * @method toJson
      * @return {String} JSON representation of all the attributes in the array
      * @public
      */

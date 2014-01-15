@@ -19,21 +19,29 @@ define([], function () {
     function Command(_name, _description, _params, _returnType) {
         /**
          * Name of the command
+         * @property name
+         * @type String
          */
         var name;
 
         /**
          * Description of the command, can be seen in the help
+         * @property description
+         * @type String
          */
         var description;
 
         /**
          * Parameters of the command, can be empty
+         * @property params
+         * @type Array
          */
         var params;
 
         /**
          * What the command should return
+         * @property returnType
+         * @type String
          */
         var returnType;
 
