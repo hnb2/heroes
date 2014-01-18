@@ -1,6 +1,5 @@
 /**
- * View for the Name command, is not defined as a class because
- * of the context issue when calling a command "exec" method
+ * View for the name command
  * @class NameView
  * @author Pierre Guillemot
  */

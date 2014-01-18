@@ -3,7 +3,8 @@
  * @class WhoAmICommand
  * @author Pierre Guillemot
  */
-define(["commands/command"], function (mCommand) {
+define(["commands/command", "views/whoAmIView"],
+    function (mCommand, mWhoAmIView) {
 
     /**
      * Constructor
@@ -36,39 +37,7 @@ define(["commands/command"], function (mCommand) {
         //Creating a "shortcut"
         var env = _context.environment;
 
-        var content = [];
-
-        if (env.hero.getName() === undefined) {
-            content.push(
-                env.domHelper.createText(
-                    "info",
-                    "You should pick a name !"
-                )
-            );
-
-            content.push(
-                env.domHelper.createCommand(
-                    "name",
-                    "name"
-                    )
-                );
-        } else {
-            content.push(
-                env.domHelper.createText(
-                    "info",
-                    env.hero.getName()
-                    )
-                );
-        }
-        content.push(
-            env.domHelper.createText(
-                "info",
-                ">> " +
-                env.hero.getAttributes().toString()
-                )
-            );
-        
-        return env.domHelper.appendArray(content);
+        return mWhoAmIView.whoAmI(env.hero);
     };
     
     return {WhoAmICommand: WhoAmICommand};
