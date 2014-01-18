@@ -20,8 +20,7 @@ define(["utils/domUtils"], function (mDomUtils) {
 
         //Basic error message
         content.push(
-            mDomUtils.createText(
-                "error",
+            mDomUtils.createErrorText(
                 "Please enter a valid name."
             )
         );
@@ -61,8 +60,7 @@ define(["utils/domUtils"], function (mDomUtils) {
      * @public
      */
     var nameAlreadySet = function (_hero) {
-        return mDomUtils.createText(
-            "error",
+        return mDomUtils.createErrorText(
             "It is too late for you " +
             _hero.getDisplayName() +
             " !"

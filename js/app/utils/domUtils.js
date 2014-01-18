@@ -37,6 +37,17 @@ define([], function () {
     }
     
     /**
+     * Helper method to create an error text DOM element
+     * @method createErrorText
+     * @param {String} _content content of the text element
+     * @return {Object} DOM element
+     * @public
+     */
+    function createErrorText(_content) {
+        return createElement("p", "error", _content);
+    }
+
+    /**
      * Helper method to create a command DOM element
      * @method createCommand
      * @param {String} _command command name
@@ -75,6 +86,7 @@ define([], function () {
 
     return {
         createText: createText,
+        createErrorText: createErrorText,
         appendArray: appendArray,
         createCommand: createCommand
     };
