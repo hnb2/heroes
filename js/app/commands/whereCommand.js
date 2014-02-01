@@ -3,7 +3,8 @@
  * @class WhereCommand
  * @author Pierre Guillemot
  */
-define(["commands/command"], function (mCommand) {
+define(["commands/command", "views/whereView"],
+    function (mCommand, mWhereView) {
 
     /**
      * Constructor
@@ -29,7 +30,7 @@ define(["commands/command"], function (mCommand) {
      * @method exec
      * @param {Array} _args     no arguments for this command
      * @param {Object} _context contains the hero
-     * @return {Nothing}
+     * @return {Object} View
      * @public
      */
     WhereCommand.prototype.exec = function (_args, _context) {
@@ -39,87 +40,7 @@ define(["commands/command"], function (mCommand) {
         //Getting the position of the hero
         var position = env.hero.getPosition();
         
-        var content = [];
-        
-        //Dark
-        if (position.isDark()) {
-            content.push(
-                env.domHelper.createText(
-                    "dark",
-                    "[DARK]"
-                )
-            );
-        }
-
-        //Basic description
-        content.push(
-            env.domHelper.createText(
-                "info",
-                position.getName() + " : " + position.getDescription()
-            )
-        );
-        
-        //Directions
-        content.push(
-            env.domHelper.createText(
-                "info",
-                "You can move to :"
-            )
-        );
-
-        position.getTo().forEach(function (toPosition) {
-            content.push(
-                env.domHelper.createCommand(
-                    "move " + toPosition,
-                    toPosition
-                )
-            );
-        });
-        
-        //Monsters
-        if (position.hasMonsters()) {
-            var monsters = position.getMonsters();
-
-            content.push(
-                env.domHelper.createText(
-                    "info",
-                    monsters.length +
-                    " monster:"
-                )
-            );
-
-            monsters.forEach(function (monster) {
-                content.push(
-                    env.domHelper.createCommand(
-                        "who " + monster,
-                        monster
-                    )
-                );
-            });
-        }
-        
-        //Items
-        if (position.hasItems()) {
-            var items = position.getItems();
-
-            content.push(
-                env.domHelper.createText(
-                    "info",
-                    items.length + " items(s) :"
-                )
-            );
-
-            items.forEach(function (item) {
-                content.push(
-                    env.domHelper.createCommand(
-                        "what " + item,
-                        item
-                    )
-                );
-            });
-        }
-        
-        return env.domHelper.appendArray(content);
+        return mWhereView.where(position);
     };
     
     return {WhereCommand: WhereCommand};
