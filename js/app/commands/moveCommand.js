@@ -4,7 +4,8 @@
  * @class MoveCommand
  * @author Pierre Guillemot
  */
-define(["commands/command"], function (mCommand) {
+define(["commands/command", "views/moveView"],
+    function (mCommand, mMoveView) {
 
     /**
      * Constructor
@@ -59,56 +60,30 @@ define(["commands/command"], function (mCommand) {
         
         //If the position has not been found
         if (nextPosition === undefined) {
-            return env.domHelper.createText(
-                "error",
-                env.hero.getDisplayName() +
-                " has lost his way ! Remember to use where in trouble..."
-            );
+            return mMoveView.moveError(env.hero);
         }
  
         //Dark
         if (currentPosition.isDark()) {
-            return env.domHelper.createText(
-                "dark",
-                "You cannot find your way in the dark..."
-            );
+            return mMoveView.positionIsDark();
         }
 
         //Monsters    
         if (currentPosition.hasMonsters()) {
-            return env.domHelper.createText(
-                "error",
-                "Monster(s) are blocking the way !"
-            );
+            return mMoveView.positionHasMonsters();
         }
 
-        var content = [];
-
-        //Info message: the hero is moving
-        content.push(
-            env.domHelper.createText(
-                "info",
-                env.hero.getDisplayName() +
-                " has moved from " +
-                currentPosition.getName() +
-                " to " +
-                nextPosition.getName() +
-                "."
-            )
+        //Successful move
+        var view = mMoveView.moveSuccess(
+            env.hero,
+            currentPosition,
+            nextPosition
         );
 
-        //Adding a where command button
-        content.push(
-            env.domHelper.createCommand(
-                "where",
-                "where"
-            )
-        );
-        
         //Move the hero
         env.hero.move(nextPosition);
     
-        return env.domHelper.appendArray(content);
+        return view;
     };
     
     return {MoveCommand: MoveCommand};
