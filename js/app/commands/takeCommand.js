@@ -4,7 +4,8 @@
  * @class TakeCommand
  * @author Pierre Guillemot
  */
-define(["commands/command"], function (mCommand) {
+define(["commands/command", "views/takeView"],
+    function (mCommand, mTakeView) {
 
     /**
      * Constructor
@@ -57,24 +58,17 @@ define(["commands/command"], function (mCommand) {
             
             //Check for monsters
             if (currentPosition.hasMonsters()) {
-                return env.domHelper.createText(
-                    "error",
-                    "You cannot take the item, " +
-                    "monster(s) are around..."
-                );
+                return mTakeView.takeImpossible();
             }
 
             //We remove it from the position
             currentPosition.getItems().splice(itemIndex, 1);
             
-            return env.domHelper.createText(
-                "action",
-                env.hero.take(item)
-            );
+            return mTakeView.takeSuccess(env.hero, item);
         }
 
         //Cannot find the item
-        return env.domHelper.createText("error", "Not found !");
+        return mTakeView.takeError();
     };
     
     return {TakeCommand: TakeCommand};
