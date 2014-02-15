@@ -3,7 +3,8 @@
  * @class WhatCommand
  * @author Pierre Guillemot
  */
-define(["commands/command"], function (mCommand) {
+define(["commands/command", "views/whatView"],
+    function (mCommand, mWhatView) {
 
     /**
      * Constructor
@@ -52,10 +53,10 @@ define(["commands/command"], function (mCommand) {
             //Get the item
             var item = env.items.getItem(itemId);
             
-            return env.domHelper.createText("info", item.toString());
+            return mWhatView.whatSuccess(item);
         }
-        
-        return env.domHelper.createText("error", "Not found !");
+    
+        return mWhatView.whatError();
     };
     
     return {WhatCommand: WhatCommand};

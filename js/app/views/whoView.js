@@ -1,4 +1,3 @@
-
 /**
  * View for the who command
  * @class WhoView
