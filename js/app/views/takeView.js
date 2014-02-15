@@ -1,5 +1,5 @@
 /**
- * View for the take  command
+ * View for the take command
  * @class TakeView
  * @author Pierre Guillemot
  */

@@ -3,7 +3,8 @@
  * @class WhoCommand
  * @author Pierre Guillemot
  */
-define(["commands/command"], function (mCommand) {
+define(["commands/command", "views/whoView"],
+    function (mCommand, mWhoView) {
 
     /**
      * Constructor 
@@ -54,33 +55,10 @@ define(["commands/command"], function (mCommand) {
             //Get the monster
             var monster = env.monsters.getMonster(creatureId);
 
-            var content = [];
-
-            //Monster name
-            content.push(
-                env.domHelper.createText("info", monster.getName())
-            );
-
-            //Monster attributes
-            content.push(
-                env.domHelper.createText(
-                    "info", ">> " + monster.getAttributes().toString()
-                )
-            );
-
-            //Fight command shortcut
-            content.push(
-                env.domHelper.createCommand(
-                    "fight " + monster.getId(),
-                    "fight"
-                )
-            );
-            
-            return env.domHelper.appendArray(content);
-        
+            return mWhoView.whoSuccess(monster);
         }
         
-        return env.domHelper.createText("error", "Not found !");
+        return mWhoView.whoError();
     };
     
     return {WhoCommand: WhoCommand};
