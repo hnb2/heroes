@@ -6,7 +6,7 @@
 define(["utils/domUtils"], function (mDomUtils) {
 
     /**
-     * Returns an error message because the target could ont be found
+     * Returns an error message because the target could not be found
      * @method whoError
      * @return {Object} view
      * @public
