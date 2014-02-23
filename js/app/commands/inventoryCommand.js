@@ -4,7 +4,8 @@
  * @class InventoryCommand
  * @author Pierre Guillemot
  */
-define(["commands/command"], function (mCommand) {
+define(["commands/command", "views/inventoryView"],
+    function (mCommand, mInventoryView) {
 
     /**
      * Constructor
@@ -40,22 +41,7 @@ define(["commands/command"], function (mCommand) {
         //Get the content of the inventory of the hero    
         var bag = env.hero.getInventory();
         
-        var dom = [];
-
-        if (bag.length > 0) {
-            bag.forEach(function (_item) {
-                dom.push(
-                    env.domHelper.createText(
-                        "info",
-                        _item.toString()
-                    )
-                );
-            });
-
-            return env.domHelper.appendArray(dom);
-        }
-
-        return env.domHelper.createText("error", "Empty bag...");
+        return mInventoryView.inventorySuccess(bag);
     };
     
     return {InventoryCommand: InventoryCommand};

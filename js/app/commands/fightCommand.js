@@ -3,7 +3,8 @@
  * @class FightCommand
  * @author Pierre Guillemot
  */
-define(["commands/command"], function (mCommand) {
+define(["commands/command", "views/fightView"],
+    function (mCommand, mFightView) {
 
     /**
      * Constructor
@@ -56,62 +57,14 @@ define(["commands/command"], function (mCommand) {
         if (currentPosition.hasMonsters() && monsterIndexPosition !== -1) {
             monster = env.monsters.getMonster(creatureId);
         } else {
-            return env.domHelper.createText(
-                "error",
-                "Nothing to fight here !"
-            );
+            return mFightView.fightError();
         }
 
-        var content = [];
-
-        //The hero attacks the monster if alive
-        if (! env.hero.isDead()) {
-            content.push(
-                env.domHelper.createText(
-                    "fight",
-                    env.hero.attack(monster)
-                )
-            );
-        } else {
-            content.push(
-                env.domHelper.createText(
-                    "error",
-                    env.hero.getDisplayName() + " died..."
-                )
-            );
-        }
-        
-        //The monster attacks back the hero if alive
-        if (! monster.isDead()) {
-            content.push(
-                env.domHelper.createText(
-                    "fight",
-                    monster.attack(env.hero)
-                )
-            );
-
-            content.push(
-                env.domHelper.createCommand(
-                    "fight " + monster.getId(),
-                    "fight"
-                )
-            );
-        } else {
-            //Remove the monster
-            currentPosition.getMonsters().splice(monsterIndexPosition, 1);
-
-            content.push(
-                env.domHelper.createText(
-                    "victory",
-                    monster.getName() + " is dead."
-                )
-            );
-        }
-        
-        //Add a shortcut to "whoami" to check your health
-        content.push(env.domHelper.createCommand("whoami", "whoami"));
-        
-        return env.domHelper.appendArray(content);
+        return mFightView.fightSucess(
+            env.hero,
+            monster,
+            monsterIndexPosition
+        );
     };
     
     return {FightCommand: FightCommand};

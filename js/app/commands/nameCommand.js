@@ -3,7 +3,8 @@
  * @class NameCommand
  * @author Pierre Guillemot
  */
-define(["commands/command"], function (mCommand) {
+define(["commands/command", "views/nameView"],
+    function (mCommand, mNameView) {
 
     /**
      * Constructor
@@ -41,43 +42,21 @@ define(["commands/command"], function (mCommand) {
     NameCommand.prototype.exec = function (_args, _context) {
         //Creating a "shortcut"
         var env = _context.environment;
-                    
-        if (env.hero.getName() === undefined) {
-            if (_args.name === undefined) {
-                var content = [];
-                content.push(
-                    env.domHelper.createText(
-                        "error",
-                        "Please enter a valid name."
-                    )
-                );
 
-                content.push(
-                    env.domHelper.createCommand(
-                        "name",
-                        "name"
-                    )
-                );
-                
-                return env.domHelper.appendArray(content);
-            } else {
-                //Set the name
-                env.hero.setName(_args.name);
-        
-                return env.domHelper.createText(
-                    "name",
-                    "Thou shall now be known as " +
-                    env.hero.getName()
-                );
-            }
-        } else {
-            return env.domHelper.createText(
-                "error",
-                "It is too late for you " +
-                env.hero.name +
-                " !"
-            );
+        if (_args.name === undefined) {
+            return mNameView.nameError();
         }
+
+        //If the hero name is not set yet
+        if (env.hero.getName() === undefined) {
+            //Set the name
+            env.hero.setName(_args.name);
+
+            return mNameView.nameSuccess(env.hero);
+        }
+
+        //If the hero name is already set
+        return mNameView.nameAlreadySet(env.hero);
     };
     
     return {NameCommand: NameCommand};

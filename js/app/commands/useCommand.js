@@ -3,7 +3,8 @@
  * @class UseCommand
  * @author Pierre Guillemot
  */
-define(["commands/command"], function (mCommand) {
+define(["commands/command", "views/useView"],
+    function (mCommand, mUseView) {
 
     /**
      * Constructor
@@ -61,7 +62,7 @@ define(["commands/command"], function (mCommand) {
         var item = env.hero.getItem(itemId);
         
         if (item === undefined) {
-            return env.domHelper.createText("error", "Not found in your inventory !");
+            return mUseView.useError();
         }
         
         //Target identification
@@ -80,22 +81,13 @@ define(["commands/command"], function (mCommand) {
         //Check for constraints on the item
         if (item.constraint !== undefined) {
             if (item.constraint === currentPosition.getId()) {
-                return env.domHelper.createText(
-                    "action",
-                    env.hero.use(target, item)
-                );
+                return mUseView.useSuccess(env.hero, target, item);
             }
 
-            return env.domHelper.createText(
-                "error",
-                "You cannot use this here !"
-            );
+            return mUseView.useConstraintError();
         }
 
-        return env.domHelper.createText(
-            "action",
-            env.hero.use(target, item)
-        );
+        return mUseView.useSuccess(env.hero, target, item);
     };
     
     return {UseCommand: UseCommand};
