@@ -29,7 +29,6 @@ You can then generate the documentation by calling this at the root of heroes:
 Thou shall find what one must do to complete what one once began...
 
 ### NOW
- * Write Views in order to separate the logic in the Commands classes
  * Refactor "Controllers" usign DAO pattern
  * Review the fight command logic
  * Review the use command logic
