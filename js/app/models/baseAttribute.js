@@ -11,7 +11,7 @@ define([], function () {
      * Constructor 
      * @method BaseAttribute
      * @param {String} _name   name of the attribute
-     * @param {String} _value  value of the attribute
+     * @param {Number} _value  value of the attribute
      * @return {Nothing}
      * @public
      */
