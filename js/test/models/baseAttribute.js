@@ -1,7 +1,7 @@
 /**
  *
  */
-define(['models/baseAttribute'], function (mBaseAttribute) {
+define(['js/app/models/baseAttribute'], function (mBaseAttribute) {
     "use strict";
 
     var MOCK_NAME = 'Strength';
@@ -23,17 +23,11 @@ define(['models/baseAttribute'], function (mBaseAttribute) {
                 function () {
                 var base = get_mock_obj();
 
-                expect(
-                    base.toBeDefined()
-                );
+                expect(base).toBeDefined();
 
-                expect(
-                    base.getName().toEqual(MOCK_NAME)
-                );
+                expect(base.getName()).toEqual(MOCK_NAME);
 
-                expect(
-                    base.getValue().toEqual(MOCK_VALUE)
-                );
+                expect(base.getValue()).toEqual(MOCK_VALUE);
             });
 
         });
@@ -44,16 +38,11 @@ define(['models/baseAttribute'], function (mBaseAttribute) {
 
                 var base = get_mock_obj();
 
-                expect(
-                    base.getName().toEqual(MOCK_NAME)
-                );
+                expect(base.getName()).toEqual(MOCK_NAME);
 
                 base.setName('Dexterity');
 
-                expect(
-                    base.getName().toEqual('Dexterity')
-                );
-
+                expect(base.getName()).toEqual('Dexterity');
             });
 
 
