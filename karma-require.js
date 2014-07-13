@@ -1,5 +1,4 @@
 var allTestFiles = [];
-//TODO: FIX ME
 var TEST_REGEXP = /test.*\.js$/i;
 
 var pathToModule = function (path) {
