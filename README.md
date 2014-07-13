@@ -25,6 +25,15 @@ You can then generate the documentation by calling this at the root of heroes:
 
 `yuidoc -c yuidoc.json`
 
+## Running tests ?
+You need to have NodeJS installed on your computer and install Karma dependencies:
+
+`npm install karma karma-jasmine karma-cli karma-requirejs karma-chrome-launcher`
+
+Then you need to run the Karma test runner server:
+
+`karma start`
+
 ## Behold the almighty todo list !
 Thou shall find what one must do to complete what one once began...
 
