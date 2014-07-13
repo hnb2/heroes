@@ -1,2 +1,5 @@
 #Ignore the content of the build directory (doc + minified js)
 build
+
+#Ignore the content of the Code coverage Karma plugin
+coverage
