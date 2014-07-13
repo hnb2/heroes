@@ -28,7 +28,7 @@ You can then generate the documentation by calling this at the root of heroes:
 ## Running tests ?
 You need to have NodeJS installed on your computer and install Karma dependencies:
 
-`npm install karma karma-jasmine karma-cli karma-requirejs karma-chrome-launcher`
+`npm install karma karma-jasmine karma-cli karma-requirejs karma-chrome-launcher karma-coverage`
 
 Then you need to run the Karma test runner server:
 
