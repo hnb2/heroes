@@ -8,9 +8,14 @@ var pathToModule = function (path) {
 
 Object.keys(window.__karma__.files).forEach(function (file) {
 
+    console.log(file);
+
     if (TEST_REGEXP.test(file)) {
         // Normalize paths to RequireJS module names.
         var path = pathToModule(file);
+
+        console.log('OK : ' + path);
+
         allTestFiles.push(path);
     }
 });
