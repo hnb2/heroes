@@ -1,5 +1,5 @@
 /**
- *
+ * Test the model BaseAttribute
  */
 define(['js/app/models/baseAttribute'], function (mBaseAttribute) {
     "use strict";
@@ -43,6 +43,22 @@ define(['js/app/models/baseAttribute'], function (mBaseAttribute) {
                 base.setName('Dexterity');
 
                 expect(base.getName()).toEqual('Dexterity');
+            });
+
+
+        });
+
+        describe('setValue', function () {
+
+            it('Should update the value', function () {
+
+                var base = get_mock_obj();
+
+                expect(base.getValue()).toEqual(MOCK_VALUE);
+
+                base.setValue(90);
+
+                expect(base.getValue()).toEqual(90);
             });
 
 
