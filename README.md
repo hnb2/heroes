@@ -16,28 +16,31 @@ I have always wanted to make a RPG, and after working a bit on the Eclipse Orion
 ## Ever heard of graphics ?
 No, I have not.
 
+## Preparing the development environment
+Simply run `npm install` at the root of the project. It will download locally the node modules necessary for generating the documenation and running unit tests.
+
 ## Documentation ?
-You need to have NodeJS Installed on your computer and install the yuidoc dependency:
-
-`npm install -g yuidoc`
-
-You can then generate the documentation by calling this at the root of heroes:
+You can generate the documentation by calling this at the root of heroes:
 
 `yuidoc -c yuidoc.json`
 
 ## Running tests ?
-You need to have NodeJS installed on your computer and install Karma dependencies:
-
-`npm install karma karma-jasmine karma-cli karma-requirejs karma-chrome-launcher karma-coverage`
-
-Then you need to run the Karma test runner server:
+You need to run the Karma test runner server:
 
 `karma start`
+
+Then you can either call:
+
+`karma run`
+
+in a separate terminal, or simply edit the code and have the tests be launched automatically, each time you make a modification.
 
 ## Behold the almighty todo list !
 Thou shall find what one must do to complete what one once began...
 
 ### NOW
+ * Reach a satisfactory test coverage
+ * Update the external libraries
  * Refactor "Controllers" usign DAO pattern
  * Review the fight command logic
  * Review the use command logic
